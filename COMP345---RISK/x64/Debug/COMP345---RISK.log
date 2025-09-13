@@ -1,0 +1,27 @@
+﻿  Map.cpp
+G:\My Drive\Concordia\COMP 345\COMP345---RISK\Map.cpp(23,23): error C2429: language feature 'structured bindings' requires compiler flag '/std:c++17'
+G:\My Drive\Concordia\COMP 345\COMP345---RISK\Map.cpp(24,54): error C2668: 'std::to_string': ambiguous call to overloaded function
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\string(506,38):
+      could be 'std::string std::to_string(long double)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\string(502,38):
+      or       'std::string std::to_string(float)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\string(495,38):
+      or       'std::string std::to_string(double)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\string(491,38):
+      or       'std::string std::to_string(unsigned __int64)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\string(487,38):
+      or       'std::string std::to_string(__int64)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\string(483,38):
+      or       'std::string std::to_string(unsigned long)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\string(479,38):
+      or       'std::string std::to_string(long)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\string(475,38):
+      or       'std::string std::to_string(unsigned int)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\string(471,38):
+      or       'std::string std::to_string(int)'
+      G:\My Drive\Concordia\COMP 345\COMP345---RISK\Map.cpp(24,54):
+      while trying to match the argument list '(unknown-type)'
+  
+  MapDriver.cpp
+  MapLoader.cpp
+  Generating Code...
