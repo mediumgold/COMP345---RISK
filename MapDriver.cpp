@@ -9,13 +9,24 @@
 
 Map testLoadMaps(string filepath)
 {
-    MapLoader loader(filepath);
-    return loader.getMap();
+    try
+    {
+        MapLoader loader(filepath);
+        return loader.getMap();
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    
+    return Map(); // Return an empty map on failure.
 }
 
 int main() {
     // Test loading a map.
     Map map = testLoadMaps("Maps/Americas 1792.map");
     cout << map.toString() << endl;
+    bool valid = map.validate();
+    cout << "Map is " << (valid ? "valid" : "invalid") << ".\n";
     return 0;
 }

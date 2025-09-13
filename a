@@ -1,0 +1,1203 @@
+Setting adjacencies for territory Antigua in continent Caribbean Islands with adjacents: Guadeloupe, Puerto Rico,
+Setting adjacency for Antigua to Guadeloupe.
+Setting adjacency for Antigua to Puerto Rico.
+Setting adjacencies for territory Barbados in continent Caribbean Islands with adjacents: St. Lucia, St. Johns, British Guiana,
+Setting adjacency for Barbados to St. Lucia.
+Setting adjacency for Barbados to St. Johns.
+Setting adjacency for Barbados to British Guiana.
+Setting adjacencies for territory Cuba in continent Caribbean Islands with adjacents: Havana, Santiago de Cuba,
+Setting adjacency for Cuba to Havana.
+Setting adjacency for Cuba to Santiago de Cuba.
+Setting adjacencies for territory Dominica in continent Caribbean Islands with adjacents: Guadeloupe, Martinique,
+Setting adjacency for Dominica to Guadeloupe.
+Setting adjacency for Dominica to Martinique.
+Setting adjacencies for territory Grenada in continent Caribbean Islands with adjacents: St. Lucia, Trinidad,
+Setting adjacency for Grenada to St. Lucia.
+Setting adjacency for Grenada to Trinidad.
+Setting adjacencies for territory Guadeloupe in continent Caribbean Islands with adjacents: Antigua, Dominica,
+Setting adjacency for Guadeloupe to Antigua.
+Setting adjacency for Guadeloupe to Dominica.
+Setting adjacencies for territory Haiti in continent Caribbean Islands with adjacents: Santo Domingo, Southern Bahamas, Santiago de Cuba, Jamaica,
+Setting adjacency for Haiti to Santo Domingo.
+Setting adjacency for Haiti to Southern Bahamas.
+Setting adjacency for Haiti to Santiago de Cuba.
+Setting adjacency for Haiti to Jamaica.
+Setting adjacencies for territory Havana in continent Caribbean Islands with adjacents: Cuba, New Orleans, East Florida, Yucatan,
+Setting adjacency for Havana to Cuba.
+Setting adjacency for Havana to New Orleans.
+Setting adjacency for Havana to East Florida.
+Setting adjacency for Havana to Yucatan.
+Setting adjacencies for territory Jamaica in continent Caribbean Islands with adjacents: Haiti, Santiago de Cuba, Mosquito Coast, Panama,
+Setting adjacency for Jamaica to Haiti.
+Setting adjacency for Jamaica to Santiago de Cuba.
+Setting adjacency for Jamaica to Mosquito Coast.
+Setting adjacency for Jamaica to Panama.
+Setting adjacencies for territory Martinique in continent Caribbean Islands with adjacents: Dominica, St. Lucia,
+Setting adjacency for Martinique to Dominica.
+Setting adjacency for Martinique to St. Lucia.
+Setting adjacencies for territory Northern Bahamas in continent Caribbean Islands with adjacents: North Carolina, East Florida, Southern Bahamas, Santiago de Cuba,
+Setting adjacency for Northern Bahamas to North Carolina.
+Setting adjacency for Northern Bahamas to East Florida.
+Setting adjacency for Northern Bahamas to Southern Bahamas.
+Setting adjacency for Northern Bahamas to Santiago de Cuba.
+Setting adjacencies for territory Puerto Rico in continent Caribbean Islands with adjacents: Santo Domingo, Curacao, Antigua,
+Setting adjacency for Puerto Rico to Santo Domingo.
+Setting adjacency for Puerto Rico to Curacao.
+Setting adjacency for Puerto Rico to Antigua.
+Setting adjacencies for territory Santiago de Cuba in continent Caribbean Islands with adjacents: Cuba, Haiti, Jamaica, Northern Bahamas, Southern Bahamas,
+Setting adjacency for Santiago de Cuba to Cuba.
+Setting adjacency for Santiago de Cuba to Haiti.
+Setting adjacency for Santiago de Cuba to Jamaica.
+Setting adjacency for Santiago de Cuba to Northern Bahamas.
+Setting adjacency for Santiago de Cuba to Southern Bahamas.
+Setting adjacencies for territory Santo Domingo in continent Caribbean Islands with adjacents: Haiti, Puerto Rico,
+Setting adjacency for Santo Domingo to Haiti.
+Setting adjacency for Santo Domingo to Puerto Rico.
+Setting adjacencies for territory Southern Bahamas in continent Caribbean Islands with adjacents: Haiti, Northern Bahamas, Santiago de Cuba, Massachusetts,
+Setting adjacency for Southern Bahamas to Haiti.
+Setting adjacency for Southern Bahamas to Northern Bahamas.
+Setting adjacency for Southern Bahamas to Santiago de Cuba.
+Setting adjacency for Southern Bahamas to Massachusetts.
+Setting adjacencies for territory St. Lucia in continent Caribbean Islands with adjacents: Barbados, Grenada, Martinique,
+Setting adjacency for St. Lucia to Barbados.
+Setting adjacency for St. Lucia to Grenada.
+Setting adjacency for St. Lucia to Martinique.
+Setting adjacencies for territory British Honduras in continent Central America with adjacents: Yucatan, Campeche, Guatemala,
+Setting adjacency for British Honduras to Yucatan.
+Setting adjacency for British Honduras to Campeche.
+Setting adjacency for British Honduras to Guatemala.
+Setting adjacencies for territory Campeche in continent Central America with adjacents: British Honduras, Yucatan, Tabasco, Guatemala, Chiapas,
+Setting adjacency for Campeche to British Honduras.
+Setting adjacency for Campeche to Yucatan.
+Setting adjacency for Campeche to Tabasco.
+Setting adjacency for Campeche to Guatemala.
+Setting adjacency for Campeche to Chiapas.
+Setting adjacencies for territory Costa Rica in continent Central America with adjacents: Mosquito Coast, Panama, Nicaragua,
+Setting adjacency for Costa Rica to Mosquito Coast.
+Setting adjacency for Costa Rica to Panama.
+Setting adjacency for Costa Rica to Nicaragua.
+Setting adjacencies for territory Guatemala in continent Central America with adjacents: British Honduras, Campeche, Chiapas, Salvador, Honduras,
+Setting adjacency for Guatemala to British Honduras.
+Setting adjacency for Guatemala to Campeche.
+Setting adjacency for Guatemala to Chiapas.
+Setting adjacency for Guatemala to Salvador.
+Setting adjacency for Guatemala to Honduras.
+Setting adjacencies for territory Honduras in continent Central America with adjacents: Guatemala, Mosquito Coast, Nicaragua, Salvador,
+Setting adjacency for Honduras to Guatemala.
+Setting adjacency for Honduras to Mosquito Coast.
+Setting adjacency for Honduras to Nicaragua.
+Setting adjacency for Honduras to Salvador.
+Setting adjacencies for territory Mosquito Coast in continent Central America with adjacents: Jamaica, Costa Rica, Nicaragua, Honduras,
+Setting adjacency for Mosquito Coast to Jamaica.
+Setting adjacency for Mosquito Coast to Costa Rica.
+Setting adjacency for Mosquito Coast to Nicaragua.
+Setting adjacency for Mosquito Coast to Honduras.
+Setting adjacencies for territory Nicaragua in continent Central America with adjacents: Costa Rica, Mosquito Coast, Honduras,
+Setting adjacency for Nicaragua to Costa Rica.
+Setting adjacency for Nicaragua to Mosquito Coast.
+Setting adjacency for Nicaragua to Honduras.
+Setting adjacencies for territory Panama in continent Central America with adjacents: Jamaica, Costa Rica, Cartagena, Antioqura,
+Setting adjacency for Panama to Jamaica.
+Setting adjacency for Panama to Costa Rica.
+Setting adjacency for Panama to Cartagena.
+Setting adjacency for Panama to Antioqura.
+Setting adjacencies for territory Salvador in continent Central America with adjacents: Guatemala, Honduras,
+Setting adjacency for Salvador to Guatemala.
+Setting adjacency for Salvador to Honduras.
+Setting adjacencies for territory Yucatan in continent Central America with adjacents: Havana, British Honduras, Campeche,
+Setting adjacency for Yucatan to Havana.
+Setting adjacency for Yucatan to British Honduras.
+Setting adjacency for Yucatan to Campeche.
+Setting adjacencies for territory Apache lands in continent Great Plains with adjacents: Coahuila, Chihuahua, Comanche lands, San Antonio,
+Setting adjacency for Apache lands to Coahuila.
+Setting adjacency for Apache lands to Chihuahua.
+Setting adjacency for Apache lands to Comanche lands.
+Setting adjacency for Apache lands to San Antonio.
+Setting adjacencies for territory Arapaho lands in continent Great Plains with adjacents: Pawnee lands, Arikira lands, Kiowa lands, Skidi Pawnee,
+Setting adjacency for Arapaho lands to Pawnee lands.
+Setting adjacency for Arapaho lands to Arikira lands.
+Setting adjacency for Arapaho lands to Kiowa lands.
+Setting adjacency for Arapaho lands to Skidi Pawnee.
+Setting adjacencies for territory Arikira lands in continent Great Plains with adjacents: Arapaho lands, Cheyenne lands, Ponca lands, Skidi Pawnee,
+Setting adjacency for Arikira lands to Arapaho lands.
+Setting adjacency for Arikira lands to Cheyenne lands.
+Setting adjacency for Arikira lands to Ponca lands.
+Setting adjacency for Arikira lands to Skidi Pawnee.
+Setting adjacencies for territory Cheyenne lands in continent Great Plains with adjacents: Arikira lands, Santee Sioux lands, Crow lands, Ponca lands,
+Setting adjacency for Cheyenne lands to Arikira lands.
+Setting adjacency for Cheyenne lands to Santee Sioux lands.
+Setting adjacency for Cheyenne lands to Crow lands.
+Setting adjacency for Cheyenne lands to Ponca lands.
+Setting adjacencies for territory Comanche lands in continent Great Plains with adjacents: Apache lands, Caddo lands, Wichita lands, Kiowa lands, Tejas, San Antonio,
+Setting adjacency for Comanche lands to Apache lands.
+Setting adjacency for Comanche lands to Caddo lands.
+Setting adjacency for Comanche lands to Wichita lands.
+Setting adjacency for Comanche lands to Kiowa lands.
+Setting adjacency for Comanche lands to Tejas.
+Setting adjacency for Comanche lands to San Antonio.
+Setting adjacencies for territory Crow lands in continent Great Plains with adjacents: Cheyenne lands, Santee Sioux lands, Mandan lands, Assiniboin lands,
+Setting adjacency for Crow lands to Cheyenne lands.
+Setting adjacency for Crow lands to Santee Sioux lands.
+Setting adjacency for Crow lands to Mandan lands.
+Setting adjacency for Crow lands to Assiniboin lands.
+Setting adjacencies for territory Dacotah Sioux lands in continent Great Plains with adjacents: Iowa lands, Mesquakie lands, Santee Sioux lands, Chippewa lands, Yankton Sioux lands, Omaha lands, Ponca lands,
+Setting adjacency for Dacotah Sioux lands to Iowa lands.
+Setting adjacency for Dacotah Sioux lands to Mesquakie lands.
+Setting adjacency for Dacotah Sioux lands to Santee Sioux lands.
+Setting adjacency for Dacotah Sioux lands to Chippewa lands.
+Setting adjacency for Dacotah Sioux lands to Yankton Sioux lands.
+Setting adjacency for Dacotah Sioux lands to Omaha lands.
+Setting adjacency for Dacotah Sioux lands to Ponca lands.
+Setting adjacencies for territory Iowa lands in continent Great Plains with adjacents: Dacotah Sioux lands, Mesquakie lands, Sauk lands, Oto lands, Omaha lands,
+Setting adjacency for Iowa lands to Dacotah Sioux lands.
+Setting adjacency for Iowa lands to Mesquakie lands.
+Setting adjacency for Iowa lands to Sauk lands.
+Setting adjacency for Iowa lands to Oto lands.
+Setting adjacency for Iowa lands to Omaha lands.
+Setting adjacencies for territory Kansa lands in continent Great Plains with adjacents: Arkansas, Illinois, Pawnee lands, Oto lands, Kikapoo lands, Osage lands,
+Setting adjacency for Kansa lands to Arkansas.
+Setting adjacency for Kansa lands to Illinois.
+Setting adjacency for Kansa lands to Pawnee lands.
+Setting adjacency for Kansa lands to Oto lands.
+Setting adjacency for Kansa lands to Kikapoo lands.
+Setting adjacency for Kansa lands to Osage lands.
+Setting adjacencies for territory Kiowa lands in continent Great Plains with adjacents: Arapaho lands, Comanche lands, Caddo lands, Pawnee lands, Wichita lands, Osage lands,
+Setting adjacency for Kiowa lands to Arapaho lands.
+Setting adjacency for Kiowa lands to Comanche lands.
+Setting adjacency for Kiowa lands to Caddo lands.
+Setting adjacency for Kiowa lands to Pawnee lands.
+Setting adjacency for Kiowa lands to Wichita lands.
+Setting adjacency for Kiowa lands to Osage lands.
+Setting adjacencies for territory Mandan lands in continent Great Plains with adjacents: Crow lands, Santee Sioux lands, Assiniboin lands, Cree lands, Yankton Sioux lands,
+Setting adjacency for Mandan lands to Crow lands.
+Setting adjacency for Mandan lands to Santee Sioux lands.
+Setting adjacency for Mandan lands to Assiniboin lands.
+Setting adjacency for Mandan lands to Cree lands.
+Setting adjacency for Mandan lands to Yankton Sioux lands.
+Setting adjacencies for territory Omaha lands in continent Great Plains with adjacents: Dacotah Sioux lands, Iowa lands, Pawnee lands, Ponca lands, Skidi Pawnee, Oto lands,
+Setting adjacency for Omaha lands to Dacotah Sioux lands.
+Setting adjacency for Omaha lands to Iowa lands.
+Setting adjacency for Omaha lands to Pawnee lands.
+Setting adjacency for Omaha lands to Ponca lands.
+Setting adjacency for Omaha lands to Skidi Pawnee.
+Setting adjacency for Omaha lands to Oto lands.
+Setting adjacencies for territory Osage lands in continent Great Plains with adjacents: Kansa lands, Kiowa lands, Arkansas, Caddo lands, Pawnee lands, Quapaw lands,
+Setting adjacency for Osage lands to Kansa lands.
+Setting adjacency for Osage lands to Kiowa lands.
+Setting adjacency for Osage lands to Arkansas.
+Setting adjacency for Osage lands to Caddo lands.
+Setting adjacency for Osage lands to Pawnee lands.
+Setting adjacency for Osage lands to Quapaw lands.
+Setting adjacencies for territory Oto lands in continent Great Plains with adjacents: Iowa lands, Kansa lands, Sauk lands, Pawnee lands, Omaha lands,
+Setting adjacency for Oto lands to Iowa lands.
+Setting adjacency for Oto lands to Kansa lands.
+Setting adjacency for Oto lands to Sauk lands.
+Setting adjacency for Oto lands to Pawnee lands.
+Setting adjacency for Oto lands to Omaha lands.
+Setting adjacencies for territory Pawnee lands in continent Great Plains with adjacents: Arapaho lands, Kansa lands, Kiowa lands, Omaha lands, Osage lands, Oto lands, Skidi Pawnee,
+Setting adjacency for Pawnee lands to Arapaho lands.
+Setting adjacency for Pawnee lands to Kansa lands.
+Setting adjacency for Pawnee lands to Kiowa lands.
+Setting adjacency for Pawnee lands to Omaha lands.
+Setting adjacency for Pawnee lands to Osage lands.
+Setting adjacency for Pawnee lands to Oto lands.
+Setting adjacency for Pawnee lands to Skidi Pawnee.
+Setting adjacencies for territory Ponca lands in continent Great Plains with adjacents: Arikira lands, Cheyenne lands, Dacotah Sioux lands, Omaha lands, Santee Sioux lands, Skidi Pawnee,
+Setting adjacency for Ponca lands to Arikira lands.
+Setting adjacency for Ponca lands to Cheyenne lands.
+Setting adjacency for Ponca lands to Dacotah Sioux lands.
+Setting adjacency for Ponca lands to Omaha lands.
+Setting adjacency for Ponca lands to Santee Sioux lands.
+Setting adjacency for Ponca lands to Skidi Pawnee.
+Setting adjacencies for territory Santee Sioux lands in continent Great Plains with adjacents: Cheyenne lands, Crow lands, Dacotah Sioux lands, Mandan lands, Ponca lands, Yankton Sioux lands,
+Setting adjacency for Santee Sioux lands to Cheyenne lands.
+Setting adjacency for Santee Sioux lands to Crow lands.
+Setting adjacency for Santee Sioux lands to Dacotah Sioux lands.
+Setting adjacency for Santee Sioux lands to Mandan lands.
+Setting adjacency for Santee Sioux lands to Ponca lands.
+Setting adjacency for Santee Sioux lands to Yankton Sioux lands.
+Setting adjacencies for territory Skidi Pawnee in continent Great Plains with adjacents: Arapaho lands, Arikira lands, Omaha lands, Pawnee lands, Ponca lands,
+Setting adjacency for Skidi Pawnee to Arapaho lands.
+Setting adjacency for Skidi Pawnee to Arikira lands.
+Setting adjacency for Skidi Pawnee to Omaha lands.
+Setting adjacency for Skidi Pawnee to Pawnee lands.
+Setting adjacency for Skidi Pawnee to Ponca lands.
+Setting adjacencies for territory Wichita lands in continent Great Plains with adjacents: Comanche lands, Kiowa lands, Caddo lands,
+Setting adjacency for Wichita lands to Comanche lands.
+Setting adjacency for Wichita lands to Kiowa lands.
+Setting adjacency for Wichita lands to Caddo lands.
+Setting adjacencies for territory Yankton Sioux lands in continent Great Plains with adjacents: Dacotah Sioux lands, Mandan lands, Santee Sioux lands, Chippewa lands, Cree lands,
+Setting adjacency for Yankton Sioux lands to Dacotah Sioux lands.
+Setting adjacency for Yankton Sioux lands to Mandan lands.
+Setting adjacency for Yankton Sioux lands to Santee Sioux lands.
+Setting adjacency for Yankton Sioux lands to Chippewa lands.
+Setting adjacency for Yankton Sioux lands to Cree lands.
+Setting adjacencies for territory British Guiana in continent Guiana with adjacents: Barbados, Angostura, Venezuela, Dutch Guiana,
+Setting adjacency for British Guiana to Barbados.
+Setting adjacency for British Guiana to Angostura.
+Setting adjacency for British Guiana to Venezuela.
+Setting adjacency for British Guiana to Dutch Guiana.
+Setting adjacencies for territory Dutch Guiana in continent Guiana with adjacents: British Guiana, French Guiana,
+Setting adjacency for Dutch Guiana to British Guiana.
+Setting adjacency for Dutch Guiana to French Guiana.
+Setting adjacencies for territory French Guiana in continent Guiana with adjacents: Dutch Guiana,
+Setting adjacency for French Guiana to Dutch Guiana.
+Setting adjacencies for territory Arkansas in continent Louisiana with adjacents: Kansa lands, Osage lands, Tennesee, Illinois, Quapaw lands, Mississippi,
+Setting adjacency for Arkansas to Kansa lands.
+Setting adjacency for Arkansas to Osage lands.
+Setting adjacency for Arkansas to Tennesee.
+Setting adjacency for Arkansas to Illinois.
+Setting adjacency for Arkansas to Quapaw lands.
+Setting adjacency for Arkansas to Mississippi.
+Setting adjacencies for territory Caddo lands in continent Louisiana with adjacents: Comanche lands, Kiowa lands, Osage lands, Wichita lands, Natchez, Los Adaes, Tejas, Quapaw lands,
+Setting adjacency for Caddo lands to Comanche lands.
+Setting adjacency for Caddo lands to Kiowa lands.
+Setting adjacency for Caddo lands to Osage lands.
+Setting adjacency for Caddo lands to Wichita lands.
+Setting adjacency for Caddo lands to Natchez.
+Setting adjacency for Caddo lands to Los Adaes.
+Setting adjacency for Caddo lands to Tejas.
+Setting adjacency for Caddo lands to Quapaw lands.
+Setting adjacencies for territory Choctaw lands in continent Louisiana with adjacents: West Florida, New Orleans, Chickasaw lands, Mississippi, Creek lands,
+Setting adjacency for Choctaw lands to West Florida.
+Setting adjacency for Choctaw lands to New Orleans.
+Setting adjacency for Choctaw lands to Chickasaw lands.
+Setting adjacency for Choctaw lands to Mississippi.
+Setting adjacency for Choctaw lands to Creek lands.
+Setting adjacencies for territory Creek lands in continent Louisiana with adjacents: Choctaw lands, West Florida, Appalachian mountains, Chickasaw lands, Georgia,
+Setting adjacency for Creek lands to Choctaw lands.
+Setting adjacency for Creek lands to West Florida.
+Setting adjacency for Creek lands to Appalachian mountains.
+Setting adjacency for Creek lands to Chickasaw lands.
+Setting adjacency for Creek lands to Georgia.
+Setting adjacencies for territory Illinois in continent Louisiana with adjacents: Kansa lands, Arkansas, Tennesee, Mascouten lands, Shawnee lands, Kentucky, Kikapoo lands,
+Setting adjacency for Illinois to Kansa lands.
+Setting adjacency for Illinois to Arkansas.
+Setting adjacency for Illinois to Tennesee.
+Setting adjacency for Illinois to Mascouten lands.
+Setting adjacency for Illinois to Shawnee lands.
+Setting adjacency for Illinois to Kentucky.
+Setting adjacency for Illinois to Kikapoo lands.
+Setting adjacencies for territory Mississippi in continent Louisiana with adjacents: Arkansas, Choctaw lands, Natchez, New Orleans, Quapaw lands, Chickasaw lands, Tennesee,
+Setting adjacency for Mississippi to Arkansas.
+Setting adjacency for Mississippi to Choctaw lands.
+Setting adjacency for Mississippi to Natchez.
+Setting adjacency for Mississippi to New Orleans.
+Setting adjacency for Mississippi to Quapaw lands.
+Setting adjacency for Mississippi to Chickasaw lands.
+Setting adjacency for Mississippi to Tennesee.
+Setting adjacencies for territory Natchez in continent Louisiana with adjacents: Caddo lands, Mississippi, New Orleans, Los Adaes, Quapaw lands,
+Setting adjacency for Natchez to Caddo lands.
+Setting adjacency for Natchez to Mississippi.
+Setting adjacency for Natchez to New Orleans.
+Setting adjacency for Natchez to Los Adaes.
+Setting adjacency for Natchez to Quapaw lands.
+Setting adjacencies for territory New Orleans in continent Louisiana with adjacents: Havana, Choctaw lands, Mississippi, Natchez, West Florida, Los Adaes, Vera Cruz,
+Setting adjacency for New Orleans to Havana.
+Setting adjacency for New Orleans to Choctaw lands.
+Setting adjacency for New Orleans to Mississippi.
+Setting adjacency for New Orleans to Natchez.
+Setting adjacency for New Orleans to West Florida.
+Setting adjacency for New Orleans to Los Adaes.
+Setting adjacency for New Orleans to Vera Cruz.
+Setting adjacencies for territory Quapaw lands in continent Louisiana with adjacents: Osage lands, Arkansas, Caddo lands, Mississippi, Natchez,
+Setting adjacency for Quapaw lands to Osage lands.
+Setting adjacency for Quapaw lands to Arkansas.
+Setting adjacency for Quapaw lands to Caddo lands.
+Setting adjacency for Quapaw lands to Mississippi.
+Setting adjacency for Quapaw lands to Natchez.
+Setting adjacencies for territory West Florida in continent Louisiana with adjacents: Choctaw lands, Creek lands, New Orleans, East Florida, Georgia,
+Setting adjacency for West Florida to Choctaw lands.
+Setting adjacency for West Florida to Creek lands.
+Setting adjacency for West Florida to New Orleans.
+Setting adjacency for West Florida to East Florida.
+Setting adjacency for West Florida to Georgia.
+Setting adjacencies for territory Abenaki lands in continent Lower Canada with adjacents: Maine, Gaspe, New Hampshire, Montreal, Lake Champlain, Quebec,
+Setting adjacency for Abenaki lands to Maine.
+Setting adjacency for Abenaki lands to Gaspe.
+Setting adjacency for Abenaki lands to New Hampshire.
+Setting adjacency for Abenaki lands to Montreal.
+Setting adjacency for Abenaki lands to Lake Champlain.
+Setting adjacency for Abenaki lands to Quebec.
+Setting adjacencies for territory Canada in continent Lower Canada with adjacents: Canadian wilderness, Moose Factory, Lower Canada, Montreal, Ontario, Quebec, Tadoussac,
+Setting adjacency for Canada to Canadian wilderness.
+Setting adjacency for Canada to Moose Factory.
+Setting adjacency for Canada to Lower Canada.
+Setting adjacency for Canada to Montreal.
+Setting adjacency for Canada to Ontario.
+Setting adjacency for Canada to Quebec.
+Setting adjacency for Canada to Tadoussac.
+Setting adjacencies for territory Canadian wilderness in continent Lower Canada with adjacents: Canada, Labrador, Moose Factory, James Bay, Montagnais lands, Tadoussac,
+Setting adjacency for Canadian wilderness to Canada.
+Setting adjacency for Canadian wilderness to Labrador.
+Setting adjacency for Canadian wilderness to Moose Factory.
+Setting adjacency for Canadian wilderness to James Bay.
+Setting adjacency for Canadian wilderness to Montagnais lands.
+Setting adjacency for Canadian wilderness to Tadoussac.
+Setting adjacencies for territory Gaspe in continent Lower Canada with adjacents: Abenaki lands, Maine, New Brunswick,
+Setting adjacency for Gaspe to Abenaki lands.
+Setting adjacency for Gaspe to Maine.
+Setting adjacency for Gaspe to New Brunswick.
+Setting adjacencies for territory Halifax in continent Lower Canada with adjacents: Prince Edward Island, New Brunswick, Isle Royale, Nova Scotia,
+Setting adjacency for Halifax to Prince Edward Island.
+Setting adjacency for Halifax to New Brunswick.
+Setting adjacency for Halifax to Isle Royale.
+Setting adjacency for Halifax to Nova Scotia.
+Setting adjacencies for territory Isle Royale in continent Lower Canada with adjacents: Halifax, St. Johns,
+Setting adjacency for Isle Royale to Halifax.
+Setting adjacency for Isle Royale to St. Johns.
+Setting adjacencies for territory Labrador in continent Lower Canada with adjacents: Canadian wilderness, Montagnais lands, Newfoundland,
+Setting adjacency for Labrador to Canadian wilderness.
+Setting adjacency for Labrador to Montagnais lands.
+Setting adjacency for Labrador to Newfoundland.
+Setting adjacencies for territory Lower Canada in continent Lower Canada with adjacents: Canada, Adirondack mountains, Montreal, Upper Canada, Ontario,
+Setting adjacency for Lower Canada to Canada.
+Setting adjacency for Lower Canada to Adirondack mountains.
+Setting adjacency for Lower Canada to Montreal.
+Setting adjacency for Lower Canada to Upper Canada.
+Setting adjacency for Lower Canada to Ontario.
+Setting adjacencies for territory Montagnais lands in continent Lower Canada with adjacents: Canadian wilderness, Labrador, Tadoussac,
+Setting adjacency for Montagnais lands to Canadian wilderness.
+Setting adjacency for Montagnais lands to Labrador.
+Setting adjacency for Montagnais lands to Tadoussac.
+Setting adjacencies for territory Montreal in continent Lower Canada with adjacents: Abenaki lands, Canada, Lower Canada, Adirondack mountains, Lake Champlain, Quebec,
+Setting adjacency for Montreal to Abenaki lands.
+Setting adjacency for Montreal to Canada.
+Setting adjacency for Montreal to Lower Canada.
+Setting adjacency for Montreal to Adirondack mountains.
+Setting adjacency for Montreal to Lake Champlain.
+Setting adjacency for Montreal to Quebec.
+Setting adjacencies for territory New Brunswick in continent Lower Canada with adjacents: Gaspe, Halifax, Maine, Prince Edward Island,
+Setting adjacency for New Brunswick to Gaspe.
+Setting adjacency for New Brunswick to Halifax.
+Setting adjacency for New Brunswick to Maine.
+Setting adjacency for New Brunswick to Prince Edward Island.
+Setting adjacencies for territory Newfoundland in continent Lower Canada with adjacents: Labrador, St. Johns,
+Setting adjacency for Newfoundland to Labrador.
+Setting adjacency for Newfoundland to St. Johns.
+Setting adjacencies for territory Nova Scotia in continent Lower Canada with adjacents: Halifax, Massachusetts,
+Setting adjacency for Nova Scotia to Halifax.
+Setting adjacency for Nova Scotia to Massachusetts.
+Setting adjacencies for territory Prince Edward Island in continent Lower Canada with adjacents: Halifax, New Brunswick,
+Setting adjacency for Prince Edward Island to Halifax.
+Setting adjacency for Prince Edward Island to New Brunswick.
+Setting adjacencies for territory Quebec in continent Lower Canada with adjacents: Abenaki lands, Canada, Montreal, Tadoussac,
+Setting adjacency for Quebec to Abenaki lands.
+Setting adjacency for Quebec to Canada.
+Setting adjacency for Quebec to Montreal.
+Setting adjacency for Quebec to Tadoussac.
+Setting adjacencies for territory St. Johns in continent Lower Canada with adjacents: Barbados, Isle Royale, Newfoundland,
+Setting adjacency for St. Johns to Barbados.
+Setting adjacency for St. Johns to Isle Royale.
+Setting adjacency for St. Johns to Newfoundland.
+Setting adjacencies for territory Tadoussac in continent Lower Canada with adjacents: Canada, Canadian wilderness, Montagnais lands, Quebec,
+Setting adjacency for Tadoussac to Canada.
+Setting adjacency for Tadoussac to Canadian wilderness.
+Setting adjacency for Tadoussac to Montagnais lands.
+Setting adjacency for Tadoussac to Quebec.
+Setting adjacencies for territory Chihuahua in continent Northern Mexico with adjacents: Apache lands, Durango, Coahuila,
+Setting adjacency for Chihuahua to Apache lands.
+Setting adjacency for Chihuahua to Durango.
+Setting adjacency for Chihuahua to Coahuila.
+Setting adjacencies for territory Coahuila in continent Northern Mexico with adjacents: Apache lands, Chihuahua, Matamoros, Durango, Zacatecas, Laredo, San Antonio,
+Setting adjacency for Coahuila to Apache lands.
+Setting adjacency for Coahuila to Chihuahua.
+Setting adjacency for Coahuila to Matamoros.
+Setting adjacency for Coahuila to Durango.
+Setting adjacency for Coahuila to Zacatecas.
+Setting adjacency for Coahuila to Laredo.
+Setting adjacency for Coahuila to San Antonio.
+Setting adjacencies for territory Laredo in continent Northern Mexico with adjacents: Coahuila, Matamoros, San Antonio,
+Setting adjacency for Laredo to Coahuila.
+Setting adjacency for Laredo to Matamoros.
+Setting adjacency for Laredo to San Antonio.
+Setting adjacencies for territory Los Adaes in continent Northern Mexico with adjacents: Caddo lands, Natchez, New Orleans, Tejas,
+Setting adjacency for Los Adaes to Caddo lands.
+Setting adjacency for Los Adaes to Natchez.
+Setting adjacency for Los Adaes to New Orleans.
+Setting adjacency for Los Adaes to Tejas.
+Setting adjacencies for territory San Antonio in continent Northern Mexico with adjacents: Apache lands, Comanche lands, Coahuila, Laredo, Tejas,
+Setting adjacency for San Antonio to Apache lands.
+Setting adjacency for San Antonio to Comanche lands.
+Setting adjacency for San Antonio to Coahuila.
+Setting adjacency for San Antonio to Laredo.
+Setting adjacency for San Antonio to Tejas.
+Setting adjacencies for territory Tejas in continent Northern Mexico with adjacents: Comanche lands, Caddo lands, Los Adaes, San Antonio,
+Setting adjacency for Tejas to Comanche lands.
+Setting adjacency for Tejas to Caddo lands.
+Setting adjacency for Tejas to Los Adaes.
+Setting adjacency for Tejas to San Antonio.
+Setting adjacencies for territory Adirondack mountains in continent Northern States with adjacents: Lower Canada, Montreal, Lake Champlain, New York,
+Setting adjacency for Adirondack mountains to Lower Canada.
+Setting adjacency for Adirondack mountains to Montreal.
+Setting adjacency for Adirondack mountains to Lake Champlain.
+Setting adjacency for Adirondack mountains to New York.
+Setting adjacencies for territory Connecticutt & Rhode Island in continent Northern States with adjacents: Massachusetts, New York,
+Setting adjacency for Connecticutt & Rhode Island to Massachusetts.
+Setting adjacency for Connecticutt & Rhode Island to New York.
+Setting adjacencies for territory Fort Niagra in continent Northern States with adjacents: Pittsburgh, Northern Allegheny mountains, Upper Canada, New York,
+Setting adjacency for Fort Niagra to Pittsburgh.
+Setting adjacency for Fort Niagra to Northern Allegheny mountains.
+Setting adjacency for Fort Niagra to Upper Canada.
+Setting adjacency for Fort Niagra to New York.
+Setting adjacencies for territory Lake Champlain in continent Northern States with adjacents: Abenaki lands, Montreal, Adirondack mountains, New Hampshire, New York, Massachusetts,
+Setting adjacency for Lake Champlain to Abenaki lands.
+Setting adjacency for Lake Champlain to Montreal.
+Setting adjacency for Lake Champlain to Adirondack mountains.
+Setting adjacency for Lake Champlain to New Hampshire.
+Setting adjacency for Lake Champlain to New York.
+Setting adjacency for Lake Champlain to Massachusetts.
+Setting adjacencies for territory Maine in continent Northern States with adjacents: Abenaki lands, Gaspe, New Brunswick, New Hampshire,
+Setting adjacency for Maine to Abenaki lands.
+Setting adjacency for Maine to Gaspe.
+Setting adjacency for Maine to New Brunswick.
+Setting adjacency for Maine to New Hampshire.
+Setting adjacencies for territory Massachusetts in continent Northern States with adjacents: Southern Bahamas, Nova Scotia, Lake Champlain, New Hampshire, New York, Connecticutt & Rhode Island,
+Setting adjacency for Massachusetts to Southern Bahamas.
+Setting adjacency for Massachusetts to Nova Scotia.
+Setting adjacency for Massachusetts to Lake Champlain.
+Setting adjacency for Massachusetts to New Hampshire.
+Setting adjacency for Massachusetts to New York.
+Setting adjacency for Massachusetts to Connecticutt & Rhode Island.
+Setting adjacencies for territory New Hampshire in continent Northern States with adjacents: Abenaki lands, Lake Champlain, Maine, Massachusetts,
+Setting adjacency for New Hampshire to Abenaki lands.
+Setting adjacency for New Hampshire to Lake Champlain.
+Setting adjacency for New Hampshire to Maine.
+Setting adjacency for New Hampshire to Massachusetts.
+Setting adjacencies for territory New Jersey & Delaware in continent Northern States with adjacents: New York, Maryland, Pennsylvania,
+Setting adjacency for New Jersey & Delaware to New York.
+Setting adjacency for New Jersey & Delaware to Maryland.
+Setting adjacency for New Jersey & Delaware to Pennsylvania.
+Setting adjacencies for territory New York in continent Northern States with adjacents: Adirondack mountains, Fort Niagra, Lake Champlain, Massachusetts, New Jersey & Delaware, Northern Allegheny mountains, Pennsylvania, Connecticutt & Rhode Island,
+Setting adjacency for New York to Adirondack mountains.
+Setting adjacency for New York to Fort Niagra.
+Setting adjacency for New York to Lake Champlain.
+Setting adjacency for New York to Massachusetts.
+Setting adjacency for New York to New Jersey & Delaware.
+Setting adjacency for New York to Northern Allegheny mountains.
+Setting adjacency for New York to Pennsylvania.
+Setting adjacency for New York to Connecticutt & Rhode Island.
+Setting adjacencies for territory Northern Allegheny mountains in continent Northern States with adjacents: Fort Niagra, New York, Pittsburgh, Pennsylvania,
+Setting adjacency for Northern Allegheny mountains to Fort Niagra.
+Setting adjacency for Northern Allegheny mountains to New York.
+Setting adjacency for Northern Allegheny mountains to Pittsburgh.
+Setting adjacency for Northern Allegheny mountains to Pennsylvania.
+Setting adjacencies for territory Chippewa lands in continent Northwest Territory with adjacents: Dacotah Sioux lands, Yankton Sioux lands, Mesquakie lands, Cree lands, Menominie lands,
+Setting adjacency for Chippewa lands to Dacotah Sioux lands.
+Setting adjacency for Chippewa lands to Yankton Sioux lands.
+Setting adjacency for Chippewa lands to Mesquakie lands.
+Setting adjacency for Chippewa lands to Cree lands.
+Setting adjacency for Chippewa lands to Menominie lands.
+Setting adjacencies for territory Fort Detroit in continent Northwest Territory with adjacents: Miami lands, Potawatomi lands, Upper Canada, Fort Michilimackinac,
+Setting adjacency for Fort Detroit to Miami lands.
+Setting adjacency for Fort Detroit to Potawatomi lands.
+Setting adjacency for Fort Detroit to Upper Canada.
+Setting adjacency for Fort Detroit to Fort Michilimackinac.
+Setting adjacencies for territory Fort Michilimackinac in continent Northwest Territory with adjacents: Fort Detroit, Potawatomi lands, Menominie lands,
+Setting adjacency for Fort Michilimackinac to Fort Detroit.
+Setting adjacency for Fort Michilimackinac to Potawatomi lands.
+Setting adjacency for Fort Michilimackinac to Menominie lands.
+Setting adjacencies for territory Kikapoo lands in continent Northwest Territory with adjacents: Kansa lands, Illinois, Sauk lands, Potawatomi lands, Mascouten lands,
+Setting adjacency for Kikapoo lands to Kansa lands.
+Setting adjacency for Kikapoo lands to Illinois.
+Setting adjacency for Kikapoo lands to Sauk lands.
+Setting adjacency for Kikapoo lands to Potawatomi lands.
+Setting adjacency for Kikapoo lands to Mascouten lands.
+Setting adjacencies for territory Mascouten lands in continent Northwest Territory with adjacents: Illinois, Kikapoo lands, Miami lands, Potawatomi lands, Shawnee lands,
+Setting adjacency for Mascouten lands to Illinois.
+Setting adjacency for Mascouten lands to Kikapoo lands.
+Setting adjacency for Mascouten lands to Miami lands.
+Setting adjacency for Mascouten lands to Potawatomi lands.
+Setting adjacency for Mascouten lands to Shawnee lands.
+Setting adjacencies for territory Menominie lands in continent Northwest Territory with adjacents: Chippewa lands, Fort Michilimackinac, Ottawa lands, Mesquakie lands, Sauk lands, Potawatomi lands,
+Setting adjacency for Menominie lands to Chippewa lands.
+Setting adjacency for Menominie lands to Fort Michilimackinac.
+Setting adjacency for Menominie lands to Ottawa lands.
+Setting adjacency for Menominie lands to Mesquakie lands.
+Setting adjacency for Menominie lands to Sauk lands.
+Setting adjacency for Menominie lands to Potawatomi lands.
+Setting adjacencies for territory Mesquakie lands in continent Northwest Territory with adjacents: Dacotah Sioux lands, Iowa lands, Chippewa lands, Menominie lands, Sauk lands,
+Setting adjacency for Mesquakie lands to Dacotah Sioux lands.
+Setting adjacency for Mesquakie lands to Iowa lands.
+Setting adjacency for Mesquakie lands to Chippewa lands.
+Setting adjacency for Mesquakie lands to Menominie lands.
+Setting adjacency for Mesquakie lands to Sauk lands.
+Setting adjacencies for territory Miami lands in continent Northwest Territory with adjacents: Fort Detroit, Mascouten lands, Potawatomi lands, Shawnee lands, Ohio,
+Setting adjacency for Miami lands to Fort Detroit.
+Setting adjacency for Miami lands to Mascouten lands.
+Setting adjacency for Miami lands to Potawatomi lands.
+Setting adjacency for Miami lands to Shawnee lands.
+Setting adjacency for Miami lands to Ohio.
+Setting adjacencies for territory Potawatomi lands in continent Northwest Territory with adjacents: Fort Detroit, Fort Michilimackinac, Kikapoo lands, Mascouten lands, Menominie lands, Miami lands, Sauk lands,
+Setting adjacency for Potawatomi lands to Fort Detroit.
+Setting adjacency for Potawatomi lands to Fort Michilimackinac.
+Setting adjacency for Potawatomi lands to Kikapoo lands.
+Setting adjacency for Potawatomi lands to Mascouten lands.
+Setting adjacency for Potawatomi lands to Menominie lands.
+Setting adjacency for Potawatomi lands to Miami lands.
+Setting adjacency for Potawatomi lands to Sauk lands.
+Setting adjacencies for territory Sauk lands in continent Northwest Territory with adjacents: Iowa lands, Oto lands, Kikapoo lands, Menominie lands, Mesquakie lands, Potawatomi lands,
+Setting adjacency for Sauk lands to Iowa lands.
+Setting adjacency for Sauk lands to Oto lands.
+Setting adjacency for Sauk lands to Kikapoo lands.
+Setting adjacency for Sauk lands to Menominie lands.
+Setting adjacency for Sauk lands to Mesquakie lands.
+Setting adjacency for Sauk lands to Potawatomi lands.
+Setting adjacencies for territory Shawnee lands in continent Northwest Territory with adjacents: Illinois, Mascouten lands, Miami lands, Kentucky, Ohio,
+Setting adjacency for Shawnee lands to Illinois.
+Setting adjacency for Shawnee lands to Mascouten lands.
+Setting adjacency for Shawnee lands to Miami lands.
+Setting adjacency for Shawnee lands to Kentucky.
+Setting adjacency for Shawnee lands to Ohio.
+Setting adjacencies for territory Cherokee lands in continent Ohio with adjacents: Tennesee, Appalachian mountains, Kentucky, Chickasaw lands, North Carolina,
+Setting adjacency for Cherokee lands to Tennesee.
+Setting adjacency for Cherokee lands to Appalachian mountains.
+Setting adjacency for Cherokee lands to Kentucky.
+Setting adjacency for Cherokee lands to Chickasaw lands.
+Setting adjacency for Cherokee lands to North Carolina.
+Setting adjacencies for territory Chickasaw lands in continent Ohio with adjacents: Choctaw lands, Creek lands, Mississippi, Cherokee lands, Tennesee, Appalachian mountains,
+Setting adjacency for Chickasaw lands to Choctaw lands.
+Setting adjacency for Chickasaw lands to Creek lands.
+Setting adjacency for Chickasaw lands to Mississippi.
+Setting adjacency for Chickasaw lands to Cherokee lands.
+Setting adjacency for Chickasaw lands to Tennesee.
+Setting adjacency for Chickasaw lands to Appalachian mountains.
+Setting adjacencies for territory Kentucky in continent Ohio with adjacents: Illinois, Shawnee lands, Cherokee lands, Pittsburgh, Tennesee, North Carolina, Blue Ridge mountains, Ohio, Southern Allegheny mountains,
+Setting adjacency for Kentucky to Illinois.
+Setting adjacency for Kentucky to Shawnee lands.
+Setting adjacency for Kentucky to Cherokee lands.
+Setting adjacency for Kentucky to Pittsburgh.
+Setting adjacency for Kentucky to Tennesee.
+Setting adjacency for Kentucky to North Carolina.
+Setting adjacency for Kentucky to Blue Ridge mountains.
+Setting adjacency for Kentucky to Ohio.
+Setting adjacency for Kentucky to Southern Allegheny mountains.
+Setting adjacencies for territory Ohio in continent Ohio with adjacents: Miami lands, Shawnee lands, Kentucky, Pittsburgh, Southern Allegheny mountains,
+Setting adjacency for Ohio to Miami lands.
+Setting adjacency for Ohio to Shawnee lands.
+Setting adjacency for Ohio to Kentucky.
+Setting adjacency for Ohio to Pittsburgh.
+Setting adjacency for Ohio to Southern Allegheny mountains.
+Setting adjacencies for territory Pittsburgh in continent Ohio with adjacents: Fort Niagra, Northern Allegheny mountains, Kentucky, Ohio, Blue Ridge mountains, Maryland, Southern Allegheny mountains, Pennsylvania,
+Setting adjacency for Pittsburgh to Fort Niagra.
+Setting adjacency for Pittsburgh to Northern Allegheny mountains.
+Setting adjacency for Pittsburgh to Kentucky.
+Setting adjacency for Pittsburgh to Ohio.
+Setting adjacency for Pittsburgh to Blue Ridge mountains.
+Setting adjacency for Pittsburgh to Maryland.
+Setting adjacency for Pittsburgh to Southern Allegheny mountains.
+Setting adjacency for Pittsburgh to Pennsylvania.
+Setting adjacencies for territory Southern Allegheny mountains in continent Ohio with adjacents: Kentucky, Ohio, Pittsburgh,
+Setting adjacency for Southern Allegheny mountains to Kentucky.
+Setting adjacency for Southern Allegheny mountains to Ohio.
+Setting adjacency for Southern Allegheny mountains to Pittsburgh.
+Setting adjacencies for territory Tennesee in continent Ohio with adjacents: Arkansas, Illinois, Cherokee lands, Chickasaw lands, Kentucky, Mississippi,
+Setting adjacency for Tennesee to Arkansas.
+Setting adjacency for Tennesee to Illinois.
+Setting adjacency for Tennesee to Cherokee lands.
+Setting adjacency for Tennesee to Chickasaw lands.
+Setting adjacency for Tennesee to Kentucky.
+Setting adjacency for Tennesee to Mississippi.
+Setting adjacencies for territory Angostura in continent South America with adjacents: British Guiana, Venezuela, Caracas, Orinoco jungles, Trinidad,
+Setting adjacency for Angostura to British Guiana.
+Setting adjacency for Angostura to Venezuela.
+Setting adjacency for Angostura to Caracas.
+Setting adjacency for Angostura to Orinoco jungles.
+Setting adjacency for Angostura to Trinidad.
+Setting adjacencies for territory Antioqura in continent South America with adjacents: New Granada, Mompas, Bogota, Cartagena, Panama,
+Setting adjacency for Antioqura to New Granada.
+Setting adjacency for Antioqura to Mompas.
+Setting adjacency for Antioqura to Bogota.
+Setting adjacency for Antioqura to Cartagena.
+Setting adjacency for Antioqura to Panama.
+Setting adjacencies for territory Bogota in continent South America with adjacents: Antioqura, New Granada,
+Setting adjacency for Bogota to Antioqura.
+Setting adjacency for Bogota to New Granada.
+Setting adjacencies for territory Caracas in continent South America with adjacents: Angostura, Coro, Orinoco jungles, Trinidad,
+Setting adjacency for Caracas to Angostura.
+Setting adjacency for Caracas to Coro.
+Setting adjacency for Caracas to Orinoco jungles.
+Setting adjacency for Caracas to Trinidad.
+Setting adjacencies for territory Cartagena in continent South America with adjacents: Panama, Antioqura, Maracaibo, Mompas,
+Setting adjacency for Cartagena to Panama.
+Setting adjacency for Cartagena to Antioqura.
+Setting adjacency for Cartagena to Maracaibo.
+Setting adjacency for Cartagena to Mompas.
+Setting adjacencies for territory Coro in continent South America with adjacents: Caracas, New Granada, Maracaibo, Orinoco jungles, Curacao,
+Setting adjacency for Coro to Caracas.
+Setting adjacency for Coro to New Granada.
+Setting adjacency for Coro to Maracaibo.
+Setting adjacency for Coro to Orinoco jungles.
+Setting adjacency for Coro to Curacao.
+Setting adjacencies for territory Curacao in continent South America with adjacents: Puerto Rico, Coro,
+Setting adjacency for Curacao to Puerto Rico.
+Setting adjacency for Curacao to Coro.
+Setting adjacencies for territory Maracaibo in continent South America with adjacents: Cartagena, Coro, New Granada, Mompas,
+Setting adjacency for Maracaibo to Cartagena.
+Setting adjacency for Maracaibo to Coro.
+Setting adjacency for Maracaibo to New Granada.
+Setting adjacency for Maracaibo to Mompas.
+Setting adjacencies for territory Mompas in continent South America with adjacents: Antioqura, Cartagena, Maracaibo, New Granada,
+Setting adjacency for Mompas to Antioqura.
+Setting adjacency for Mompas to Cartagena.
+Setting adjacency for Mompas to Maracaibo.
+Setting adjacency for Mompas to New Granada.
+Setting adjacencies for territory New Granada in continent South America with adjacents: Antioqura, Bogota, Coro, Maracaibo, Mompas, Venezuela, Orinoco jungles,
+Setting adjacency for New Granada to Antioqura.
+Setting adjacency for New Granada to Bogota.
+Setting adjacency for New Granada to Coro.
+Setting adjacency for New Granada to Maracaibo.
+Setting adjacency for New Granada to Mompas.
+Setting adjacency for New Granada to Venezuela.
+Setting adjacency for New Granada to Orinoco jungles.
+Setting adjacencies for territory Orinoco jungles in continent South America with adjacents: Angostura, Caracas, Coro, New Granada, Venezuela,
+Setting adjacency for Orinoco jungles to Angostura.
+Setting adjacency for Orinoco jungles to Caracas.
+Setting adjacency for Orinoco jungles to Coro.
+Setting adjacency for Orinoco jungles to New Granada.
+Setting adjacency for Orinoco jungles to Venezuela.
+Setting adjacencies for territory Trinidad in continent South America with adjacents: Grenada, Angostura, Caracas,
+Setting adjacency for Trinidad to Grenada.
+Setting adjacency for Trinidad to Angostura.
+Setting adjacency for Trinidad to Caracas.
+Setting adjacencies for territory Venezuela in continent South America with adjacents: British Guiana, Angostura, New Granada, Orinoco jungles,
+Setting adjacency for Venezuela to British Guiana.
+Setting adjacency for Venezuela to Angostura.
+Setting adjacency for Venezuela to New Granada.
+Setting adjacency for Venezuela to Orinoco jungles.
+Setting adjacencies for territory Chiapas in continent Southern Mexico with adjacents: Guatemala, Oaxaca, Vera Cruz, Tabasco, Campeche,
+Setting adjacency for Chiapas to Guatemala.
+Setting adjacency for Chiapas to Oaxaca.
+Setting adjacency for Chiapas to Vera Cruz.
+Setting adjacency for Chiapas to Tabasco.
+Setting adjacency for Chiapas to Campeche.
+Setting adjacencies for territory Durango in continent Southern Mexico with adjacents: Chihuahua, Coahuila, Tepic, Zacatecas,
+Setting adjacency for Durango to Chihuahua.
+Setting adjacency for Durango to Coahuila.
+Setting adjacency for Durango to Tepic.
+Setting adjacency for Durango to Zacatecas.
+Setting adjacencies for territory Guerrero in continent Southern Mexico with adjacents: Oaxaca, Puebla, Michoacan,
+Setting adjacency for Guerrero to Oaxaca.
+Setting adjacency for Guerrero to Puebla.
+Setting adjacency for Guerrero to Michoacan.
+Setting adjacencies for territory Hidalgo in continent Southern Mexico with adjacents: Mexico, Matamoros, Tamaulipas, Zacatecas, Vera Cruz,
+Setting adjacency for Hidalgo to Mexico.
+Setting adjacency for Hidalgo to Matamoros.
+Setting adjacency for Hidalgo to Tamaulipas.
+Setting adjacency for Hidalgo to Zacatecas.
+Setting adjacency for Hidalgo to Vera Cruz.
+Setting adjacencies for territory Jalisco in continent Southern Mexico with adjacents: Tepic, Mexico, Zacatecas, Michoacan,
+Setting adjacency for Jalisco to Tepic.
+Setting adjacency for Jalisco to Mexico.
+Setting adjacency for Jalisco to Zacatecas.
+Setting adjacency for Jalisco to Michoacan.
+Setting adjacencies for territory Matamoros in continent Southern Mexico with adjacents: Coahuila, Laredo, Hidalgo, Tamaulipas,
+Setting adjacency for Matamoros to Coahuila.
+Setting adjacency for Matamoros to Laredo.
+Setting adjacency for Matamoros to Hidalgo.
+Setting adjacency for Matamoros to Tamaulipas.
+Setting adjacencies for territory Mexico in continent Southern Mexico with adjacents: Hidalgo, Jalisco, Vera Cruz, Puebla, Michoacan,
+Setting adjacency for Mexico to Hidalgo.
+Setting adjacency for Mexico to Jalisco.
+Setting adjacency for Mexico to Vera Cruz.
+Setting adjacency for Mexico to Puebla.
+Setting adjacency for Mexico to Michoacan.
+Setting adjacencies for territory Michoacan in continent Southern Mexico with adjacents: Guerrero, Jalisco, Mexico, Puebla,
+Setting adjacency for Michoacan to Guerrero.
+Setting adjacency for Michoacan to Jalisco.
+Setting adjacency for Michoacan to Mexico.
+Setting adjacency for Michoacan to Puebla.
+Setting adjacencies for territory Oaxaca in continent Southern Mexico with adjacents: Chiapas, Guerrero, Vera Cruz, Puebla,
+Setting adjacency for Oaxaca to Chiapas.
+Setting adjacency for Oaxaca to Guerrero.
+Setting adjacency for Oaxaca to Vera Cruz.
+Setting adjacency for Oaxaca to Puebla.
+Setting adjacencies for territory Puebla in continent Southern Mexico with adjacents: Guerrero, Mexico, Michoacan, Oaxaca, Vera Cruz,
+Setting adjacency for Puebla to Guerrero.
+Setting adjacency for Puebla to Mexico.
+Setting adjacency for Puebla to Michoacan.
+Setting adjacency for Puebla to Oaxaca.
+Setting adjacency for Puebla to Vera Cruz.
+Setting adjacencies for territory Tabasco in continent Southern Mexico with adjacents: Campeche, Chiapas, Vera Cruz,
+Setting adjacency for Tabasco to Campeche.
+Setting adjacency for Tabasco to Chiapas.
+Setting adjacency for Tabasco to Vera Cruz.
+Setting adjacencies for territory Tamaulipas in continent Southern Mexico with adjacents: Hidalgo, Matamoros, Vera Cruz,
+Setting adjacency for Tamaulipas to Hidalgo.
+Setting adjacency for Tamaulipas to Matamoros.
+Setting adjacency for Tamaulipas to Vera Cruz.
+Setting adjacencies for territory Tepic in continent Southern Mexico with adjacents: Durango, Jalisco, Zacatecas,
+Setting adjacency for Tepic to Durango.
+Setting adjacency for Tepic to Jalisco.
+Setting adjacency for Tepic to Zacatecas.
+Setting adjacencies for territory Vera Cruz in continent Southern Mexico with adjacents: New Orleans, Chiapas, Hidalgo, Mexico, Oaxaca, Puebla, Tabasco, Tamaulipas,
+Setting adjacency for Vera Cruz to New Orleans.
+Setting adjacency for Vera Cruz to Chiapas.
+Setting adjacency for Vera Cruz to Hidalgo.
+Setting adjacency for Vera Cruz to Mexico.
+Setting adjacency for Vera Cruz to Oaxaca.
+Setting adjacency for Vera Cruz to Puebla.
+Setting adjacency for Vera Cruz to Tabasco.
+Setting adjacency for Vera Cruz to Tamaulipas.
+Setting adjacencies for territory Zacatecas in continent Southern Mexico with adjacents: Coahuila, Durango, Hidalgo, Jalisco, Tepic,
+Setting adjacency for Zacatecas to Coahuila.
+Setting adjacency for Zacatecas to Durango.
+Setting adjacency for Zacatecas to Hidalgo.
+Setting adjacency for Zacatecas to Jalisco.
+Setting adjacency for Zacatecas to Tepic.
+Setting adjacencies for territory Appalachian mountains in continent Southern States with adjacents: Creek lands, Cherokee lands, Chickasaw lands, North Carolina, Georgia, South Carolina,
+Setting adjacency for Appalachian mountains to Creek lands.
+Setting adjacency for Appalachian mountains to Cherokee lands.
+Setting adjacency for Appalachian mountains to Chickasaw lands.
+Setting adjacency for Appalachian mountains to North Carolina.
+Setting adjacency for Appalachian mountains to Georgia.
+Setting adjacency for Appalachian mountains to South Carolina.
+Setting adjacencies for territory Blue Ridge mountains in continent Southern States with adjacents: Kentucky, Pittsburgh, North Carolina, Virginia, Maryland,
+Setting adjacency for Blue Ridge mountains to Kentucky.
+Setting adjacency for Blue Ridge mountains to Pittsburgh.
+Setting adjacency for Blue Ridge mountains to North Carolina.
+Setting adjacency for Blue Ridge mountains to Virginia.
+Setting adjacency for Blue Ridge mountains to Maryland.
+Setting adjacencies for territory East Florida in continent Southern States with adjacents: Havana, Northern Bahamas, West Florida, Seminole lands, Georgia, Everglade swamp,
+Setting adjacency for East Florida to Havana.
+Setting adjacency for East Florida to Northern Bahamas.
+Setting adjacency for East Florida to West Florida.
+Setting adjacency for East Florida to Seminole lands.
+Setting adjacency for East Florida to Georgia.
+Setting adjacency for East Florida to Everglade swamp.
+Setting adjacencies for territory Everglade swamp in continent Southern States with adjacents: East Florida, Seminole lands,
+Setting adjacency for Everglade swamp to East Florida.
+Setting adjacency for Everglade swamp to Seminole lands.
+Setting adjacencies for territory Georgia in continent Southern States with adjacents: Appalachian mountains, East Florida, South Carolina, Creek lands, West Florida,
+Setting adjacency for Georgia to Appalachian mountains.
+Setting adjacency for Georgia to East Florida.
+Setting adjacency for Georgia to South Carolina.
+Setting adjacency for Georgia to Creek lands.
+Setting adjacency for Georgia to West Florida.
+Setting adjacencies for territory Maryland in continent Southern States with adjacents: New Jersey & Delaware, Pittsburgh, Blue Ridge mountains, Virginia, Pennsylvania,
+Setting adjacency for Maryland to New Jersey & Delaware.
+Setting adjacency for Maryland to Pittsburgh.
+Setting adjacency for Maryland to Blue Ridge mountains.
+Setting adjacency for Maryland to Virginia.
+Setting adjacency for Maryland to Pennsylvania.
+Setting adjacencies for territory North Carolina in continent Southern States with adjacents: Northern Bahamas, Kentucky, Appalachian mountains, Blue Ridge mountains, South Carolina, Virginia, Cherokee lands,
+Setting adjacency for North Carolina to Northern Bahamas.
+Setting adjacency for North Carolina to Kentucky.
+Setting adjacency for North Carolina to Appalachian mountains.
+Setting adjacency for North Carolina to Blue Ridge mountains.
+Setting adjacency for North Carolina to South Carolina.
+Setting adjacency for North Carolina to Virginia.
+Setting adjacency for North Carolina to Cherokee lands.
+Setting adjacencies for territory Pennsylvania in continent Southern States with adjacents: New Jersey & Delaware, New York, Northern Allegheny mountains, Pittsburgh, Maryland,
+Setting adjacency for Pennsylvania to New Jersey & Delaware.
+Setting adjacency for Pennsylvania to New York.
+Setting adjacency for Pennsylvania to Northern Allegheny mountains.
+Setting adjacency for Pennsylvania to Pittsburgh.
+Setting adjacency for Pennsylvania to Maryland.
+Setting adjacencies for territory Seminole lands in continent Southern States with adjacents: East Florida, Everglade swamp,
+Setting adjacency for Seminole lands to East Florida.
+Setting adjacency for Seminole lands to Everglade swamp.
+Setting adjacencies for territory South Carolina in continent Southern States with adjacents: Appalachian mountains, Georgia, North Carolina,
+Setting adjacency for South Carolina to Appalachian mountains.
+Setting adjacency for South Carolina to Georgia.
+Setting adjacency for South Carolina to North Carolina.
+Setting adjacencies for territory Virginia in continent Southern States with adjacents: Blue Ridge mountains, Maryland, North Carolina,
+Setting adjacency for Virginia to Blue Ridge mountains.
+Setting adjacency for Virginia to Maryland.
+Setting adjacency for Virginia to North Carolina.
+Setting adjacencies for territory Assiniboin lands in continent Upper Canada with adjacents: Crow lands, Mandan lands, Hudsons Bay, Cree lands,
+Setting adjacency for Assiniboin lands to Crow lands.
+Setting adjacency for Assiniboin lands to Mandan lands.
+Setting adjacency for Assiniboin lands to Hudsons Bay.
+Setting adjacency for Assiniboin lands to Cree lands.
+Setting adjacencies for territory Cree lands in continent Upper Canada with adjacents: Mandan lands, Yankton Sioux lands, Chippewa lands, Assiniboin lands, Hudsons Bay, Ojibwa lands,
+Setting adjacency for Cree lands to Mandan lands.
+Setting adjacency for Cree lands to Yankton Sioux lands.
+Setting adjacency for Cree lands to Chippewa lands.
+Setting adjacency for Cree lands to Assiniboin lands.
+Setting adjacency for Cree lands to Hudsons Bay.
+Setting adjacency for Cree lands to Ojibwa lands.
+Setting adjacencies for territory Hudsons Bay in continent Upper Canada with adjacents: Assiniboin lands, Cree lands, Ruperts Land, Ojibwa lands,
+Setting adjacency for Hudsons Bay to Assiniboin lands.
+Setting adjacency for Hudsons Bay to Cree lands.
+Setting adjacency for Hudsons Bay to Ruperts Land.
+Setting adjacency for Hudsons Bay to Ojibwa lands.
+Setting adjacencies for territory James Bay in continent Upper Canada with adjacents: Canadian wilderness, Moose Factory,
+Setting adjacency for James Bay to Canadian wilderness.
+Setting adjacency for James Bay to Moose Factory.
+Setting adjacencies for territory Moose Factory in continent Upper Canada with adjacents: Canada, Canadian wilderness, James Bay, Ruperts Land, Ontario,
+Setting adjacency for Moose Factory to Canada.
+Setting adjacency for Moose Factory to Canadian wilderness.
+Setting adjacency for Moose Factory to James Bay.
+Setting adjacency for Moose Factory to Ruperts Land.
+Setting adjacency for Moose Factory to Ontario.
+Setting adjacencies for territory Ojibwa lands in continent Upper Canada with adjacents: Cree lands, Hudsons Bay, Ottawa lands, Ruperts Land, Ontario,
+Setting adjacency for Ojibwa lands to Cree lands.
+Setting adjacency for Ojibwa lands to Hudsons Bay.
+Setting adjacency for Ojibwa lands to Ottawa lands.
+Setting adjacency for Ojibwa lands to Ruperts Land.
+Setting adjacency for Ojibwa lands to Ontario.
+Setting adjacencies for territory Ontario in continent Upper Canada with adjacents: Canada, Lower Canada, Moose Factory, Ojibwa lands, Ottawa lands, Ruperts Land, Upper Canada,
+Setting adjacency for Ontario to Canada.
+Setting adjacency for Ontario to Lower Canada.
+Setting adjacency for Ontario to Moose Factory.
+Setting adjacency for Ontario to Ojibwa lands.
+Setting adjacency for Ontario to Ottawa lands.
+Setting adjacency for Ontario to Ruperts Land.
+Setting adjacency for Ontario to Upper Canada.
+Setting adjacencies for territory Ottawa lands in continent Upper Canada with adjacents: Menominie lands, Ojibwa lands, Ontario, Upper Canada,
+Setting adjacency for Ottawa lands to Menominie lands.
+Setting adjacency for Ottawa lands to Ojibwa lands.
+Setting adjacency for Ottawa lands to Ontario.
+Setting adjacency for Ottawa lands to Upper Canada.
+Setting adjacencies for territory Ruperts Land in continent Upper Canada with adjacents: Hudsons Bay, Moose Factory, Ojibwa lands, Ontario,
+Setting adjacency for Ruperts Land to Hudsons Bay.
+Setting adjacency for Ruperts Land to Moose Factory.
+Setting adjacency for Ruperts Land to Ojibwa lands.
+Setting adjacency for Ruperts Land to Ontario.
+Setting adjacencies for territory Upper Canada in continent Upper Canada with adjacents: Lower Canada, Fort Niagra, Fort Detroit, Ontario, Ottawa lands, Fake Land 1,
+Setting adjacency for Upper Canada to Lower Canada.
+Setting adjacency for Upper Canada to Fort Niagra.
+Setting adjacency for Upper Canada to Fort Detroit.
+Setting adjacency for Upper Canada to Ontario.
+Setting adjacency for Upper Canada to Ottawa lands.
+Setting adjacency for Upper Canada to Fake Land 1.
+Setting adjacencies for territory Fake Land 1 in continent Caribbean Islands with adjacents: Ontario,
+Setting adjacency for Fake Land 1 to Ontario.
+Map Name: Americas 1792.map
+Continents:
+ - Guiana: Control Value 3
+ - Caribbean Islands: Control Value 16
+ - Northern Mexico: Control Value 6
+ - Central America: Control Value 10
+ - South America: Control Value 13
+ - Northern States: Control Value 10
+ - Great Plains: Control Value 20
+ - Louisiana: Control Value 10
+ - Lower Canada: Control Value 16
+ - Northwest Territory: Control Value 12
+ - Ohio: Control Value 7
+ - Southern Mexico: Control Value 15
+ - Southern States: Control Value 11
+ - Upper Canada: Control Value 10
+Territories:
+ - Antigua (Continent: Caribbean Islands)
+   Adjacent Territories: Guadeloupe, Puerto Rico
+ - Barbados (Continent: Caribbean Islands)
+   Adjacent Territories: St. Lucia, St. Johns, British Guiana
+ - Cuba (Continent: Caribbean Islands)
+   Adjacent Territories: Havana, Santiago de Cuba
+ - Dominica (Continent: Caribbean Islands)
+   Adjacent Territories: Guadeloupe, Martinique
+ - Fake Land 1 (Continent: Caribbean Islands)
+   Adjacent Territories: St. Lucia, Trinidad
+ - Grenada (Continent: Caribbean Islands)
+   Adjacent Territories: Antigua, Dominica
+ - Guadeloupe (Continent: Caribbean Islands)
+   Adjacent Territories: Santo Domingo, Southern Bahamas, Santiago de Cuba, Jamaica
+ - Haiti (Continent: Caribbean Islands)
+   Adjacent Territories: Cuba, New Orleans, East Florida, Yucatan
+ - Havana (Continent: Caribbean Islands)
+   Adjacent Territories: Haiti, Santiago de Cuba, Mosquito Coast, Panama
+ - Jamaica (Continent: Caribbean Islands)
+   Adjacent Territories: Dominica, St. Lucia
+ - Martinique (Continent: Caribbean Islands)
+   Adjacent Territories: North Carolina, East Florida, Southern Bahamas, Santiago de Cuba
+ - Northern Bahamas (Continent: Caribbean Islands)
+   Adjacent Territories: Santo Domingo, Curacao, Antigua
+ - Puerto Rico (Continent: Caribbean Islands)
+   Adjacent Territories: Cuba, Haiti, Jamaica, Northern Bahamas, Southern Bahamas
+ - Santiago de Cuba (Continent: Caribbean Islands)
+   Adjacent Territories: Haiti, Puerto Rico
+ - Santo Domingo (Continent: Caribbean Islands)
+   Adjacent Territories: Haiti, Northern Bahamas, Santiago de Cuba, Massachusetts
+ - Southern Bahamas (Continent: Caribbean Islands)
+   Adjacent Territories: Barbados, Grenada, Martinique
+ - St. Lucia (Continent: Caribbean Islands)
+   Adjacent Territories: Yucatan, Campeche, Guatemala
+ - British Honduras (Continent: Central America)
+   Adjacent Territories: British Honduras, Yucatan, Tabasco, Guatemala, Chiapas
+ - Campeche (Continent: Central America)
+   Adjacent Territories: Mosquito Coast, Panama, Nicaragua
+ - Costa Rica (Continent: Central America)
+   Adjacent Territories: British Honduras, Campeche, Chiapas, Salvador, Honduras
+ - Guatemala (Continent: Central America)
+   Adjacent Territories: Guatemala, Mosquito Coast, Nicaragua, Salvador
+ - Honduras (Continent: Central America)
+   Adjacent Territories: Jamaica, Costa Rica, Nicaragua, Honduras
+ - Mosquito Coast (Continent: Central America)
+   Adjacent Territories: Costa Rica, Mosquito Coast, Honduras
+ - Nicaragua (Continent: Central America)
+   Adjacent Territories: Jamaica, Costa Rica, Cartagena, Antioqura
+ - Panama (Continent: Central America)
+   Adjacent Territories: Guatemala, Honduras
+ - Salvador (Continent: Central America)
+   Adjacent Territories: Havana, British Honduras, Campeche
+ - Yucatan (Continent: Central America)
+   Adjacent Territories: Coahuila, Chihuahua, Comanche lands, San Antonio
+ - Apache lands (Continent: Great Plains)
+   Adjacent Territories: Pawnee lands, Arikira lands, Kiowa lands, Skidi Pawnee
+ - Arapaho lands (Continent: Great Plains)
+   Adjacent Territories: Arapaho lands, Cheyenne lands, Ponca lands, Skidi Pawnee
+ - Arikira lands (Continent: Great Plains)
+   Adjacent Territories: Arikira lands, Santee Sioux lands, Crow lands, Ponca lands
+ - Cheyenne lands (Continent: Great Plains)
+   Adjacent Territories: Apache lands, Caddo lands, Wichita lands, Kiowa lands, Tejas, San Antonio
+ - Comanche lands (Continent: Great Plains)
+   Adjacent Territories: Cheyenne lands, Santee Sioux lands, Mandan lands, Assiniboin lands
+ - Crow lands (Continent: Great Plains)
+   Adjacent Territories: Iowa lands, Mesquakie lands, Santee Sioux lands, Chippewa lands, Yankton Sioux lands, Omaha lands, Ponca lands
+ - Dacotah Sioux lands (Continent: Great Plains)
+   Adjacent Territories: Dacotah Sioux lands, Mesquakie lands, Sauk lands, Oto lands, Omaha lands
+ - Iowa lands (Continent: Great Plains)
+   Adjacent Territories: Arkansas, Illinois, Pawnee lands, Oto lands, Kikapoo lands, Osage lands
+ - Kansa lands (Continent: Great Plains)
+   Adjacent Territories: Arapaho lands, Comanche lands, Caddo lands, Pawnee lands, Wichita lands, Osage lands
+ - Kiowa lands (Continent: Great Plains)
+   Adjacent Territories: Crow lands, Santee Sioux lands, Assiniboin lands, Cree lands, Yankton Sioux lands
+ - Mandan lands (Continent: Great Plains)
+   Adjacent Territories: Dacotah Sioux lands, Iowa lands, Pawnee lands, Ponca lands, Skidi Pawnee, Oto lands
+ - Omaha lands (Continent: Great Plains)
+   Adjacent Territories: Kansa lands, Kiowa lands, Arkansas, Caddo lands, Pawnee lands, Quapaw lands
+ - Osage lands (Continent: Great Plains)
+   Adjacent Territories: Iowa lands, Kansa lands, Sauk lands, Pawnee lands, Omaha lands
+ - Oto lands (Continent: Great Plains)
+   Adjacent Territories: Arapaho lands, Kansa lands, Kiowa lands, Omaha lands, Osage lands, Oto lands, Skidi Pawnee
+ - Pawnee lands (Continent: Great Plains)
+   Adjacent Territories: Arikira lands, Cheyenne lands, Dacotah Sioux lands, Omaha lands, Santee Sioux lands, Skidi Pawnee
+ - Ponca lands (Continent: Great Plains)
+   Adjacent Territories: Cheyenne lands, Crow lands, Dacotah Sioux lands, Mandan lands, Ponca lands, Yankton Sioux lands
+ - Santee Sioux lands (Continent: Great Plains)
+   Adjacent Territories: Arapaho lands, Arikira lands, Omaha lands, Pawnee lands, Ponca lands
+ - Skidi Pawnee (Continent: Great Plains)
+   Adjacent Territories: Comanche lands, Kiowa lands, Caddo lands
+ - Wichita lands (Continent: Great Plains)
+   Adjacent Territories: Dacotah Sioux lands, Mandan lands, Santee Sioux lands, Chippewa lands, Cree lands
+ - Yankton Sioux lands (Continent: Great Plains)
+   Adjacent Territories: Barbados, Angostura, Venezuela, Dutch Guiana
+ - British Guiana (Continent: Guiana)
+   Adjacent Territories: British Guiana, French Guiana
+ - Dutch Guiana (Continent: Guiana)
+   Adjacent Territories: Dutch Guiana
+ - French Guiana (Continent: Guiana)
+   Adjacent Territories: Kansa lands, Osage lands, Tennesee, Illinois, Quapaw lands, Mississippi
+ - Arkansas (Continent: Louisiana)
+   Adjacent Territories: Comanche lands, Kiowa lands, Osage lands, Wichita lands, Natchez, Los Adaes, Tejas, Quapaw lands
+ - Caddo lands (Continent: Louisiana)
+   Adjacent Territories: West Florida, New Orleans, Chickasaw lands, Mississippi, Creek lands
+ - Choctaw lands (Continent: Louisiana)
+   Adjacent Territories: Choctaw lands, West Florida, Appalachian mountains, Chickasaw lands, Georgia
+ - Creek lands (Continent: Louisiana)
+   Adjacent Territories: Kansa lands, Arkansas, Tennesee, Mascouten lands, Shawnee lands, Kentucky, Kikapoo lands
+ - Illinois (Continent: Louisiana)
+   Adjacent Territories: Arkansas, Choctaw lands, Natchez, New Orleans, Quapaw lands, Chickasaw lands, Tennesee
+ - Mississippi (Continent: Louisiana)
+   Adjacent Territories: Caddo lands, Mississippi, New Orleans, Los Adaes, Quapaw lands
+ - Natchez (Continent: Louisiana)
+   Adjacent Territories: Havana, Choctaw lands, Mississippi, Natchez, West Florida, Los Adaes, Vera Cruz
+ - New Orleans (Continent: Louisiana)
+   Adjacent Territories: Osage lands, Arkansas, Caddo lands, Mississippi, Natchez
+ - Quapaw lands (Continent: Louisiana)
+   Adjacent Territories: Choctaw lands, Creek lands, New Orleans, East Florida, Georgia
+ - West Florida (Continent: Louisiana)
+   Adjacent Territories: Maine, Gaspe, New Hampshire, Montreal, Lake Champlain, Quebec
+ - Abenaki lands (Continent: Lower Canada)
+   Adjacent Territories: Canadian wilderness, Moose Factory, Lower Canada, Montreal, Ontario, Quebec, Tadoussac
+ - Canada (Continent: Lower Canada)
+   Adjacent Territories: Canada, Labrador, Moose Factory, James Bay, Montagnais lands, Tadoussac
+ - Canadian wilderness (Continent: Lower Canada)
+   Adjacent Territories: Abenaki lands, Maine, New Brunswick
+ - Gaspe (Continent: Lower Canada)
+   Adjacent Territories: Prince Edward Island, New Brunswick, Isle Royale, Nova Scotia
+ - Halifax (Continent: Lower Canada)
+   Adjacent Territories: Halifax, St. Johns
+ - Isle Royale (Continent: Lower Canada)
+   Adjacent Territories: Canadian wilderness, Montagnais lands, Newfoundland
+ - Labrador (Continent: Lower Canada)
+   Adjacent Territories: Canada, Adirondack mountains, Montreal, Upper Canada, Ontario
+ - Lower Canada (Continent: Lower Canada)
+   Adjacent Territories: Canadian wilderness, Labrador, Tadoussac
+ - Montagnais lands (Continent: Lower Canada)
+   Adjacent Territories: Abenaki lands, Canada, Lower Canada, Adirondack mountains, Lake Champlain, Quebec
+ - Montreal (Continent: Lower Canada)
+   Adjacent Territories: Gaspe, Halifax, Maine, Prince Edward Island
+ - New Brunswick (Continent: Lower Canada)
+   Adjacent Territories: Labrador, St. Johns
+ - Newfoundland (Continent: Lower Canada)
+   Adjacent Territories: Halifax, Massachusetts
+ - Nova Scotia (Continent: Lower Canada)
+   Adjacent Territories: Halifax, New Brunswick
+ - Prince Edward Island (Continent: Lower Canada)
+   Adjacent Territories: Abenaki lands, Canada, Montreal, Tadoussac
+ - Quebec (Continent: Lower Canada)
+   Adjacent Territories: Barbados, Isle Royale, Newfoundland
+ - St. Johns (Continent: Lower Canada)
+   Adjacent Territories: Canada, Canadian wilderness, Montagnais lands, Quebec
+ - Tadoussac (Continent: Lower Canada)
+   Adjacent Territories: Apache lands, Durango, Coahuila
+ - Chihuahua (Continent: Northern Mexico)
+   Adjacent Territories: Apache lands, Chihuahua, Matamoros, Durango, Zacatecas, Laredo, San Antonio
+ - Coahuila (Continent: Northern Mexico)
+   Adjacent Territories: Coahuila, Matamoros, San Antonio
+ - Laredo (Continent: Northern Mexico)
+   Adjacent Territories: Caddo lands, Natchez, New Orleans, Tejas
+ - Los Adaes (Continent: Northern Mexico)
+   Adjacent Territories: Apache lands, Comanche lands, Coahuila, Laredo, Tejas
+ - San Antonio (Continent: Northern Mexico)
+   Adjacent Territories: Comanche lands, Caddo lands, Los Adaes, San Antonio
+ - Tejas (Continent: Northern Mexico)
+   Adjacent Territories: Lower Canada, Montreal, Lake Champlain, New York
+ - Adirondack mountains (Continent: Northern States)
+   Adjacent Territories: Massachusetts, New York
+ - Connecticutt & Rhode Island (Continent: Northern States)
+   Adjacent Territories: Pittsburgh, Northern Allegheny mountains, Upper Canada, New York
+ - Fort Niagra (Continent: Northern States)
+   Adjacent Territories: Abenaki lands, Montreal, Adirondack mountains, New Hampshire, New York, Massachusetts
+ - Lake Champlain (Continent: Northern States)
+   Adjacent Territories: Abenaki lands, Gaspe, New Brunswick, New Hampshire
+ - Maine (Continent: Northern States)
+   Adjacent Territories: Southern Bahamas, Nova Scotia, Lake Champlain, New Hampshire, New York, Connecticutt & Rhode Island
+ - Massachusetts (Continent: Northern States)
+   Adjacent Territories: Abenaki lands, Lake Champlain, Maine, Massachusetts
+ - New Hampshire (Continent: Northern States)
+   Adjacent Territories: New York, Maryland, Pennsylvania
+ - New Jersey & Delaware (Continent: Northern States)
+   Adjacent Territories: Adirondack mountains, Fort Niagra, Lake Champlain, Massachusetts, New Jersey & Delaware, Northern Allegheny mountains, Pennsylvania, Connecticutt & Rhode Island
+ - New York (Continent: Northern States)
+   Adjacent Territories: Fort Niagra, New York, Pittsburgh, Pennsylvania
+ - Northern Allegheny mountains (Continent: Northern States)
+   Adjacent Territories: Dacotah Sioux lands, Yankton Sioux lands, Mesquakie lands, Cree lands, Menominie lands
+ - Chippewa lands (Continent: Northwest Territory)
+   Adjacent Territories: Miami lands, Potawatomi lands, Upper Canada, Fort Michilimackinac
+ - Fort Detroit (Continent: Northwest Territory)
+   Adjacent Territories: Fort Detroit, Potawatomi lands, Menominie lands
+ - Fort Michilimackinac (Continent: Northwest Territory)
+   Adjacent Territories: Kansa lands, Illinois, Sauk lands, Potawatomi lands, Mascouten lands
+ - Kikapoo lands (Continent: Northwest Territory)
+   Adjacent Territories: Illinois, Kikapoo lands, Miami lands, Potawatomi lands, Shawnee lands
+ - Mascouten lands (Continent: Northwest Territory)
+   Adjacent Territories: Chippewa lands, Fort Michilimackinac, Ottawa lands, Mesquakie lands, Sauk lands, Potawatomi lands
+ - Menominie lands (Continent: Northwest Territory)
+   Adjacent Territories: Dacotah Sioux lands, Iowa lands, Chippewa lands, Menominie lands, Sauk lands
+ - Mesquakie lands (Continent: Northwest Territory)
+   Adjacent Territories: Fort Detroit, Mascouten lands, Potawatomi lands, Shawnee lands, Ohio
+ - Miami lands (Continent: Northwest Territory)
+   Adjacent Territories: Fort Detroit, Fort Michilimackinac, Kikapoo lands, Mascouten lands, Menominie lands, Miami lands, Sauk lands
+ - Potawatomi lands (Continent: Northwest Territory)
+   Adjacent Territories: Iowa lands, Oto lands, Kikapoo lands, Menominie lands, Mesquakie lands, Potawatomi lands
+ - Sauk lands (Continent: Northwest Territory)
+   Adjacent Territories: Illinois, Mascouten lands, Miami lands, Kentucky, Ohio
+ - Shawnee lands (Continent: Northwest Territory)
+   Adjacent Territories: Tennesee, Appalachian mountains, Kentucky, Chickasaw lands, North Carolina
+ - Cherokee lands (Continent: Ohio)
+   Adjacent Territories: Choctaw lands, Creek lands, Mississippi, Cherokee lands, Tennesee, Appalachian mountains
+ - Chickasaw lands (Continent: Ohio)
+   Adjacent Territories: Illinois, Shawnee lands, Cherokee lands, Pittsburgh, Tennesee, North Carolina, Blue Ridge mountains, Ohio, Southern Allegheny mountains
+ - Kentucky (Continent: Ohio)
+   Adjacent Territories: Miami lands, Shawnee lands, Kentucky, Pittsburgh, Southern Allegheny mountains
+ - Ohio (Continent: Ohio)
+   Adjacent Territories: Fort Niagra, Northern Allegheny mountains, Kentucky, Ohio, Blue Ridge mountains, Maryland, Southern Allegheny mountains, Pennsylvania
+ - Pittsburgh (Continent: Ohio)
+   Adjacent Territories: Kentucky, Ohio, Pittsburgh
+ - Southern Allegheny mountains (Continent: Ohio)
+   Adjacent Territories: Arkansas, Illinois, Cherokee lands, Chickasaw lands, Kentucky, Mississippi
+ - Tennesee (Continent: Ohio)
+   Adjacent Territories: British Guiana, Venezuela, Caracas, Orinoco jungles, Trinidad
+ - Angostura (Continent: South America)
+   Adjacent Territories: New Granada, Mompas, Bogota, Cartagena, Panama
+ - Antioqura (Continent: South America)
+   Adjacent Territories: Antioqura, New Granada
+ - Bogota (Continent: South America)
+   Adjacent Territories: Angostura, Coro, Orinoco jungles, Trinidad
+ - Caracas (Continent: South America)
+   Adjacent Territories: Panama, Antioqura, Maracaibo, Mompas
+ - Cartagena (Continent: South America)
+   Adjacent Territories: Caracas, New Granada, Maracaibo, Orinoco jungles, Curacao
+ - Coro (Continent: South America)
+   Adjacent Territories: Puerto Rico, Coro
+ - Curacao (Continent: South America)
+   Adjacent Territories: Cartagena, Coro, New Granada, Mompas
+ - Maracaibo (Continent: South America)
+   Adjacent Territories: Antioqura, Cartagena, Maracaibo, New Granada
+ - Mompas (Continent: South America)
+   Adjacent Territories: Antioqura, Bogota, Coro, Maracaibo, Mompas, Venezuela, Orinoco jungles
+ - New Granada (Continent: South America)
+   Adjacent Territories: Angostura, Caracas, Coro, New Granada, Venezuela
+ - Orinoco jungles (Continent: South America)
+   Adjacent Territories: Grenada, Angostura, Caracas
+ - Trinidad (Continent: South America)
+   Adjacent Territories: British Guiana, Angostura, New Granada, Orinoco jungles
+ - Venezuela (Continent: South America)
+   Adjacent Territories: Guatemala, Oaxaca, Vera Cruz, Tabasco, Campeche
+ - Chiapas (Continent: Southern Mexico)
+   Adjacent Territories: Chihuahua, Coahuila, Tepic, Zacatecas
+ - Durango (Continent: Southern Mexico)
+   Adjacent Territories: Oaxaca, Puebla, Michoacan
+ - Guerrero (Continent: Southern Mexico)
+   Adjacent Territories: Mexico, Matamoros, Tamaulipas, Zacatecas, Vera Cruz
+ - Hidalgo (Continent: Southern Mexico)
+   Adjacent Territories: Tepic, Mexico, Zacatecas, Michoacan
+ - Jalisco (Continent: Southern Mexico)
+   Adjacent Territories: Coahuila, Laredo, Hidalgo, Tamaulipas
+ - Matamoros (Continent: Southern Mexico)
+   Adjacent Territories: Hidalgo, Jalisco, Vera Cruz, Puebla, Michoacan
+ - Mexico (Continent: Southern Mexico)
+   Adjacent Territories: Guerrero, Jalisco, Mexico, Puebla
+ - Michoacan (Continent: Southern Mexico)
+   Adjacent Territories: Chiapas, Guerrero, Vera Cruz, Puebla
+ - Oaxaca (Continent: Southern Mexico)
+   Adjacent Territories: Guerrero, Mexico, Michoacan, Oaxaca, Vera Cruz
+ - Puebla (Continent: Southern Mexico)
+   Adjacent Territories: Campeche, Chiapas, Vera Cruz
+ - Tabasco (Continent: Southern Mexico)
+   Adjacent Territories: Hidalgo, Matamoros, Vera Cruz
+ - Tamaulipas (Continent: Southern Mexico)
+   Adjacent Territories: Durango, Jalisco, Zacatecas
+ - Tepic (Continent: Southern Mexico)
+   Adjacent Territories: New Orleans, Chiapas, Hidalgo, Mexico, Oaxaca, Puebla, Tabasco, Tamaulipas
+ - Vera Cruz (Continent: Southern Mexico)
+   Adjacent Territories: Coahuila, Durango, Hidalgo, Jalisco, Tepic
+ - Zacatecas (Continent: Southern Mexico)
+   Adjacent Territories: Creek lands, Cherokee lands, Chickasaw lands, North Carolina, Georgia, South Carolina
+ - Appalachian mountains (Continent: Southern States)
+   Adjacent Territories: Kentucky, Pittsburgh, North Carolina, Virginia, Maryland
+ - Blue Ridge mountains (Continent: Southern States)
+   Adjacent Territories: Havana, Northern Bahamas, West Florida, Seminole lands, Georgia, Everglade swamp
+ - East Florida (Continent: Southern States)
+   Adjacent Territories: East Florida, Seminole lands
+ - Everglade swamp (Continent: Southern States)
+   Adjacent Territories: Appalachian mountains, East Florida, South Carolina, Creek lands, West Florida
+ - Georgia (Continent: Southern States)
+   Adjacent Territories: New Jersey & Delaware, Pittsburgh, Blue Ridge mountains, Virginia, Pennsylvania
+ - Maryland (Continent: Southern States)
+   Adjacent Territories: Northern Bahamas, Kentucky, Appalachian mountains, Blue Ridge mountains, South Carolina, Virginia, Cherokee lands
+ - North Carolina (Continent: Southern States)
+   Adjacent Territories: New Jersey & Delaware, New York, Northern Allegheny mountains, Pittsburgh, Maryland
+ - Pennsylvania (Continent: Southern States)
+   Adjacent Territories: East Florida, Everglade swamp
+ - Seminole lands (Continent: Southern States)
+   Adjacent Territories: Appalachian mountains, Georgia, North Carolina
+ - South Carolina (Continent: Southern States)
+   Adjacent Territories: Blue Ridge mountains, Maryland, North Carolina
+ - Virginia (Continent: Southern States)
+   Adjacent Territories: Crow lands, Mandan lands, Hudsons Bay, Cree lands
+ - Assiniboin lands (Continent: Upper Canada)
+   Adjacent Territories: Mandan lands, Yankton Sioux lands, Chippewa lands, Assiniboin lands, Hudsons Bay, Ojibwa lands
+ - Cree lands (Continent: Upper Canada)
+   Adjacent Territories: Assiniboin lands, Cree lands, Ruperts Land, Ojibwa lands
+ - Hudsons Bay (Continent: Upper Canada)
+   Adjacent Territories: Canadian wilderness, Moose Factory
+ - James Bay (Continent: Upper Canada)
+   Adjacent Territories: Canada, Canadian wilderness, James Bay, Ruperts Land, Ontario
+ - Moose Factory (Continent: Upper Canada)
+   Adjacent Territories: Cree lands, Hudsons Bay, Ottawa lands, Ruperts Land, Ontario
+ - Ojibwa lands (Continent: Upper Canada)
+   Adjacent Territories: Canada, Lower Canada, Moose Factory, Ojibwa lands, Ottawa lands, Ruperts Land, Upper Canada
+ - Ontario (Continent: Upper Canada)
+   Adjacent Territories: Menominie lands, Ojibwa lands, Ontario, Upper Canada
+ - Ottawa lands (Continent: Upper Canada)
+   Adjacent Territories: Hudsons Bay, Moose Factory, Ojibwa lands, Ontario
+ - Ruperts Land (Continent: Upper Canada)
+   Adjacent Territories: Lower Canada, Fort Niagra, Fort Detroit, Ontario, Ottawa lands, Fake Land 1
+ - Upper Canada (Continent: Upper Canada)
+   Adjacent Territories: Ontario
