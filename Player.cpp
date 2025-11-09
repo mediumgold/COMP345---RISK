@@ -13,7 +13,8 @@ Player::Player(const string& n)
         : name(new string(n)),
           ownedTerritories(new vector<Map::territoryNode*>()),
           hand(new Hand()),
-          ordersList(new OrdersList()) {
+          ordersList(new OrdersList()),
+          reinforcementPool(0) {
     cout << "[Player] Created player '" << *name << "'\n";
 }
 
@@ -22,7 +23,8 @@ Player::Player(const Player& other)
         : name(new string(*other.name)),
           ownedTerritories(new vector<Map::territoryNode*>()),
           hand(new Hand(*other.hand)),
-          ordersList(new OrdersList(*other.ordersList)) {
+          ordersList(new OrdersList(*other.ordersList)),
+          reinforcementPool(other.reinforcementPool) {
 
     //copy territories (shallow)
     for (auto* t : *other.ownedTerritories) {
@@ -44,6 +46,7 @@ Player& Player::operator=(const Player& other) {
         ownedTerritories = new vector<Map::territoryNode*>(*other.ownedTerritories);
         hand = new Hand(*other.hand);
         ordersList = new OrdersList(*other.ordersList);
+        reinforcementPool = other.reinforcementPool;
     }
     return *this;
 }
@@ -94,12 +97,28 @@ string Player::getName() const { return *name; }
 const vector<Map::territoryNode*>* Player::getOwnedTerritories() const { return ownedTerritories; }
 OrdersList* Player::getOrdersList() const { return ordersList; }
 Hand* Player::getHand() const { return hand; }
+int Player::getReinforcementPool() const { return reinforcementPool; }
+
+void Player::setReinforcementPool(int armies) {
+    reinforcementPool = armies < 0 ? 0 : armies;
+}
+
+void Player::addReinforcements(int armies) {
+    if (armies > 0) {
+        reinforcementPool += armies;
+    }
+}
+
+void Player::clearTerritories() {
+    ownedTerritories->clear();
+}
 
 //stream insertion operator
 ostream& operator<<(ostream& os, const Player& p) {
     os << "Player:" << *p.name
        << ", Number of owned territories: " << p.ownedTerritories->size()
        << ", Number of cards in hand: " << p.hand->size()
-       << ", Number of orders: " << p.ordersList->size();
+       << ", Number of orders: " << p.ordersList->size()
+       << ", Reinforcement pool: " << p.reinforcementPool;
     return os;
 }
