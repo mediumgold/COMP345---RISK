@@ -213,6 +213,14 @@ bool Map::territoriesConnected(const territoryNode& start, const territoryNode& 
     return false;
 }
 
+vector<Map::territoryNode>& Map::getTerritoryNodes() {
+    return territoryNodes;
+}
+
+const vector<Map::territoryNode>& Map::getTerritoryNodes() const {
+    return territoryNodes;
+}
+
 string Map::toString() {
     string result = "Map Name: " + name + "\nContinents:\n";
     for (auto const& [key, val] : continents) {
