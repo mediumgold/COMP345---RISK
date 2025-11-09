@@ -24,6 +24,7 @@ private:
     vector<Map::territoryNode*>* ownedTerritories;
     Hand* hand;
     OrdersList* ordersList;
+    int reinforcementPool;
 
 public:
     Player(const string& n = "Player");
@@ -42,6 +43,10 @@ public:
     const vector<Map::territoryNode*>* getOwnedTerritories() const;
     OrdersList* getOrdersList() const;
     Hand* getHand() const;
+    int getReinforcementPool() const;
+    void setReinforcementPool(int armies);
+    void addReinforcements(int armies);
+    void clearTerritories();
 
     friend ostream& operator<<(ostream& os, const Player& p);
 };
