@@ -32,6 +32,7 @@ class Command
         friend ostream& operator<<(ostream& os, const Command& cmd);
         string getParameter() const { return parameter; }
         State getEffect() const { return effect; }
+        CommandTypes getType() const { return type; }
     private:
         CommandTypes type;
         string parameter;
