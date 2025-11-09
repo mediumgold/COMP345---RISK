@@ -36,9 +36,11 @@ class Map {
 
         string toString();
 
-        // ✅ Stream insertion operator (replaces toString)
+        //  Stream insertion operator (replaces toString)
         friend ostream& operator<<(ostream& os, const Map& map);
         string getName() const { return name; }
+        vector<territoryNode>& getTerritoryNodes();
+        const vector<territoryNode>& getTerritoryNodes() const;
     private:
         string name;
         // Unordered map (effectively a dictionary) of continents and their control values.
