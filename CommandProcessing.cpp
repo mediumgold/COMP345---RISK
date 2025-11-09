@@ -2,9 +2,26 @@
 // Command processing classes for the game engine.
 
 #include "CommandProcessing.h"
+#include <algorithm>
+#include <cctype>
 #include <string>
 #include <vector>
 using namespace std;
+
+namespace {
+
+string trim(const string& value)
+{
+    size_t first = value.find_first_not_of(" \t\r\n");
+    if (first == string::npos)
+    {
+        return "";
+    }
+    size_t last = value.find_last_not_of(" \t\r\n");
+    return value.substr(first, last - first + 1);
+}
+
+}
 
 // Default Command constructor.
 Command::Command()
@@ -230,22 +247,19 @@ string* CommandProcessor::readCommand()
     string input;
     getline(cin, input);
 
-    // Convert to lowercase.
-    for (auto& c : input) {
-        c = tolower(c);
-    }
-
-    // Split along space to separate command and parameters.
     static string inputs[2];
-    size_t spacePos = input.find(' ');
+
+    size_t spacePos = input.find_first_of(" \t");
     if (spacePos != string::npos) {
         inputs[0] = input.substr(0, spacePos);
-        inputs[1] = input.substr(spacePos + 1);
+        inputs[1] = trim(input.substr(spacePos + 1));
     }
     else {
         inputs[0] = input;
         inputs[1] = "";
     }
+
+    std::transform(inputs[0].begin(), inputs[0].end(), inputs[0].begin(), [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
 
     return inputs;
 }
@@ -319,21 +333,17 @@ string* FileCommandProcessorAdapter::readCommand()
     string line;
     getline(inputFile, line);
 
-    // Convert to lowercase.
-    for (auto& c : line) {
-        c = tolower(c);
-    }
-
-    // Split along space to separate command and parameters.
-    size_t spacePos = line.find(' ');
+    size_t spacePos = line.find_first_of(" \t");
     if (spacePos != string::npos) {
         inputs[0] = line.substr(0, spacePos);
-        inputs[1] = line.substr(spacePos + 1);
+        inputs[1] = trim(line.substr(spacePos + 1));
     }
     else {
         inputs[0] = line;
         inputs[1] = "";
     }
+
+    std::transform(inputs[0].begin(), inputs[0].end(), inputs[0].begin(), [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
 
     cout << "Read command from file: " << inputs[0] << " " << inputs[1] << endl;
 
