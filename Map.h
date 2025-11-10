@@ -10,6 +10,8 @@
 #include <vector>
 using namespace std;
 
+class Player;
+
 class Map {
     // Constructor: Read a .map file and initialize the Map object.
     public:
@@ -25,6 +27,13 @@ class Map {
             string name;
             string continent;
             vector<int> adjacentIndices;
+
+            //part 4 -army management and ownership
+            int armyCount;
+            Player* owner;
+
+            //part 4 -constructor to initialize new fields
+            territoryNode() : armyCount(0), owner(nullptr) {}
         };
 
         Map();
@@ -41,6 +50,16 @@ class Map {
         string getName() const { return name; }
         vector<territoryNode>& getTerritoryNodes();
         const vector<territoryNode>& getTerritoryNodes() const;
+
+        //part 4-get continent bonus value
+        int getContinentBonus(const string& continentName) const {
+            auto it = continents.find(continentName);
+            if (it != continents.end()) {
+                return it->second;
+            }
+            return 0;
+        }
+
     private:
         string name;
         // Unordered map (effectively a dictionary) of continents and their control values.

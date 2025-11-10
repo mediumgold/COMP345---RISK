@@ -36,6 +36,10 @@ Map::Map(string name, unordered_map<string, int> continents, const vector<territ
         }
 
         node.continent = terr.continent;
+        // added for part 4 - Initialize new fields
+        node.armyCount = 0;
+        node.owner = nullptr;
+
         territoryNodes.push_back(node);
     }
 
@@ -181,7 +185,7 @@ bool Map::territoriesConnected(const territoryNode& start, const territoryNode& 
     }
 
     //cout << "Starting BFS from " << start.name << " to find " << target.name << (requiredContinent.empty() ? "" : (" within continent " + requiredContinent)) << ".\n";
-    
+
     while (!queue.empty()) {
         int currentIndex = queue.front();
         queue.erase(queue.begin());
