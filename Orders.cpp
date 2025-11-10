@@ -1,19 +1,31 @@
-
-
 #include "Orders.h"
+#include "Player.h" 
+#include "Cards.h"  
 #include <sstream>
+#include <random>    
+#include <algorithm> 
 
 
 //default constructor for Order
 Order::Order() {
     executed = new bool(false);
     effect = new std::string("");
+    issuingPlayer = nullptr;
+}
+
+//part 4- constructor with player
+Order::Order(Player* player) {
+    executed = new bool(false);
+    effect = new std::string("");
+    issuingPlayer = player;
 }
 
 //copy constructor for Order
 Order::Order(const Order& other) {
     executed = new bool(*(other.executed));
     effect = new std::string(*(other.effect));
+    //part 4
+    issuingPlayer = other.issuingPlayer;
 }
 
 //destructor for Order
@@ -30,6 +42,8 @@ Order& Order::operator=(const Order& other) {
 
         executed = new bool(*(other.executed));
         effect = new std::string(*(other.effect));
+       //part 4
+        issuingPlayer = other.issuingPlayer;
     }
     return *this;
 }
@@ -42,6 +56,11 @@ bool Order::isExecuted() const {
 //get the effect of the order
 std::string Order::getEffect() const {
     return *effect;
+}
+
+//part 4- getter for issuing player
+Player* Order::getIssuingPlayer() const {
+    return issuingPlayer;
 }
 
 //stream insertion operator for Order
@@ -62,18 +81,35 @@ std::ostream& operator<<(std::ostream& os, const Order& order) {
 Deploy::Deploy() : Order() {
     armyUnits = new int(0);
     targetTerritory = new std::string("");
+    //part 4
+    targetTerritoryNode = nullptr;
 }
 
 //parameterized constructor for Deploy
 Deploy::Deploy(int armies, const std::string& territory) : Order() {
     armyUnits = new int(armies);
     targetTerritory = new std::string(territory);
+    //part 4
+    targetTerritoryNode = nullptr;
+}
+
+// part 4 -constructor with player and territory node
+Deploy::Deploy(Player* player, int armies, Map::territoryNode* target) : Order(player) {
+    armyUnits = new int(armies);
+    targetTerritoryNode = target;
+    if (target) {
+        targetTerritory = new std::string(target->name);
+    } else {
+        targetTerritory = new std::string("");
+    }
 }
 
 //copy constructor for Deploy
 Deploy::Deploy(const Deploy& other) : Order(other) {
     armyUnits = new int(*(other.armyUnits));
     targetTerritory = new std::string(*(other.targetTerritory));
+    //part 4
+    targetTerritoryNode = other.targetTerritoryNode;
 }
 
 //destructor for Deploy
@@ -92,6 +128,8 @@ Deploy& Deploy::operator=(const Deploy& other) {
 
         armyUnits = new int(*(other.armyUnits));
         targetTerritory = new std::string(*(other.targetTerritory));
+        //part 4
+        targetTerritoryNode = other.targetTerritoryNode;
     }
     return *this;
 }
@@ -100,14 +138,37 @@ Deploy& Deploy::operator=(const Deploy& other) {
 bool Deploy::validate() {
     if (*armyUnits <= 0) return false;        // must deploy positive armies
     if (targetTerritory->empty()) return false; // must specify target territory
+
+    //part 4 - Advanced validation
+    if (!targetTerritoryNode) return false;  //must have valid territory node
+    if (!issuingPlayer) return false;         //must have issuing player
+
+    //check if target territory belongs to the player issuing the order
+    if (targetTerritoryNode->owner != issuingPlayer) {
+        return false;
+    }
+
+    //check if player has enough armies in reinforcement pool
+    if (issuingPlayer->getReinforcementPool() < *armyUnits) {
+        return false;
+    }
+
     return true;
 }
 
 //execute Deploy order
 void Deploy::execute() {
     if (validate()) {
+        // part 4- actual deployment logic
+        //remove armies from reinforcement pool
+        issuingPlayer->removeFromReinforcementPool(*armyUnits);
+
+        //add armies to target territory
+        targetTerritoryNode->armyCount += *armyUnits;
+
         std::ostringstream oss;
-        oss << "Deployed " << *armyUnits << " army units to " << *targetTerritory;
+        oss << "Deployed " << *armyUnits << " army units to " << *targetTerritory
+            << ".Territory now has " << targetTerritoryNode->armyCount << " armies.";
         *effect = oss.str();
         *executed = true;
     } else {
@@ -138,6 +199,11 @@ std::string Deploy::getTargetTerritory() const {
     return *targetTerritory;
 }
 
+//part 4
+Map::territoryNode* Deploy::getTargetTerritoryNode() const {
+    return targetTerritoryNode;
+}
+
 
 
 
@@ -148,6 +214,11 @@ Advance::Advance() : Order() {
     armyUnits = new int(0);
     sourceTerritory = new std::string("");
     targetTerritory = new std::string("");
+    //part 4
+    sourceTerritoryNode = nullptr;
+    targetTerritoryNode = nullptr;
+    gameDeck = nullptr;
+    gameMap = nullptr;
 }
 
 //parameterized constructor for Advance
@@ -155,6 +226,33 @@ Advance::Advance(int armies, const std::string& source, const std::string& targe
     armyUnits = new int(armies);
     sourceTerritory = new std::string(source);
     targetTerritory = new std::string(target);
+    // part 4
+    sourceTerritoryNode = nullptr;
+    targetTerritoryNode = nullptr;
+    gameDeck = nullptr;
+    gameMap = nullptr;  // FIXED: Initialize gameMap
+}
+
+// part 4 - Constructor with player and territory nodes (FIXED: added Map*)
+Advance::Advance(Player* player, int armies, Map::territoryNode* source, Map::territoryNode* target, Deck* deck, Map* map)
+    : Order(player) {
+    armyUnits = new int(armies);
+    sourceTerritoryNode = source;
+    targetTerritoryNode = target;
+    gameDeck = deck;
+    gameMap = map;  // FIXED: Store map reference
+
+    if (source) {
+        sourceTerritory = new std::string(source->name);
+    } else {
+        sourceTerritory = new std::string("");
+    }
+
+    if (target) {
+        targetTerritory = new std::string(target->name);
+    } else {
+        targetTerritory = new std::string("");
+    }
 }
 
 //copy constructor for Advance
@@ -162,6 +260,11 @@ Advance::Advance(const Advance& other) : Order(other) {
     armyUnits = new int(*(other.armyUnits));
     sourceTerritory = new std::string(*(other.sourceTerritory));
     targetTerritory = new std::string(*(other.targetTerritory));
+    // part 4
+    sourceTerritoryNode = other.sourceTerritoryNode;
+    targetTerritoryNode = other.targetTerritoryNode;
+    gameDeck = other.gameDeck;
+    gameMap = other.gameMap;
 }
 
 //destructor for Advance
@@ -183,15 +286,69 @@ Advance& Advance::operator=(const Advance& other) {
         armyUnits = new int(*(other.armyUnits));
         sourceTerritory = new std::string(*(other.sourceTerritory));
         targetTerritory = new std::string(*(other.targetTerritory));
+        // part 4
+        sourceTerritoryNode = other.sourceTerritoryNode;
+        targetTerritoryNode = other.targetTerritoryNode;
+        gameDeck = other.gameDeck;
+        gameMap = other.gameMap;
     }
     return *this;
 }
 
-//validate Advance order
+//validate Advance order (Proper adjacency checking)
 bool Advance::validate() {
     if (*armyUnits <= 0) return false;
     if (sourceTerritory->empty() || targetTerritory->empty()) return false;
     if (*sourceTerritory == *targetTerritory) return false;
+
+    // part 4 - Advanced validation
+    if (!sourceTerritoryNode || !targetTerritoryNode) return false;
+    if (!issuingPlayer) return false;
+
+    //source territory must belong to the player issuing the order
+    if (sourceTerritoryNode->owner != issuingPlayer) {
+        return false;
+    }
+
+    //source must have enough armies
+    if (sourceTerritoryNode->armyCount < *armyUnits) {
+        return false;
+    }
+
+    //proper adjacency checking
+    if (!gameMap) return false;
+
+    bool isAdjacent = false;
+    auto& allTerritories = gameMap->getTerritoryNodes();
+
+    //find the index of target territory in the map
+    int targetIndex = -1;
+    for (size_t i = 0; i < allTerritories.size(); ++i) {
+        if (&allTerritories[i] == targetTerritoryNode) {
+            targetIndex = i;
+            break;
+        }
+    }
+
+    if (targetIndex == -1) return false;
+
+    //check if targetIndex is in source's adjacency list
+    for (int adjIdx : sourceTerritoryNode->adjacentIndices) {
+        if (adjIdx == targetIndex) {
+            isAdjacent = true;
+            break;
+        }
+    }
+
+    if (!isAdjacent) return false;
+
+    // part 4 - Check negotiation status
+    if (targetTerritoryNode->owner && targetTerritoryNode->owner != issuingPlayer) {
+        if (issuingPlayer->isNegotiatedWith(targetTerritoryNode->owner)) {
+            return false;  // Cannot attack a negotiated player
+        }
+    }
+
     return true;
 }
 
@@ -199,8 +356,88 @@ bool Advance::validate() {
 void Advance::execute() {
     if (validate()) {
         std::ostringstream oss;
-        oss << "Advanced " << *armyUnits << " army units from " << *sourceTerritory
-            << " to " << *targetTerritory;
+
+        // part 4 - Actual advance logic
+        //remove armies from source
+        sourceTerritoryNode->armyCount -= *armyUnits;
+
+        //check if target belongs to same player (move) or enemy (attack)
+        if (targetTerritoryNode->owner == issuingPlayer) {
+            targetTerritoryNode->armyCount += *armyUnits;
+            oss << "Advanced " << *armyUnits << " army units from " << *sourceTerritory
+                << " to " << *targetTerritory << " (friendly move).";
+        } else {
+            //attack: simulate battle
+            int attackingArmies = *armyUnits;
+            int defendingArmies = targetTerritoryNode->armyCount;
+
+            std::random_device rd;
+            std::mt19937 gen(rd());
+            std::uniform_int_distribution<> dis(1, 100);
+
+            oss << "Battle at " << *targetTerritory << ": "
+                << attackingArmies << " attackers vs " << defendingArmies << " defenders. ";
+
+            //battle simulation: each attacking army has 60% chance to kill a defender
+            //each defending army has 70% chance to kill an attacker
+            int attackerKills = 0;
+            int defenderKills = 0;
+
+            for (int i = 0; i < attackingArmies && defendingArmies > 0; ++i) {
+                if (dis(gen) <= 60) {  // 60% chance
+                    attackerKills++;
+                }
+            }
+
+            for (int i = 0; i < defendingArmies && attackingArmies > 0; ++i) {
+                if (dis(gen) <= 70) {  // 70% chance
+                    defenderKills++;
+                }
+            }
+
+            //apply casualties
+            defendingArmies -= attackerKills;
+            if (defendingArmies < 0) defendingArmies = 0;
+
+            attackingArmies -= defenderKills;
+            if (attackingArmies < 0) attackingArmies = 0;
+
+            oss << "Attackers killed " << attackerKills << " defenders. "
+                << "Defenders killed " << defenderKills << " attackers. ";
+
+            if (defendingArmies == 0 && attackingArmies > 0) {
+                Player* previousOwner = targetTerritoryNode->owner;
+
+                targetTerritoryNode->owner = issuingPlayer;
+                targetTerritoryNode->armyCount = attackingArmies;
+
+                //add territory to issuing player's list
+                issuingPlayer->addTerritory(targetTerritoryNode);
+
+                //remove from previous owner if they had one
+                if (previousOwner) {
+                    auto* territories = const_cast<std::vector<Map::territoryNode*>*>(
+                        previousOwner->getOwnedTerritories()
+                    );
+                    territories->erase(
+                        std::remove(territories->begin(), territories->end(), targetTerritoryNode),
+                        territories->end()
+                    );
+                }
+
+                oss << "Territory conquered! " << issuingPlayer->getName()
+                    << " now owns " << *targetTerritory << " with " << attackingArmies << " armies.";
+
+                // part 4 - Mark that player conquered a territory this turn
+                issuingPlayer->setConqueredThisTurn(true);
+
+            } else {
+                // defence holds: Defenders survive
+                targetTerritoryNode->armyCount = defendingArmies;
+                oss << "Defense holds! " << defendingArmies << " defenders remain.";
+            }
+        }
+
         *effect = oss.str();
         *executed = true;
     } else {
@@ -227,6 +464,10 @@ int Advance::getArmyUnits() const { return *armyUnits; }
 std::string Advance::getSourceTerritory() const { return *sourceTerritory; }
 std::string Advance::getTargetTerritory() const { return *targetTerritory; }
 
+// part 4
+Map::territoryNode* Advance::getSourceTerritoryNode() const { return sourceTerritoryNode; }
+Map::territoryNode* Advance::getTargetTerritoryNode() const { return targetTerritoryNode; }
+
 
 
 
@@ -235,16 +476,36 @@ std::string Advance::getTargetTerritory() const { return *targetTerritory; }
 //default constructor for Bomb
 Bomb::Bomb() : Order() {
     targetTerritory = new std::string("");
+    // part 4
+    targetTerritoryNode = nullptr;
+    gameMap = nullptr;
 }
 
 //parameterized constructor for Bomb
 Bomb::Bomb(const std::string& territory) : Order() {
     targetTerritory = new std::string(territory);
+    // part 4
+    targetTerritoryNode = nullptr;
+    gameMap = nullptr;
+}
+
+// part 4 -constructor with player and territory node
+Bomb::Bomb(Player* player, Map::territoryNode* target, Map* map) : Order(player) {
+    targetTerritoryNode = target;
+    gameMap = map;
+    if (target) {
+        targetTerritory = new std::string(target->name);
+    } else {
+        targetTerritory = new std::string("");
+    }
 }
 
 //copy constructor for Bomb
 Bomb::Bomb(const Bomb& other) : Order(other) {
     targetTerritory = new std::string(*(other.targetTerritory));
+    // part 4
+    targetTerritoryNode = other.targetTerritoryNode;
+    gameMap = other.gameMap;
 }
 
 //destructor for Bomb
@@ -258,21 +519,72 @@ Bomb& Bomb::operator=(const Bomb& other) {
         Order::operator=(other);
         delete targetTerritory;
         targetTerritory = new std::string(*(other.targetTerritory));
+        // part 4
+        targetTerritoryNode = other.targetTerritoryNode;
+        gameMap = other.gameMap;
     }
     return *this;
 }
 
-//validate Bomb order
+//validate Bomb order (Proper adjacency checking)
 bool Bomb::validate() {
     if (targetTerritory->empty()) return false;
+
+    // part 4 - Advanced validation
+    if (!targetTerritoryNode) return false;
+    if (!issuingPlayer) return false;
+    if (!gameMap) return false;
+
+    //target must belong to an enemy player
+    if (targetTerritoryNode->owner == issuingPlayer) {
+        return false;
+    }
+
+    auto& allTerritories = gameMap->getTerritoryNodes();
+
+    //find the index of target territory
+    int targetIndex = -1;
+    for (size_t i = 0; i < allTerritories.size(); ++i) {
+        if (&allTerritories[i] == targetTerritoryNode) {
+            targetIndex = i;
+            break;
+        }
+    }
+
+    if (targetIndex == -1) return false;
+
+    //check if target is adjacent to any of player's territories
+    bool isAdjacentToPlayerTerritory = false;
+    auto* playerTerritories = issuingPlayer->getOwnedTerritories();
+
+    for (auto* playerTerritory : *playerTerritories) {
+        for (int adjIdx : playerTerritory->adjacentIndices) {
+            if (adjIdx == targetIndex) {
+                isAdjacentToPlayerTerritory = true;
+                break;
+            }
+        }
+        if (isAdjacentToPlayerTerritory) break;
+    }
+
+    if (!isAdjacentToPlayerTerritory) {
+        return false;
+    }
+
     return true;
 }
 
 //execute Bomb order
 void Bomb::execute() {
     if (validate()) {
+        // part 4 - Actual bombing logic
+        int originalArmies = targetTerritoryNode->armyCount;
+        targetTerritoryNode->armyCount = targetTerritoryNode->armyCount / 2;
+
         std::ostringstream oss;
-        oss << "Bombed territory " << *targetTerritory << ", destroying half of its army units";
+        oss << "Bombed territory " << *targetTerritory
+            << ", destroying half of its army units (from " << originalArmies
+            << " to " << targetTerritoryNode->armyCount << ").";
         *effect = oss.str();
         *executed = true;
     } else {
@@ -296,6 +608,9 @@ std::string Bomb::getDescription() const {
 //getters for Bomb
 std::string Bomb::getTargetTerritory() const { return *targetTerritory; }
 
+// part 4
+Map::territoryNode* Bomb::getTargetTerritoryNode() const { return targetTerritoryNode; }
+
 
 
 
@@ -303,16 +618,36 @@ std::string Bomb::getTargetTerritory() const { return *targetTerritory; }
 
 Blockade::Blockade() : Order() {
     targetTerritory = new std::string("");
+    // part 4
+    targetTerritoryNode = nullptr;
+    neutralPlayer = nullptr;
 }
 
 //parameterized constructor for Blockade
 Blockade::Blockade(const std::string& territory) : Order() {
     targetTerritory = new std::string(territory);
+    // part 4
+    targetTerritoryNode = nullptr;
+    neutralPlayer = nullptr;
+}
+
+// part 4 - Constructor with player, territory node, and neutral player
+Blockade::Blockade(Player* player, Map::territoryNode* target, Player* neutral) : Order(player) {
+    targetTerritoryNode = target;
+    neutralPlayer = neutral;
+    if (target) {
+        targetTerritory = new std::string(target->name);
+    } else {
+        targetTerritory = new std::string("");
+    }
 }
 
 //copy constructor for Blockade
 Blockade::Blockade(const Blockade& other) : Order(other) {
     targetTerritory = new std::string(*(other.targetTerritory));
+    // part 4
+    targetTerritoryNode = other.targetTerritoryNode;
+    neutralPlayer = other.neutralPlayer;
 }
 
 //destructor for Blockade
@@ -326,6 +661,9 @@ Blockade& Blockade::operator=(const Blockade& other) {
         Order::operator=(other);
         delete targetTerritory;
         targetTerritory = new std::string(*(other.targetTerritory));
+        // part 4
+        targetTerritoryNode = other.targetTerritoryNode;
+        neutralPlayer = other.neutralPlayer;
     }
     return *this;
 }
@@ -333,15 +671,45 @@ Blockade& Blockade::operator=(const Blockade& other) {
 //validate Blockade order
 bool Blockade::validate() {
     if (targetTerritory->empty()) return false;
+
+    // part 4 - advanced validation
+    if (!targetTerritoryNode) return false;
+    if (!issuingPlayer) return false;
+    if (!neutralPlayer) return false;
+
+    // target territory must belong to the player issuing the order
+    if (targetTerritoryNode->owner != issuingPlayer) {
+        return false;
+    }
+
     return true;
 }
 
 //execute Blockade order
 void Blockade::execute() {
     if (validate()) {
+        // part 4 - Actual blockade logic
+        int originalArmies = targetTerritoryNode->armyCount;
+        targetTerritoryNode->armyCount *= 2;  // Double the armies
+
+        //remove from issuing player's territories
+        auto* territories = const_cast<std::vector<Map::territoryNode*>*>(
+            issuingPlayer->getOwnedTerritories()
+        );
+        territories->erase(
+            std::remove(territories->begin(), territories->end(), targetTerritoryNode),
+            territories->end()
+        );
+
+        // transfer to neutral player
+        targetTerritoryNode->owner = neutralPlayer;
+        neutralPlayer->addTerritory(targetTerritoryNode);
+
         std::ostringstream oss;
         oss << "Blockaded territory " << *targetTerritory
-            << ", tripled army units and made it neutral";
+            << ", doubled army units (from " << originalArmies
+            << " to " << targetTerritoryNode->armyCount
+            << ") and transferred to Neutral player.";
         *effect = oss.str();
         *executed = true;
     } else {
@@ -365,6 +733,9 @@ std::string Blockade::getDescription() const {
 //getters for Blockade
 std::string Blockade::getTargetTerritory() const { return *targetTerritory; }
 
+// part 4
+Map::territoryNode* Blockade::getTargetTerritoryNode() const { return targetTerritoryNode; }
+
 
 
 
@@ -375,6 +746,9 @@ Airlift::Airlift() : Order() {
     armyUnits = new int(0);
     sourceTerritory = new std::string("");
     targetTerritory = new std::string("");
+    // part 4
+    sourceTerritoryNode = nullptr;
+    targetTerritoryNode = nullptr;
 }
 
 //parameterized constructor for Airlift
@@ -382,6 +756,29 @@ Airlift::Airlift(int armies, const std::string& source, const std::string& targe
     armyUnits = new int(armies);
     sourceTerritory = new std::string(source);
     targetTerritory = new std::string(target);
+    // part 4
+    sourceTerritoryNode = nullptr;
+    targetTerritoryNode = nullptr;
+}
+
+// part 4 - Constructor with player and territory nodes
+Airlift::Airlift(Player* player, int armies, Map::territoryNode* source, Map::territoryNode* target)
+    : Order(player) {
+    armyUnits = new int(armies);
+    sourceTerritoryNode = source;
+    targetTerritoryNode = target;
+
+    if (source) {
+        sourceTerritory = new std::string(source->name);
+    } else {
+        sourceTerritory = new std::string("");
+    }
+
+    if (target) {
+        targetTerritory = new std::string(target->name);
+    } else {
+        targetTerritory = new std::string("");
+    }
 }
 
 //copy constructor for Airlift
@@ -389,6 +786,9 @@ Airlift::Airlift(const Airlift& other) : Order(other) {
     armyUnits = new int(*(other.armyUnits));
     sourceTerritory = new std::string(*(other.sourceTerritory));
     targetTerritory = new std::string(*(other.targetTerritory));
+    // part 4
+    sourceTerritoryNode = other.sourceTerritoryNode;
+    targetTerritoryNode = other.targetTerritoryNode;
 }
 
 //destructor for Airlift
@@ -410,6 +810,9 @@ Airlift& Airlift::operator=(const Airlift& other) {
         armyUnits = new int(*(other.armyUnits));
         sourceTerritory = new std::string(*(other.sourceTerritory));
         targetTerritory = new std::string(*(other.targetTerritory));
+        // part 4
+        sourceTerritoryNode = other.sourceTerritoryNode;
+        targetTerritoryNode = other.targetTerritoryNode;
     }
     return *this;
 }
@@ -419,15 +822,39 @@ bool Airlift::validate() {
     if (*armyUnits <= 0) return false;
     if (sourceTerritory->empty() || targetTerritory->empty()) return false;
     if (*sourceTerritory == *targetTerritory) return false;
+
+    // part 4 - Advanced validation
+    if (!sourceTerritoryNode || !targetTerritoryNode) return false;
+    if (!issuingPlayer) return false;
+
+    //both source and target must belong to the player issuing the order
+    if (sourceTerritoryNode->owner != issuingPlayer) {
+        return false;
+    }
+
+    if (targetTerritoryNode->owner != issuingPlayer) {
+        return false;
+    }
+
+    //source must have enough armies
+    if (sourceTerritoryNode->armyCount < *armyUnits) {
+        return false;
+    }
+
     return true;
 }
 
 //execute Airlift order
 void Airlift::execute() {
     if (validate()) {
+        // part 4 - Actual airlift logic
+        sourceTerritoryNode->armyCount -= *armyUnits;
+        targetTerritoryNode->armyCount += *armyUnits;
+
         std::ostringstream oss;
         oss << "Airlifted " << *armyUnits << " army units from " << *sourceTerritory
-            << " to " << *targetTerritory;
+            << " to " << *targetTerritory << ". Target now has "
+            << targetTerritoryNode->armyCount << " armies.";
         *effect = oss.str();
         *executed = true;
     } else {
@@ -454,6 +881,10 @@ int Airlift::getArmyUnits() const { return *armyUnits; }
 std::string Airlift::getSourceTerritory() const { return *sourceTerritory; }
 std::string Airlift::getTargetTerritory() const { return *targetTerritory; }
 
+// part 4
+Map::territoryNode* Airlift::getSourceTerritoryNode() const { return sourceTerritoryNode; }
+Map::territoryNode* Airlift::getTargetTerritoryNode() const { return targetTerritoryNode; }
+
 
 
 
@@ -462,16 +893,32 @@ std::string Airlift::getTargetTerritory() const { return *targetTerritory; }
 //default constructor for Negotiate
 Negotiate::Negotiate() : Order() {
     targetPlayer = new std::string("");
+    // part 4
+    targetPlayerPtr = nullptr;
 }
 
 //parameterized constructor for Negotiate
 Negotiate::Negotiate(const std::string& player) : Order() {
     targetPlayer = new std::string(player);
+    // part 4
+    targetPlayerPtr = nullptr;
+}
+
+// part 4 - Constructor with both players
+Negotiate::Negotiate(Player* issuingPlayer, Player* target) : Order(issuingPlayer) {
+    targetPlayerPtr = target;
+    if (target) {
+        targetPlayer = new std::string(target->getName());
+    } else {
+        targetPlayer = new std::string("");
+    }
 }
 
 //copy constructor for Negotiate
 Negotiate::Negotiate(const Negotiate& other) : Order(other) {
     targetPlayer = new std::string(*(other.targetPlayer));
+    // part 4
+    targetPlayerPtr = other.targetPlayerPtr;
 }
 
 //destructor for Negotiate
@@ -485,6 +932,8 @@ Negotiate& Negotiate::operator=(const Negotiate& other) {
         Order::operator=(other);
         delete targetPlayer;
         targetPlayer = new std::string(*(other.targetPlayer));
+        // part 4
+        targetPlayerPtr = other.targetPlayerPtr;
     }
     return *this;
 }
@@ -493,14 +942,30 @@ Negotiate& Negotiate::operator=(const Negotiate& other) {
 //validate Negotiate order
 bool Negotiate::validate() {
     if (targetPlayer->empty()) return false;
+
+    // part 4 - Advanced validation
+    if (!targetPlayerPtr) return false;
+    if (!issuingPlayer) return false;
+
+    //cannot negotiate with yourself
+    if (targetPlayerPtr == issuingPlayer) {
+        return false;
+    }
+
     return true;
 }
 
 //execute Negotiate order
 void Negotiate::execute() {
     if (validate()) {
+        // part 4 - actual negotiation logic
+        //add each player to the other's negotiated list
+        issuingPlayer->addNegotiatedPlayer(targetPlayerPtr);
+        targetPlayerPtr->addNegotiatedPlayer(issuingPlayer);
+
         std::ostringstream oss;
-        oss << "Negotiated peace with player " << *targetPlayer << " until end of turn";
+        oss << "Negotiated peace with player " << *targetPlayer
+            << " until end of turn. No attacks possible between these players.";
         *effect = oss.str();
         *executed = true;
     } else {
@@ -523,6 +988,9 @@ std::string Negotiate::getDescription() const {
 
 //getters for Negotiate
 std::string Negotiate::getTargetPlayer() const { return *targetPlayer; }
+
+// part 4
+Player* Negotiate::getTargetPlayerPtr() const { return targetPlayerPtr; }
 
 
 
