@@ -9,6 +9,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <set>
 
 // Forward declarations to avoid circular includes
 class Order;
@@ -25,6 +26,12 @@ private:
     Hand* hand;
     OrdersList* ordersList;
     int reinforcementPool;
+
+    // part 4- Track players we cannot attack this turn (negotiate)
+    set<Player*>* cannotAttackPlayers;
+
+    // part 4- Track if player conquered a territory this turn (for card reward)
+    bool* conqueredTerritoryThisTurn;
 
 public:
     Player(const string& n = "Player");
@@ -47,6 +54,24 @@ public:
     void setReinforcementPool(int armies);
     void addReinforcements(int armies);
     void clearTerritories();
+
+    // part 4- Additional method for removing reinforcements
+    bool removeFromReinforcementPool(int amount) {
+        if (reinforcementPool >= amount) {
+            reinforcementPool -= amount;
+            return true;
+        }
+        return false;
+    }
+
+    // part 4- Negotiation management
+    void addNegotiatedPlayer(Player* p);
+    bool isNegotiatedWith(Player* p) const;
+    void clearNegotiations();
+
+    // part 4- Territory conquest tracking
+    void setConqueredThisTurn(bool conquered);
+    bool hasConqueredThisTurn() const;
 
     friend ostream& operator<<(ostream& os, const Player& p);
 };

@@ -14,7 +14,10 @@ Player::Player(const string& n)
           ownedTerritories(new vector<Map::territoryNode*>()),
           hand(new Hand()),
           ordersList(new OrdersList()),
-          reinforcementPool(0) {
+          reinforcementPool(0),
+          //part 4 - Initialize new fields
+          cannotAttackPlayers(new set<Player*>()),
+          conqueredTerritoryThisTurn(new bool(false)) {
     cout << "[Player] Created player '" << *name << "'\n";
 }
 
@@ -24,7 +27,10 @@ Player::Player(const Player& other)
           ownedTerritories(new vector<Map::territoryNode*>()),
           hand(new Hand(*other.hand)),
           ordersList(new OrdersList(*other.ordersList)),
-          reinforcementPool(other.reinforcementPool) {
+          reinforcementPool(other.reinforcementPool),
+          //part 4- Copy new fields
+          cannotAttackPlayers(new set<Player*>(*other.cannotAttackPlayers)),
+          conqueredTerritoryThisTurn(new bool(*other.conqueredTerritoryThisTurn)) {
 
     //copy territories (shallow)
     for (auto* t : *other.ownedTerritories) {
@@ -42,11 +48,17 @@ Player& Player::operator=(const Player& other) {
         delete ownedTerritories;
         delete hand;
         delete ordersList;
+        //part4 - Delete new fields
+        delete cannotAttackPlayers;
+        delete conqueredTerritoryThisTurn;
 
         ownedTerritories = new vector<Map::territoryNode*>(*other.ownedTerritories);
         hand = new Hand(*other.hand);
         ordersList = new OrdersList(*other.ordersList);
         reinforcementPool = other.reinforcementPool;
+        //part 4-copy new fields
+        cannotAttackPlayers = new set<Player*>(*other.cannotAttackPlayers);
+        conqueredTerritoryThisTurn = new bool(*other.conqueredTerritoryThisTurn);
     }
     return *this;
 }
@@ -58,9 +70,12 @@ Player::~Player() {
     delete ownedTerritories;
     delete hand;
     delete ordersList;
+    //part 4 - Delete new fields
+    delete cannotAttackPlayers;
+    delete conqueredTerritoryThisTurn;
 }
 
-//issueOrder() method adds the given order to the player’s OrdersList
+//issueOrder() method adds the given order to the player's OrdersList
 void Player::issueOrder(Order* order) {
     if (!order) return;
     ordersList->addOrder(order);
@@ -97,7 +112,10 @@ string Player::getName() const { return *name; }
 const vector<Map::territoryNode*>* Player::getOwnedTerritories() const { return ownedTerritories; }
 OrdersList* Player::getOrdersList() const { return ordersList; }
 Hand* Player::getHand() const { return hand; }
-int Player::getReinforcementPool() const { return reinforcementPool; }
+
+int Player::getReinforcementPool() const {
+    return reinforcementPool;
+}
 
 void Player::setReinforcementPool(int armies) {
     reinforcementPool = armies < 0 ? 0 : armies;
@@ -113,12 +131,36 @@ void Player::clearTerritories() {
     ownedTerritories->clear();
 }
 
+//part 4- Negotiation management
+void Player::addNegotiatedPlayer(Player* p) {
+    if (p) {
+        cannotAttackPlayers->insert(p);
+    }
+}
+
+bool Player::isNegotiatedWith(Player* p) const {
+    return cannotAttackPlayers->find(p) != cannotAttackPlayers->end();
+}
+
+void Player::clearNegotiations() {
+    cannotAttackPlayers->clear();
+}
+
+//part 4-territory conquest tracking
+void Player::setConqueredThisTurn(bool conquered) {
+    *conqueredTerritoryThisTurn = conquered;
+}
+
+bool Player::hasConqueredThisTurn() const {
+    return *conqueredTerritoryThisTurn;
+}
+
 //stream insertion operator
 ostream& operator<<(ostream& os, const Player& p) {
     os << "Player:" << *p.name
        << ", Number of owned territories: " << p.ownedTerritories->size()
        << ", Number of cards in hand: " << p.hand->size()
        << ", Number of orders: " << p.ordersList->size()
-       << ", Reinforcement pool: " << p.reinforcementPool;
+       << ", Reinforcement pool: " << p.reinforcementPool;  // THEIR FORMAT
     return os;
 }
