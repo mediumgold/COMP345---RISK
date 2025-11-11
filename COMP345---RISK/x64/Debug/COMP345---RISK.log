@@ -1,13 +1,4 @@
 ﻿  LoggingObserverDriver.cpp
-C:\Users\natha\Documents\C++\COMP345---RISK\LoggingObserverDriver.cpp(44,31): error C2661: 'Command::Command': no overloaded function takes 2 arguments
-  C:\Users\natha\Documents\C++\COMP345---RISK\LoggingObserverDriver.cpp(44,31):
-  while trying to match the argument list '(const char [8], const char [10])'
-  
-C:\Users\natha\Documents\C++\COMP345---RISK\LoggingObserverDriver.cpp(45,31): error C2661: 'Command::Command': no overloaded function takes 2 arguments
-  C:\Users\natha\Documents\C++\COMP345---RISK\LoggingObserverDriver.cpp(45,31):
-  while trying to match the argument list '(const char [12], const char [1])'
-  
-C:\Users\natha\Documents\C++\COMP345---RISK\LoggingObserverDriver.cpp(46,31): error C2661: 'Command::Command': no overloaded function takes 2 arguments
-  C:\Users\natha\Documents\C++\COMP345---RISK\LoggingObserverDriver.cpp(46,31):
-  while trying to match the argument list '(const char [10], const char [6])'
-  
+  COMP345---RISK.vcxproj -> C:\Users\natha\Documents\C++\COMP345---RISK\x64\Debug\COMP345---RISK.exe
+  'pwsh.exe' is not recognized as an internal or external command,
+  operable program or batch file.
