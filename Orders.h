@@ -4,14 +4,15 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Map.h" 
+#include "Map.h"
+#include "LoggingObserver.h" //added by Nathan
 using namespace std;
 
 //part 4- Forward declarations
 class Player;
 class Deck;
 
-class Order {
+class Order : public ILoggable, public Subject {       //Nathan: Order object now loggable and is subject
 
     protected:
         bool* executed;
@@ -38,6 +39,8 @@ class Order {
         
         //part 4- Getter for issuing player
         Player* getIssuingPlayer() const;
+
+        std::string stringToLog() const override; //Nathan: override stringToLog() method for Order object
 
         friend ostream& operator<<(ostream& os, const Order& order);
 };
@@ -205,7 +208,7 @@ class Negotiate : public Order {
         Player* getTargetPlayerPtr() const;
 };
 
-class OrdersList {
+class OrdersList : public ILoggable, public Subject {  //Nathan: Orders list object now loggable and is subject
 
     private:
         vector<Order*>* orders;
@@ -225,6 +228,8 @@ class OrdersList {
         bool empty() const;
         void executeAll();
         friend ostream& operator<<(ostream& os, const OrdersList& orders);
+        
+        std::string stringToLog() const override; //Nathan: override stringToLog() method for OrdersList object
 };
 
 void testOrdersLists();

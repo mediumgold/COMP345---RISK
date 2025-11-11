@@ -13,6 +13,7 @@
 #include "Player.h"
 #include "Map.h"
 #include "Cards.h"
+#include "LoggingObserver.h" //added by Nathan for A2
 
 class CommandProcessor;
 
@@ -28,7 +29,7 @@ enum class State {
     Finished
 };
 
-class GameEngine {
+class GameEngine : public ILoggable, public Subject {
     public:
 
         GameEngine();   //default constructor
@@ -47,6 +48,8 @@ class GameEngine {
         const Map* getLoadedMap() const { return loadedMap.get(); }
         bool isMapLoaded() const { return mapLoaded; }
         bool isMapValidated() const { return mapValidated; }
+
+        std::string stringToLog() const override; //Nathan: override stringToLog method for GameEngine object
 
     private:
         static constexpr int INITIAL_REINFORCEMENT_POOL = 50;

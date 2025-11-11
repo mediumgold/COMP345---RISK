@@ -12,12 +12,19 @@
 #include "GameEngine.h"
 #include "CommandProcessing.h"
 #include "CommandProcessingDriver.h"
+#include "LoggingObserverDriver.h"
 
 using namespace std;
 
 int main(int argc, char* argv[]) {
     cout << "==============================" << endl;
-    testCommandProcessor(argc, argv);
+    testLoggingObserver();
+    
+    //testCommandProcessor(argc, argv);
+    
+    
+    
+    
     //cout << "==============================" << endl;
     //cout << " COMP345 - Assignment 1 Demo " << endl;
     //cout << "==============================" << endl << endl;

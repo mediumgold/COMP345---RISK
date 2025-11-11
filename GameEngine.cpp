@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "Map.h"
 #include "Cards.h"
+#include "LoggingObserver.h" //Added by Nathan for A2
 #include <algorithm>
 #include <cctype>
 #include <filesystem>
@@ -230,8 +231,14 @@ bool GameEngine::apply(const std::string& cmd) {
     }
 
     //apply transition 
-    current = itCmd->second;  
+    current = itCmd->second;
+    notify(*this);     // Nathan: log game state
     return true;
+}
+
+//Nathan: stringToLog override method for GameEngine
+std::string GameEngine::stringToLog() const {
+    return std::string("GameEngine::state -> ") + GameEngine::name(current);
 }
 
 void GameEngine::startupPhase(CommandProcessor& commandProcessor, const std::string& mapDirectory)
@@ -480,6 +487,7 @@ void GameEngine::startupPhase(CommandProcessor& commandProcessor, const std::str
         }
     }
 }
+
 
 void testGameStates() {
 

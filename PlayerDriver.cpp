@@ -8,6 +8,7 @@
 #include <iostream>
 using namespace std;
 
+/*
 void testPlayers() {
     cout << "=== Part 2: Player Demo ===\n";
 
@@ -50,7 +51,7 @@ void testPlayers() {
     for (auto* t : attackList) cout << t->name << " ";
 
     cout << "\n\n=== End of Part 2 Demo ===\n";
-}
+} */
 
 /**
 int main() {

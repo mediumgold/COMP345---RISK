@@ -2,6 +2,7 @@
 // Command processing classes for the game engine.
 
 #include "CommandProcessing.h"
+#include "LoggingObserver.h" //added by Nathan
 #include <algorithm>
 #include <cctype>
 #include <string>
@@ -268,6 +269,9 @@ string* CommandProcessor::readCommand()
 void CommandProcessor::saveCommand(Command* command)
 {
     commands.push_back(command);
+    //Nathan:
+    notify(*this);                          //Logs that a command was saved
+    if (command) command->notify(*command); // Logs the command effect
 }
 
 // Validate if a command is allowed in the current state.
@@ -296,6 +300,7 @@ bool CommandProcessor::validateCommand(CommandTypes commandType)
     }
     return validInState;
 }
+
 
 FileCommandProcessorAdapter::FileCommandProcessorAdapter(const string& filepath)
 {
@@ -348,4 +353,23 @@ string* FileCommandProcessorAdapter::readCommand()
     cout << "Read command from file: " << inputs[0] << " " << inputs[1] << endl;
 
     return inputs;
+}
+
+//Nathan: override of stringToLog method for CommandProcessor object
+std::string CommandProcessor::stringToLog() const {
+    if (!commands.empty() && commands.back())
+    {
+        const Command* c = commands.back();
+        return std::string("CommandProcessor::saveCommand -> ") +
+            "type=" + std::to_string(static_cast<int>(c->getType())) +
+            " param=\"" + c->getParameter() + "\" effect=" + GameEngine::name(c->getEffect());
+    }
+    return "CommandProcessor::saveCommand -> (no command)";
+}
+
+//Nathan: override of stringToLog method for Command object
+std::string Command::stringToLog() const {
+    // Minimal, readable line for the log
+    return std::string("Command: type=") + std::to_string(static_cast<int>(type)) +
+        " param=\"" + parameter + "\" effect=" + GameEngine::name(effect);
 }

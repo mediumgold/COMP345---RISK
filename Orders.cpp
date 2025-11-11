@@ -1,6 +1,7 @@
 #include "Orders.h"
 #include "Player.h" 
-#include "Cards.h"  
+#include "Cards.h"
+#include "LoggingObserver.h" //added by Nathan
 #include <sstream>
 #include <random>    
 #include <algorithm> 
@@ -175,6 +176,8 @@ void Deploy::execute() {
         *effect = "Deploy order is invalid and was not executed";
         *executed = true;
     }
+    //Nathan:
+    notify(*this);                         // Log deploy order
 }
 
 //clone Deploy order for deep copying
@@ -444,6 +447,8 @@ void Advance::execute() {
         *effect = "Advance order is invalid and was not executed";
         *executed = true;
     }
+    //Nathan:
+    notify(*this);                         // Log Advance order
 }
 
 //clone Advance order
@@ -591,6 +596,8 @@ void Bomb::execute() {
         *effect = "Bomb order is invalid and was not executed";
         *executed = true;
     }
+    //Nathan:
+    notify(*this);                         // Log Bomb order
 }
 
 //clone Bomb order
@@ -716,6 +723,8 @@ void Blockade::execute() {
         *effect = "Blockade order is invalid and was not executed";
         *executed = true;
     }
+    //Nathan:
+    notify(*this);                         // Log Blockade order
 }
 
 //clone Blockade order
@@ -861,6 +870,8 @@ void Airlift::execute() {
         *effect = "Airlift order is invalid and was not executed";
         *executed = true;
     }
+    //Nathan:
+    notify(*this);                         // Log Airlift order
 }
 
 //clone Airlift order
@@ -972,6 +983,8 @@ void Negotiate::execute() {
         *effect = "Negotiate order is invalid and was not executed";
         *executed = true;
     }
+    //Nathan:
+    notify(*this);                         // Log Negotiate order
 }
 
 //clone Negotiate order
@@ -1040,7 +1053,11 @@ OrdersList& OrdersList::operator=(const OrdersList& other) {
 void OrdersList::addOrder(Order* order) {
     if (order != nullptr) {
         orders->push_back(order);
+        //Nathan:
+        notify(*this);                         // Log order
+        if (order) order->notify(*order);      // Log order content
     }
+
 }
 
 //remove order at specified index
@@ -1106,4 +1123,15 @@ std::ostream& operator<<(std::ostream& os, const OrdersList& ordersList) {
         os << "  " << i + 1 << ". " << *(ordersList.getOrder(i)) << "\n";
     }
     return os;
+}
+
+//Nathan: stringToLog definition for order objects
+std::string Order::stringToLog() const {
+    std::string status = isExecuted() ? "executed" : "pending";
+    return "Order: " + getDescription() + " | effect=\"" + getEffect() + "\" | " + status;
+}
+
+//Nathan stringToLog definition for OrdersList objects
+std::string OrdersList::stringToLog() const {
+    return std::string("OrdersList::addOrder -> size=") + std::to_string(size());
 }
