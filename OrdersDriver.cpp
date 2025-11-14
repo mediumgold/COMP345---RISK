@@ -77,12 +77,12 @@ void testOrdersLists() {
     std::cout << "========== End of Orders List Test ==========\n";
 }
 
-// ADDED FOR ASSIGNMENT 2 PART 4 - New comprehensive driver function
+// ADDED FOR ASSIGNMENT 2 PART 4
 void testOrderExecution() {
-    std::cout << "\n========== ASSIGNMENT 2 PART 4: Testing Order Execution ==========\n\n";
+    std::cout << "\nASSIGNMENT 2 PART 4: Testing Order Execution\n\n";
 
     // Create a simple map for testing
-    std::cout << "=== Setting up test map and players ===\n";
+    std::cout << "Setting up test map and players\n";
 
     // Create map with 4 territories
     Map::territory t1, t2, t3, t4;
@@ -154,8 +154,8 @@ void testOrderExecution() {
     std::cout << "  Territory4 (Bob): " << territories_ref[3].armyCount << " armies\n\n";
 
 
-    // ========== TEST 1: Deploy Order Validation ==========
-    std::cout << "=== TEST 1: Deploy Order Validation and Execution ===\n";
+    //TEST 1: Deploy Order Validation
+    std::cout << "Test 1: Deploy Order Validation and Execution\n";
 
     Deploy* validDeploy = new Deploy(player1, 5, &territories_ref[0]);
     std::cout << "Creating valid deploy order: 5 armies to Territory1 (owned by Alice)\n";
@@ -172,8 +172,8 @@ void testOrderExecution() {
     std::cout << "Effect: " << invalidDeploy->getEffect() << "\n\n";
 
 
-    // ========== TEST 2: Advance Order - Friendly Move ==========
-    std::cout << "=== TEST 2: Advance Order - Friendly Move ===\n";
+    //TEST 2: Advance Order - Friendly Move ==========
+    std::cout << "Test 2: Advance Order - Friendly Move \n";
 
     // FIXED: Added gameMap parameter
     Advance* friendlyAdvance = new Advance(player1, 3, &territories_ref[0], &territories_ref[1], gameDeck, gameMap);
@@ -187,8 +187,8 @@ void testOrderExecution() {
               << ", Territory2=" << territories_ref[1].armyCount << "\n\n";
 
 
-    // ========== TEST 3: Advance Order - Attack and Conquest ==========
-    std::cout << "=== TEST 3: Advance Order - Attack and Territory Conquest ===\n";
+    //TEST 3: Advance Order - Attack and Conquest
+    std::cout << "TEST 3: Advance Order - Attack and Territory Conquest\n";
 
     // Set up for a likely conquest: Alice has many armies, Bob has few
     territories_ref[1].armyCount = 15;  // Alice's Territory2
@@ -211,8 +211,8 @@ void testOrderExecution() {
     std::cout << "Alice conquered this turn: " << (player1->hasConqueredThisTurn() ? "YES" : "NO") << "\n\n";
 
 
-    // ========== TEST 4: Card Reward After Conquest ==========
-    std::cout << "=== TEST 4: Card Reward System ===\n";
+    //TEST 4: Card Reward After Conquest
+    std::cout << "TEST 4: Card Reward System\n";
 
     std::cout << "Since Alice conquered a territory, she should receive a card.\n";
     if (player1->hasConqueredThisTurn()) {
@@ -228,8 +228,8 @@ void testOrderExecution() {
     std::cout << "Note: Player can only receive ONE card per turn, regardless of conquests\n\n";
 
 
-    // ========== TEST 5: Negotiate Order ==========
-    std::cout << "=== TEST 5: Negotiate Order Prevents Attacks ===\n";
+    //TEST 5: Negotiate Order
+    std::cout << "Test 5: Negotiate Order Prevents Attacks \n";
 
     // Reset territory for this test
     territories_ref[3].owner = player2;
@@ -252,8 +252,8 @@ void testOrderExecution() {
     std::cout << "Effect: " << blockedAdvance->getEffect() << "\n\n";
 
 
-    // ========== TEST 6: Blockade Order ==========
-    std::cout << "=== TEST 6: Blockade Order Transfers to Neutral ===\n";
+    //TEST 6: Blockade Order
+    std::cout << "Test 6: Blockade Order Transfers to Neutral\n";
 
     // Reset ownership for this test
     territories_ref[0].owner = player1;
@@ -271,8 +271,8 @@ void testOrderExecution() {
               << " with " << territories_ref[0].armyCount << " armies\n\n";
 
 
-    // ========== TEST 7: Bomb Order ==========
-    std::cout << "=== TEST 7: Bomb Order Removes Half Armies ===\n";
+    //TEST 7: Bomb Order
+    std::cout << "Test 7: Bomb Order Removes Half Armies\n";
 
     // Reset for bomb test
     territories_ref[3].owner = player2;
@@ -288,8 +288,8 @@ void testOrderExecution() {
     std::cout << "After bomb: Territory4 has " << territories_ref[3].armyCount << " armies\n\n";
 
 
-    // ========== TEST 8: Airlift Order ==========
-    std::cout << "=== TEST 8: Airlift Order (Non-Adjacent Transfer) ===\n";
+    //TEST 8: Airlift Order
+    std::cout << "Test 8: Airlift Order (Non-Adjacent Transfer)\n";
 
     // Set up territories for airlift - make sure Alice owns both
     territories_ref[1].owner = player1;
@@ -310,8 +310,8 @@ void testOrderExecution() {
               << " armies, Territory3=" << territories_ref[2].armyCount << " armies\n\n";
 
 
-    // ========== TEST 9: All Orders Can Be Issued and Executed ==========
-    std::cout << "=== TEST 9: Demonstrating All Order Types Execution ===\n";
+    //TEST 9: All Orders Can Be Issued and Executed
+    std::cout << "Test 9: Demonstrating All Order Types Execution\n";
 
     OrdersList* comprehensiveList = new OrdersList();
 
@@ -336,7 +336,6 @@ void testOrderExecution() {
     comprehensiveList->addOrder(deploy1);
     std::cout << "  1. Deploy order added\n";
 
-    // FIXED: Added gameMap parameter
     Advance* advance1 = new Advance(player1, 4, &territories_ref[0], &territories_ref[1], gameDeck, gameMap);
     comprehensiveList->addOrder(advance1);
     std::cout << "  2. Advance order added\n";
@@ -370,15 +369,15 @@ void testOrderExecution() {
 
     // ========== Summary ==========
     std::cout << "\n=== SUMMARY OF TESTS ===\n";
-    std::cout << "✓ TEST 1: Deploy order validation and execution\n";
-    std::cout << "✓ TEST 2: Advance order for friendly territory movement\n";
-    std::cout << "✓ TEST 3: Advance order attack with territory conquest\n";
-    std::cout << "✓ TEST 4: Card reward system (one card per turn on conquest)\n";
-    std::cout << "✓ TEST 5: Negotiate order prevents attacks between players\n";
-    std::cout << "✓ TEST 6: Blockade order transfers ownership to Neutral player\n";
-    std::cout << "✓ TEST 7: Bomb order removes half of armies\n";
-    std::cout << "✓ TEST 8: Airlift order moves armies between non-adjacent territories\n";
-    std::cout << "✓ TEST 9: All order types can be issued and executed by game engine\n";
+    std::cout << "TEST 1: Deploy order validation and execution\n";
+    std::cout << "TEST 2: Advance order for friendly territory movement\n";
+    std::cout << "TEST 3: Advance order attack with territory conquest\n";
+    std::cout << "TEST 4: Card reward system (one card per turn on conquest)\n";
+    std::cout << "TEST 5: Negotiate order prevents attacks between players\n";
+    std::cout << "TEST 6: Blockade order transfers ownership to Neutral player\n";
+    std::cout << "TEST 7: Bomb order removes half of armies\n";
+    std::cout << "TEST 8: Airlift order moves armies between non-adjacent territories\n";
+    std::cout << "TEST 9: All order types can be issued and executed by game engine\n";
 
 
     // Cleanup
@@ -401,9 +400,9 @@ void testOrderExecution() {
     std::cout << "\n========== END OF ASSIGNMENT 2 PART 4 TEST ==========\n";
 }
 
-/*
+
 int main() {
     testOrderExecution();
     return 0;
 }
-*/
+

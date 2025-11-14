@@ -16,8 +16,11 @@ class Order;
 class OrdersList;
 class Hand;
 class Card;
+class Deck;
+class Map;
 
 using namespace std;
+
 
 class Player {
 private:
@@ -26,6 +29,11 @@ private:
     Hand* hand;
     OrdersList* ordersList;
     int reinforcementPool;
+
+    Map* mapRef = nullptr;
+
+    //allow Player to play a card using the shared deck
+    Deck* deckRef = nullptr;
 
     // part 4- Track players we cannot attack this turn (negotiate)
     set<Player*>* cannotAttackPlayers;
@@ -42,6 +50,13 @@ public:
     vector<Map::territoryNode*> toDefend() const;
     vector<Map::territoryNode*> toAttack() const;
     void issueOrder(Order* order);
+    void issueOrder();
+
+    void setMap(Map* m) { mapRef = m; }
+    Map* getMap() const { return mapRef; }
+
+    void setDeck(Deck* d) { deckRef = d; }
+    Deck* getDeck() const { return deckRef; }
 
     void addTerritory(Map::territoryNode* t);
     void addCard(Card* c);
@@ -56,13 +71,7 @@ public:
     void clearTerritories();
 
     // part 4- Additional method for removing reinforcements
-    bool removeFromReinforcementPool(int amount) {
-        if (reinforcementPool >= amount) {
-            reinforcementPool -= amount;
-            return true;
-        }
-        return false;
-    }
+    void removeFromReinforcementPool(int armies);
 
     // part 4- Negotiation management
     void addNegotiatedPlayer(Player* p);

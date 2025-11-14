@@ -357,98 +357,109 @@ bool Advance::validate() {
 
 //execute Advance order
 void Advance::execute() {
-    if (validate()) {
-        std::ostringstream oss;
+    // If basic / advanced validation fails, do nothing except log.
+    if (!validate()) {
+        *effect = "Advance order is invalid and was not executed";
+        *executed = true;
+        notify(*this);
+        return;
+    }
 
-        // part 4 - Actual advance logic
-        //remove armies from source
-        sourceTerritoryNode->armyCount -= *armyUnits;
+    std::ostringstream oss;
 
-        //check if target belongs to same player (move) or enemy (attack)
-        if (targetTerritoryNode->owner == issuingPlayer) {
-            targetTerritoryNode->armyCount += *armyUnits;
-            oss << "Advanced " << *armyUnits << " army units from " << *sourceTerritory
-                << " to " << *targetTerritory << " (friendly move).";
-        } else {
-            //attack: simulate battle
-            int attackingArmies = *armyUnits;
-            int defendingArmies = targetTerritoryNode->armyCount;
+    // Remove armies from the source territory first
+    int movingArmies = *armyUnits;
+    sourceTerritoryNode->armyCount -= movingArmies;
 
-            std::random_device rd;
-            std::mt19937 gen(rd());
-            std::uniform_int_distribution<> dis(1, 100);
+    // ===== Case 1: Friendly move (same owner) =====
+    if (targetTerritoryNode->owner == issuingPlayer) {
+        targetTerritoryNode->armyCount += movingArmies;
 
-            oss << "Battle at " << *targetTerritory << ": "
-                << attackingArmies << " attackers vs " << defendingArmies << " defenders. ";
-
-            //battle simulation: each attacking army has 60% chance to kill a defender
-            //each defending army has 70% chance to kill an attacker
-            int attackerKills = 0;
-            int defenderKills = 0;
-
-            for (int i = 0; i < attackingArmies && defendingArmies > 0; ++i) {
-                if (dis(gen) <= 60) {  // 60% chance
-                    attackerKills++;
-                }
-            }
-
-            for (int i = 0; i < defendingArmies && attackingArmies > 0; ++i) {
-                if (dis(gen) <= 70) {  // 70% chance
-                    defenderKills++;
-                }
-            }
-
-            //apply casualties
-            defendingArmies -= attackerKills;
-            if (defendingArmies < 0) defendingArmies = 0;
-
-            attackingArmies -= defenderKills;
-            if (attackingArmies < 0) attackingArmies = 0;
-
-            oss << "Attackers killed " << attackerKills << " defenders. "
-                << "Defenders killed " << defenderKills << " attackers. ";
-
-            if (defendingArmies == 0 && attackingArmies > 0) {
-                Player* previousOwner = targetTerritoryNode->owner;
-
-                targetTerritoryNode->owner = issuingPlayer;
-                targetTerritoryNode->armyCount = attackingArmies;
-
-                //add territory to issuing player's list
-                issuingPlayer->addTerritory(targetTerritoryNode);
-
-                //remove from previous owner if they had one
-                if (previousOwner) {
-                    auto* territories = const_cast<std::vector<Map::territoryNode*>*>(
-                        previousOwner->getOwnedTerritories()
-                    );
-                    territories->erase(
-                        std::remove(territories->begin(), territories->end(), targetTerritoryNode),
-                        territories->end()
-                    );
-                }
-
-                oss << "Territory conquered! " << issuingPlayer->getName()
-                    << " now owns " << *targetTerritory << " with " << attackingArmies << " armies.";
-
-                // part 4 - Mark that player conquered a territory this turn
-                issuingPlayer->setConqueredThisTurn(true);
-
-            } else {
-                // defence holds: Defenders survive
-                targetTerritoryNode->armyCount = defendingArmies;
-                oss << "Defense holds! " << defendingArmies << " defenders remain.";
-            }
-        }
+        oss << "Advanced " << movingArmies << " army units from "
+            << *sourceTerritory << " to " << *targetTerritory
+            << " (friendly move). Target now has "
+            << targetTerritoryNode->armyCount << " armies.";
 
         *effect = oss.str();
         *executed = true;
-    } else {
-        *effect = "Advance order is invalid and was not executed";
-        *executed = true;
+        notify(*this);
+        return;
     }
-    //Nathan:
-    notify(*this);                         // Log Advance order
+
+    // ===== Case 2: Attack (different owners) =====
+    int initialAttackers = movingArmies;
+    int initialDefenders = targetTerritoryNode->armyCount;
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(1, 100);
+
+    int defendersKilled = 0;
+    int attackersKilled = 0;
+
+    // Each attacking unit: 60% chance to kill one defender
+    for (int i = 0; i < initialAttackers && defendersKilled < initialDefenders; ++i) {
+        if (dis(gen) <= 60) {
+            ++defendersKilled;
+        }
+    }
+
+    // Each defending unit: 70% chance to kill one attacker
+    for (int i = 0; i < initialDefenders && attackersKilled < initialAttackers; ++i) {
+        if (dis(gen) <= 70) {
+            ++attackersKilled;
+        }
+    }
+
+    int remainingDefenders = initialDefenders - defendersKilled;
+    if (remainingDefenders < 0) remainingDefenders = 0;
+
+    int remainingAttackers = initialAttackers - attackersKilled;
+    if (remainingAttackers < 0) remainingAttackers = 0;
+
+    oss << "Battle at " << *targetTerritory << ": "
+        << initialAttackers << " attackers vs " << initialDefenders << " defenders. "
+        << "Attackers killed " << defendersKilled << " defenders. "
+        << "Defenders killed " << attackersKilled << " attackers. ";
+
+    // Apply results
+    if (remainingDefenders == 0 && remainingAttackers > 0) {
+        // Territory is conquered
+        Player* previousOwner = targetTerritoryNode->owner;
+
+        targetTerritoryNode->owner = issuingPlayer;
+        targetTerritoryNode->armyCount = remainingAttackers;
+
+        // Add territory to new owner
+        issuingPlayer->addTerritory(targetTerritoryNode);
+
+        // Remove from previous owner, if any
+        if (previousOwner) {
+            auto* territories = const_cast<std::vector<Map::territoryNode*>*>(
+                    previousOwner->getOwnedTerritories()
+            );
+            territories->erase(
+                    std::remove(territories->begin(), territories->end(), targetTerritoryNode),
+                    territories->end()
+            );
+        }
+
+        // Mark that this player conquered at least one territory this turn
+        issuingPlayer->setConqueredThisTurn(true);
+
+        oss << "Territory conquered! " << issuingPlayer->getName()
+            << " now owns " << *targetTerritory << " with "
+            << remainingAttackers << " armies.";
+    } else {
+        // Defenders hold the territory
+        targetTerritoryNode->armyCount = remainingDefenders;
+        oss << "Defense holds! " << remainingDefenders
+            << " defenders remain. Attackers are all destroyed.";
+    }
+
+    *effect = oss.str();
+    *executed = true;
+    notify(*this);   // log Advance order
 }
 
 //clone Advance order

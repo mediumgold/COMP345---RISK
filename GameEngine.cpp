@@ -18,6 +18,8 @@
 #include <string>
 #include <vector>
 #include <system_error>
+#include <unordered_set>
+#include <unordered_map>
 
 namespace fs = std::filesystem;
 
@@ -163,8 +165,7 @@ GameEngine::GameEngine()
       mapLoaded(false),
       mapValidated(false),
       loadedMap(nullptr),
-      players(),
-      deck(std::make_unique<Deck>(STARTING_DECK_SIZE))
+      players()
 {
 
     // startup
@@ -385,14 +386,24 @@ void GameEngine::startupPhase(CommandProcessor& commandProcessor, const std::str
         for (size_t i = 0; i < territoryIndices.size(); ++i)
         {
             Map::territoryNode* territory = &territories[territoryIndices[i]];
-            players[i % players.size()]->addTerritory(territory);
+
+            // pick the owning player for this territory
+            Player* owner = players[i % players.size()].get();
+
+            // assign territory to that player
+            owner->addTerritory(territory);
+
+            // set the territory's owner pointer
+            territory->owner = owner;
         }
 
         deck = std::make_unique<Deck>(STARTING_DECK_SIZE);
 
         for (auto& player : players)
         {
+            player->setDeck(deck.get());
             player->setReinforcementPool(INITIAL_REINFORCEMENT_POOL);
+            player->setMap(loadedMap.get());
             for (int i = 0; i < INITIAL_CARD_DRAW; ++i)
             {
                 if (Card* card = deck->draw())
@@ -488,7 +499,6 @@ void GameEngine::startupPhase(CommandProcessor& commandProcessor, const std::str
     }
 }
 
-
 void testGameStates() {
 
     GameEngine g;
@@ -520,4 +530,243 @@ void testGameStates() {
         }
     }
     std::cout << "Reached 'finished'. Game end.\n";
+}
+
+// === Part 3: helpers ===
+static int baseReinforcementFor(int territoriesOwned) {
+    // Classic Risk: floor(territories/3), minimum 3
+    if (territoriesOwned <= 0) return 0;
+    int r = territoriesOwned / 3;
+    return (r < 3 ? 3 : r);
+}
+
+bool GameEngine::isGameOver(size_t* winnerIndex) const {
+    if (!loadedMap) return false;
+    const auto total = loadedMap->getTerritoryNodes().size();
+    if (total == 0) return false;
+
+    size_t winIdx = static_cast<size_t>(-1);
+    for (size_t i = 0; i < players.size(); ++i) {
+        const auto* owned = players[i]->getOwnedTerritories();
+        if (owned && owned->size() == total) {
+            winIdx = i;
+            break;
+        }
+    }
+    if (winIdx != static_cast<size_t>(-1)) {
+        if (winnerIndex) *winnerIndex = winIdx;
+        return true;
+    }
+    return false;
+}
+// Part 3 — Reinforcement Phase (rubric name)
+
+void GameEngine::reinforcementPhase() {
+    if (!loadedMap) {
+        std::cout << "[Reinforcement] No map loaded - skipping.\n";
+        return;
+    }
+
+    // Build continent territories  map from the current map
+    std::unordered_map<std::string, std::vector<const Map::territoryNode*>> byContinent;
+    for (const auto& t : loadedMap->getTerritoryNodes()) {
+        byContinent[t.continent].push_back(&t);
+    }
+
+    for (auto& up : players) {
+        Player* p = up.get();
+        const auto* ownedVec = p->getOwnedTerritories();
+        const int ownedCount = ownedVec ? static_cast<int>(ownedVec->size()) : 0;
+
+        // raw base (NO min here)  min(3) applies to the final total
+        const int base = ownedCount / 3;
+
+        // put owned territories in a set
+        std::unordered_set<const Map::territoryNode*> ownedSet;
+        if (ownedVec) ownedSet.insert(ownedVec->begin(), ownedVec->end());
+
+        // sum continent bonuses for continents fully owned by this player
+        int continentBonus = 0;
+        for (const auto& [cname, terrs] : byContinent) {
+            bool allOwned = true;
+            for (const auto* t : terrs) {
+                if (!ownedSet.count(t)) { allOwned = false; break; }
+            }
+            if (allOwned) {
+                continentBonus += loadedMap->getContinentBonus(cname); // from your Map.h
+            }
+        }
+
+        // final total with rubric minimum
+        int grant = base + continentBonus;
+        if (grant < 3) grant = 3;
+
+        p->addReinforcements(grant);
+
+        std::cout << "[Reinforcement] " << p->getName()
+                  << " owns " << ownedCount
+                  << " -> base " << (ownedCount / 3)
+                  << ", continents +" << continentBonus
+                  << " -> +" << grant
+                  << " (pool=" << p->getReinforcementPool() << ")\n";
+    }
+}
+
+
+void GameEngine::assignReinforcementsPhase() {
+    if (!loadedMap) return;
+
+    // ( continent bonuses
+    for (auto& p : players) {
+        const int owned = static_cast<int>(p->getOwnedTerritories()->size());
+        const int add   = baseReinforcementFor(owned);
+        p->addReinforcements(add);
+        std::cout << "[Reinforcement] " << p->getName()
+                  << " owns " << owned << " territories --> +" << add
+                  << " (pool=" << p->getReinforcementPool() << ")\n";
+    }
+}
+
+void GameEngine::issueOrdersPhase() {
+    // use each player's reinforcement pool to issue simple Deploy orders
+    // onto their first territory. This proves the IssueOrders phase without UI.
+    if (!loadedMap) return;
+    const auto& tnodes = loadedMap->getTerritoryNodes();
+
+
+    // Enter IssueOrders state (for logging via notify)
+    if (state() != State::IssueOrders) {
+        if (!apply("issueorder")) {        // use your transition table
+            // Fallback in case we're not exactly in AssignReinforcement
+            current = State::IssueOrders;
+            notify(*this);
+        }
+    }
+
+    for (auto& p : players) {
+        if (p) {
+            p->issueOrder();   // <-- the no-arg, decision-making version (not the Order* helper)
+        }
+    }
+
+    // signal end of issuing to advance to ExecuteOrders
+    if (!apply("endissueorders")) {
+        current = State::ExecuteOrders; notify(*this);
+    }
+
+    std::cout << "[Phase] Finished issuing. State is now '" << name(state()) << "'.\n";
+}
+
+void GameEngine::executeOrdersPhase() {
+    // Enter ExecuteOrders state
+    if (!apply("execorder")) { current = State::ExecuteOrders; notify(*this); }
+    std::cout << "[Phase] Execute Orders (deploys first, round-robin)\n";
+
+    auto isDeploy = [](Order* o) -> bool {
+        return dynamic_cast<Deploy*>(o) != nullptr;
+    };
+
+    // Execute one kind (deploy or non-deploy) in round-robin using OrdersList::getOrder/remove
+    auto executeOneKindRoundRobin = [&](bool wantDeploy) {
+        bool progressed = false;
+        bool keepLooping = true;
+
+        while (keepLooping) {
+            keepLooping = false;
+
+            for (auto& up : players) {
+                if (!up) continue;
+                OrdersList* ol = up->getOrdersList();
+                if (!ol || ol->empty()) continue;
+
+                // Find next order of the requested kind in this player's list
+                int foundIdx = -1;
+                for (int i = 0; i < ol->size(); ++i) {
+                    Order* o = ol->getOrder(i);
+                    if (!o) continue;
+                    if ( (bool)isDeploy(o) == wantDeploy ) {
+                        foundIdx = i;
+                        break;
+                    }
+                }
+                if (foundIdx < 0) continue;
+
+                Order* o = ol->getOrder(foundIdx);
+                // Per spec: execute() should validate then enact and record effect
+                o->execute();
+                // Remove the order after execution
+                ol->remove(foundIdx);
+
+                progressed = true;
+                keepLooping = true;  // we made progress in this sweep; keep trying others
+            }
+        }
+
+        return progressed;
+    };
+
+    // Pass 1: execute all Deploy orders (round-robin)
+    (void)executeOneKindRoundRobin(true);
+
+    // Pass 2: execute all NON-deploy orders (round-robin)
+    (void)executeOneKindRoundRobin(false);
+
+    // Remove eliminated players (no territories)
+    const size_t before = players.size();
+    players.erase(
+            std::remove_if(players.begin(), players.end(),
+                           [](const std::unique_ptr<Player>& up) {
+                               if (!up) return true;
+                               auto* owned = up->getOwnedTerritories();
+                               return !owned || owned->empty();
+                           }),
+            players.end()
+    );
+    if (players.size() != before) {
+        std::cout << "[ExecuteOrders] Eliminated " << (before - players.size()) << " player(s).\n";
+    }
+
+    // Win condition: one player controls all territories
+    size_t winner = static_cast<size_t>(-1);
+    if (isGameOver(&winner)) {
+        std::cout << "[ExecuteOrders] " << players[winner]->getName()
+                  << " now controls all territories. WIN!\n";
+        if (!apply("win")) { current = State::Win; notify(*this); }
+        return;
+    }
+
+    // Back to AssignReinforcement
+    if (!apply("endexecorders")) { current = State::AssignReinforcement; notify(*this); }
+}
+
+
+void GameEngine::mainGameLoop(int maxTurns) {
+    if (state() != State::AssignReinforcement) {
+        std::cout << "[MainLoop] Not entering loop because state is '" << name(state())
+                  << "'. Expect 'assign reinforcement' after startup.\n";
+        return;
+    }
+
+    std::cout << "\n=== Entering Main Game Loop (Part 3) ===\n";
+    for (int turn = 1; turn <= maxTurns && state() != State::Win; ++turn) {
+        std::cout << "\n--- Turn " << turn << " ---\n";
+        std::cout << "[State] " << name(state()) << "\n";
+
+        // 1) Assign reinforcements
+        reinforcementPhase();
+
+        // 2) Issue orders (auto-demo)
+        issueOrdersPhase();
+
+        // 3) Execute orders
+        executeOrdersPhase();
+
+        if (state() == State::Win) break;
+    }
+
+    if (state() != State::Win) {
+        std::cout << "[MainLoop] Max turns reached (" << maxTurns << "). Ending demo loop.\n";
+    }
+
+    std::cout << "=== End of Main Game Loop ===\n";
 }

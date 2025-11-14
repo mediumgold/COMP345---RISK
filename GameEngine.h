@@ -51,7 +51,16 @@ class GameEngine : public ILoggable, public Subject {
 
         std::string stringToLog() const override; //Nathan: override stringToLog method for GameEngine object
 
-    private:
+        // === Part 3: Turn-loop phases ===
+        void mainGameLoop(int maxTurns = 5);      // runs Assign → Issue → Execute per turn
+        void assignReinforcementsPhase();         // computes and adds reinforcements to each player
+        void reinforcementPhase();                  // rubric name
+        void issueOrdersPhase();                  // (demo) auto-issues simple Deploy orders using reinforcementPool
+        void executeOrdersPhase();                // executes all orders for all players, clears per-turn flags
+        bool isGameOver(size_t* winnerIndex = nullptr) const; // true if one player owns all territories
+
+
+private:
         static constexpr int INITIAL_REINFORCEMENT_POOL = 50;
         static constexpr int INITIAL_CARD_DRAW = 2;
         static constexpr int STARTING_DECK_SIZE = 50;

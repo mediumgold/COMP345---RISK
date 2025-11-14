@@ -129,6 +129,7 @@ void testStartupPhase()
                     std::cout << ", ";
                 }
             }
+        cout<< "\n";
         }
         else
         {
@@ -140,8 +141,65 @@ void testStartupPhase()
     std::cout << "=== End of Startup Summary ===\n";
 }
 
-/**
-int main() {
-	testGameStates();
+void testMainGameLoop() {
+    cout << "=== Part 3 Driver: testMainGameLoop ===\n";
+
+    GameEngine engine;
+
+    // Use console for startup to keep it simple for the TA:
+    // Commands to type:
+    //   loadmap <file>
+    //   validatemap
+    //   addplayer Alice
+    //   addplayer Bob
+    //   gamestart
+    unique_ptr<CommandProcessor> cp = make_unique<CommandProcessor>();
+
+    cout << "[Driver] Startup instructions:\n"
+         << "  loadmap <map>\n"
+         << "  validatemap\n"
+         << "  addplayer Alice\n"
+         << "  addplayer Bob\n"
+         << "  gamestart\n";
+
+    engine.startupPhase(*cp, "Maps");
+
+    if (engine.state() != State::AssignReinforcement) {
+        cout << "[Driver] Startup did not reach 'assign reinforcement' — aborting.\n";
+        return;
+    }
+
+    cout << "[Driver] Startup complete. Entering main game loop.\n\n";
+
+    // Run a few turns
+    const int MAX_TURNS = 20;
+
+    for (int turn = 1; turn <= MAX_TURNS && engine.state() != State::Win; ++turn) {
+        cout << "\n--- Turn " << turn << " ---\n";
+
+        // (1) Reinforcement phase — prints base, continent bonuses, final grant
+        engine.reinforcementPhase();
+
+        // (2) Issuing — players must issue deploys first while pool>0,
+        // (3) then advance (defend/attack), (4) and may play one card
+        engine.issueOrdersPhase();
+
+        // (5) Execution — executes deploys first (round-robin), then others;
+        //     eliminates players with 0 territories; checks (6) win
+        engine.executeOrdersPhase();
+    }
+
+    if (engine.state() == State::Win) {
+        cout << "[Driver] Game ended with a winner (all territories controlled).\n";
+    } else {
+        cout << "[Driver] Max turns reached. (You can increase MAX_TURNS to continue.)\n";
+    }
+
+    cout << "=== End Part 3 Driver ===\n";
 }
-*/
+
+int main(int argc, char* argv[]) {
+//	 testStartupPhase();
+     testMainGameLoop();
+}
+

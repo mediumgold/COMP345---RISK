@@ -53,3 +53,9 @@ void testCommandProcessor(int argc, char* argv[])
     cout << "Final State reached. Summary of commands:" << endl;
     cout << *cp << endl;
 }
+
+int main(int argc, char* argv[]) {
+    // Test using command processor via console or file input
+   testCommandProcessor(argc, argv);
+    return 0;
+}

@@ -22,7 +22,6 @@ Card& Card::operator=(const Card& other) {
 
 //destructor for Card
 Card::~Card() {
-    cout << "Destroying card object: " << *type << "\n";
     delete type;
 }
 
