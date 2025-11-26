@@ -2,9 +2,10 @@
 #include "Player.h" 
 #include "Cards.h"
 #include "LoggingObserver.h" //added by Nathan
+#include "PlayerStrategies.h"
 #include <sstream>
-#include <random>    
-#include <algorithm> 
+#include <random>
+#include <algorithm>
 
 
 //default constructor for Order
@@ -387,6 +388,18 @@ void Advance::execute() {
     }
 
     // ===== Case 2: Attack (different owners) =====
+
+    // Part 1 Requirement: Neutral player becomes Aggressive when attacked
+    if (targetTerritoryNode->owner && targetTerritoryNode->owner != issuingPlayer) {
+        PlayerStrategy* defenderStrategy = targetTerritoryNode->owner->getStrategy();
+        if (defenderStrategy && dynamic_cast<NeutralPlayerStrategy*>(defenderStrategy)) {
+            // Convert Neutral to Aggressive
+            targetTerritoryNode->owner->setStrategy(new AggressivePlayerStrategy(targetTerritoryNode->owner));
+            std::cout << "[!] " << targetTerritoryNode->owner->getName()
+                      << " was attacked and is now AGGRESSIVE!\n";
+        }
+    }
+
     int initialAttackers = movingArmies;
     int initialDefenders = targetTerritoryNode->armyCount;
 
