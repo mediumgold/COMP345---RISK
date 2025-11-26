@@ -172,7 +172,7 @@ void testMainGameLoop() {
     cout << "[Driver] Startup complete. Entering main game loop.\n\n";
 
     // Run a few turns
-    const int MAX_TURNS = 20;
+    const int MAX_TURNS = 400;
 
     for (int turn = 1; turn <= MAX_TURNS && engine.state() != State::Win; ++turn) {
         cout << "\n--- Turn " << turn << " ---\n";
@@ -199,7 +199,7 @@ void testMainGameLoop() {
 }
 
 int main(int argc, char* argv[]) {
-//	 testStartupPhase();
-     testMainGameLoop();
+//    testStartupPhase();
+    testMainGameLoop();
 }
 

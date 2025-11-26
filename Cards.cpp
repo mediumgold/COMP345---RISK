@@ -39,6 +39,10 @@ void Card::play(Player* p, Deck* d, Hand* h) {
         return;
     }
 
+    Map* map = p->getMap();
+    auto defendList = p->toDefend();
+    auto attackList = p->toAttack();
+
     string orderDesc;
     if (*type == "bomb") orderDesc = "Bomb order created by card.";
     else if (*type == "reinforcement") orderDesc = "Reinforcement order created by card.";
@@ -47,24 +51,76 @@ void Card::play(Player* p, Deck* d, Hand* h) {
     else if (*type == "diplomacy") orderDesc = "Negotiate/Diplomacy order created by card.";
     else orderDesc = "Generic order created by card.";
 
-    if (*type == "bomb")
-        p->issueOrder(new Bomb("EnemyTerritory"));
-    else if (*type == "reinforcement")
-        p->issueOrder(new Deploy(5, "MyTerritory"));
-    else if (*type == "blockade")
-        p->issueOrder(new Blockade("MyTerritory"));
-    else if (*type == "airlift")
-        p->issueOrder(new Airlift(3, "Source", "Target"));
-    else if (*type == "diplomacy")
-        p->issueOrder(new Negotiate("TargetPlayer"));
-    else
-        p->issueOrder(new Advance(2, "Source", "Target"));
+    // Choose some reasonable defaults if lists are empty
+    Map::territoryNode* defendTarget = nullptr;
+    Map::territoryNode* attackTarget = nullptr;
+    Map::territoryNode* defendSource = nullptr;
 
+    const auto* owned = p->getOwnedTerritories();
+    if (!defendList.empty()) defendTarget = defendList.front();
+    else if (owned && !owned->empty()) defendTarget = owned->front();
+
+    if (!attackList.empty()) attackTarget = attackList.front();
+
+    if (owned && !owned->empty()) defendSource = owned->front();
+
+    // Create the appropriate order using the rich constructors
+    if (*type == "bomb") {
+        if (attackTarget && map) {
+            p->issueOrder(new Bomb(p, attackTarget, map));
+        } else {
+            cout << "[Card::play] No valid bomb target; skipping order.\n";
+        }
+    }
+    else if (*type == "reinforcement") {
+        // simplest interpretation: add bonus reinforcements then deploy them
+        int bonus = 5;  // per your original demo
+        if (defendTarget) {
+            p->addReinforcements(bonus);
+            p->issueOrder(new Deploy(p, bonus, defendTarget));
+        } else {
+            cout << "[Card::play] No valid reinforcement territory; skipping order.\n";
+        }
+    }
+    else if (*type == "blockade") {
+        // you will likely want to wire in a neutral player from the GameEngine;
+        // for now, just skip if we don't have one.
+        Player* neutral = nullptr; // TODO: inject real neutral player
+        if (defendTarget && neutral) {
+            p->issueOrder(new Blockade(p, defendTarget, neutral));
+        } else {
+            cout << "[Card::play] No neutral player / territory for blockade; skipping.\n";
+        }
+    }
+    else if (*type == "airlift") {
+        if (defendSource && defendTarget) {
+            p->issueOrder(new Airlift(p, 3, defendSource, defendTarget));
+        } else {
+            cout << "[Card::play] No valid airlift source/target; skipping order.\n";
+        }
+    }
+    else if (*type == "diplomacy") {
+        // Needs access to another Player*; right now Card::play only knows about `p`.
+        // You can: (a) leave this as a stub, or (b) redesign to pass in a target player.
+        cout << "[Card::play] Diplomacy card not fully wired to real target player yet.\n";
+    }
+    else {
+        // fallback: generic advance if possible
+        if (defendSource && attackTarget && map) {
+            p->issueOrder(new Advance(p, 2, defendSource, attackTarget, p->getDeck(), map));
+        } else {
+            cout << "[Card::play] No valid generic advance target; skipping order.\n";
+        }
+    }
+
+    // hand/deck behavior stays the same
     h->removeCard(this);
     d->returnCard(this);
 
-    cout << "[Card::play] Played '" << *type << "': " << orderDesc << " Card returned to deck.\n";
+    cout << "[Card::play] Played '" << *type << "': " << orderDesc
+         << " Card returned to deck.\n";
 }
+
 
 //stream insertion operator for Card
 ostream& operator<<(ostream& os, const Card& c) {

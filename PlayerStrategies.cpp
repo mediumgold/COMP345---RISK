@@ -159,6 +159,20 @@ void NeutralPlayerStrategy::issueOrder() {
     
 }
 
+// Neutral: does nothing in both attack and defend.
+void NeutralPlayerStrategy::toAttack() {
+    // Neutral players do nothing on their own turn.
+    std::cout << "[NeutralPlayerStrategy::toAttack] Neutral player "
+              << p->getName() << " does not attack.\n";
+}
+
+
+void NeutralPlayerStrategy::toDefend() {
+    // Neutral players also do not actively defend (no orders issued).
+    std::cout << "[NeutralPlayerStrategy::toDefend] Neutral player "
+              << p->getName() << " does not defend.\n";
+}
+
 // Cheater strategy: Automatically conquers all adjacent enemy territories each turn. Does not use cards.
 void CheaterPlayerStrategy::issueOrder() {
     // Don't defend.
@@ -188,4 +202,11 @@ void CheaterPlayerStrategy::toAttack() {
         int armiesToMove = target->armyCount + 1;
         p->getOrdersList()->addOrder(new Advance(p, armiesToMove, nullptr, target, p->getDeck(), p->getMap()));
     }
+}
+
+// Cheater: no defensive logic, only auto-conquer in toAttack().
+void CheaterPlayerStrategy::toDefend() {
+    // Cheater focuses only on aggressive auto-conquest; no defensive orders.
+    std::cout << "[CheaterPlayerStrategy::toDefend] Cheater player "
+              << p->getName() << " does not defend.\n";
 }

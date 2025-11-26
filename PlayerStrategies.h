@@ -93,25 +93,6 @@ public:
     void toDefend() override;
 };
 
-class NeutralPlayerStrategy : public PlayerStrategy {
-public:
-    NeutralPlayerStrategy(Player* player) { p = player; }
-    NeutralPlayerStrategy(const PlayerStrategy& other) { p = other.p; }
-    NeutralPlayerStrategy& operator=(const NeutralPlayerStrategy& other) {
-        if (this != &other) {
-            p = other.p;
-        }
-        return *this;
-    };
-    friend ostream& operator<<(ostream& os, const NeutralPlayerStrategy& nps) {
-        os << "NeutralPlayerStrategy for player: " << nps.p->getName();
-        return os;
-    }
-    void issueOrder() override;
-    void toAttack() override;
-    void toDefend() override;
-};
-
 class CheaterPlayerStrategy : public PlayerStrategy {
 public:
     CheaterPlayerStrategy(Player* player) { p = player; }

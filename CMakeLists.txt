@@ -18,6 +18,7 @@ set(SOURCES
         Player.cpp
         CommandProcessing.cpp
         LoggingObserver.cpp
+        PlayerStrategies.cpp
 )
 
 # === Executables for each module test ===

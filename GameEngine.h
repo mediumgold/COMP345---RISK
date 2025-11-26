@@ -59,7 +59,6 @@ class GameEngine : public ILoggable, public Subject {
         void executeOrdersPhase();                // executes all orders for all players, clears per-turn flags
         bool isGameOver(size_t* winnerIndex = nullptr) const; // true if one player owns all territories
 
-
 private:
         static constexpr int INITIAL_REINFORCEMENT_POOL = 50;
         static constexpr int INITIAL_CARD_DRAW = 2;
@@ -80,6 +79,7 @@ private:
 
 };
 void testGameStates();
+
 
 
 #endif

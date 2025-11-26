@@ -711,6 +711,42 @@ void GameEngine::executeOrdersPhase() {
     // Pass 2: execute all NON-deploy orders (round-robin)
     (void)executeOneKindRoundRobin(false);
 
+    // --- POST-TURN LOGIC: conquest reward + reset flags / negotiations ---
+
+    for (auto& up : players) {
+        Player* p = up.get();
+        if (!p) continue;
+
+        // If this player conquered at least one territory during this turn,
+        // they are eligible to receive ONE card from the deck.
+        if (p->hasConqueredThisTurn()) {
+            if (deck) {  // deck is your Deck* or unique_ptr<Deck>
+                Card* reward = deck->draw();
+                if (reward) {
+                    std::cout << "[ExecuteOrders] " << p->getName()
+                              << " conquered at least one territory this turn and receives a card: "
+                              << *reward << "\n";
+                    p->getHand()->addCard(reward);
+                } else {
+                    std::cout << "[ExecuteOrders] Deck is empty; "
+                              << p->getName()
+                              << " cannot receive a conquest card this turn.\n";
+                }
+            } else {
+                std::cout << "[ExecuteOrders] No deck available; "
+                          << p->getName()
+                          << " cannot receive a conquest card this turn.\n";
+            }
+        }
+
+        // Reset conquest flag so next turn starts fresh.
+        p->setConqueredThisTurn(false);
+
+        // Clear all negotiations so diplomacy does NOT persist into the next turn.
+        p->clearNegotiations();
+    }
+
+
     // Remove eliminated players (no territories)
     const size_t before = players.size();
     players.erase(
