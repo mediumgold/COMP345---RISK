@@ -1,12 +1,14 @@
 // Created by Aidan Catriel on 2025-10-17.
 // Command processing classes for the game engine.
+// Updated for Assignment 3 Part 2: Tournament Mode
 
 #include "CommandProcessing.h"
-#include "LoggingObserver.h" //added by Nathan
+#include "LoggingObserver.h"
 #include <algorithm>
 #include <cctype>
 #include <string>
 #include <vector>
+#include <sstream>
 using namespace std;
 
 namespace {
@@ -20,6 +22,27 @@ string trim(const string& value)
     }
     size_t last = value.find_last_not_of(" \t\r\n");
     return value.substr(first, last - first + 1);
+}
+
+string toLower(const string& str) {
+    string result = str;
+    transform(result.begin(), result.end(), result.begin(),
+              [](unsigned char c) { return static_cast<char>(tolower(c)); });
+    return result;
+}
+
+// Split a string by delimiter
+vector<string> split(const string& str, char delimiter) {
+    vector<string> tokens;
+    stringstream ss(str);
+    string token;
+    while (getline(ss, token, delimiter)) {
+        string trimmed = trim(token);
+        if (!trimmed.empty()) {
+            tokens.push_back(trimmed);
+        }
+    }
+    return tokens;
 }
 
 }
@@ -46,6 +69,7 @@ Command::Command(const Command& other)
     type = other.type;
     parameter = other.parameter;
     effect = other.effect;
+    tournamentParams = other.tournamentParams;  // Part 2
 }
 
 // Assignment operator for Command.
@@ -56,6 +80,7 @@ Command& Command::operator=(const Command& other)
         type = other.type;
         parameter = other.parameter;
         effect = other.effect;
+        tournamentParams = other.tournamentParams;  // Part 2
     }
     return *this;
 }
@@ -82,6 +107,9 @@ ostream& operator<<(ostream& os, const Command& cmd)
         break;
     case Quit:
         os << "Quit";
+        break;
+    case Tournament:  // Part 2
+        os << "Tournament";
         break;
     default:
         os << "Unknown";
@@ -149,6 +177,100 @@ CommandProcessor::~CommandProcessor()
     }
 }
 
+// Part 2: Check if a strategy name is valid (only computer strategies allowed)
+bool CommandProcessor::isValidStrategy(const string& strategy) {
+    string lower = toLower(strategy);
+    return lower == "aggressive" ||
+           lower == "benevolent" ||
+           lower == "neutral" ||
+           lower == "cheater";
+}
+
+// Part 2: Parse tournament command string
+// Format: tournament -M <mapfiles> -P <strategies> -G <numgames> -D <maxturns>
+bool CommandProcessor::parseTournamentCommand(const string& commandString, TournamentParameters& params) {
+    // Reset parameters
+    params = TournamentParameters();
+
+    string input = commandString;
+
+    // Find positions of each flag
+    size_t mPos = input.find("-M ");
+    size_t pPos = input.find("-P ");
+    size_t gPos = input.find("-G ");
+    size_t dPos = input.find("-D ");
+
+    if (mPos == string::npos || pPos == string::npos ||
+        gPos == string::npos || dPos == string::npos) {
+        cout << "[Tournament] Missing required parameters. Format: tournament -M <maps> -P <strategies> -G <games> -D <turns>\n";
+        return false;
+    }
+
+    // Extract each section
+    // Map files: between -M and -P
+    string mapsSection = trim(input.substr(mPos + 3, pPos - mPos - 3));
+    // Strategies: between -P and -G
+    string strategiesSection = trim(input.substr(pPos + 3, gPos - pPos - 3));
+    // Number of games: between -G and -D
+    string gamesSection = trim(input.substr(gPos + 3, dPos - gPos - 3));
+    // Max turns: after -D
+    string turnsSection = trim(input.substr(dPos + 3));
+
+    // Parse map files (comma separated)
+    params.mapFiles = split(mapsSection, ',');
+    if (params.mapFiles.empty() || params.mapFiles.size() > 5) {
+        cout << "[Tournament] Invalid number of maps. Must be 1-5 maps.\n";
+        return false;
+    }
+
+    // Parse strategies (comma separated)
+    vector<string> strategies = split(strategiesSection, ',');
+    for (const string& s : strategies) {
+        string stratLower = toLower(s);
+        if (!isValidStrategy(stratLower)) {
+            cout << "[Tournament] Invalid strategy: " << s << ". Valid strategies: Aggressive, Benevolent, Neutral, Cheater\n";
+            return false;
+        }
+        //capitalize first letter for consistency
+        string formatted = stratLower;
+        if (!formatted.empty()) {
+            formatted[0] = static_cast<char>(toupper(formatted[0]));
+        }
+        params.playerStrategies.push_back(formatted);
+    }
+
+    if (params.playerStrategies.size() < 2 || params.playerStrategies.size() > 4) {
+        cout << "[Tournament] Invalid number of strategies. Must be 2-4 strategies.\n";
+        return false;
+    }
+
+    //parse number of games
+    try {
+        params.numberOfGames = stoi(gamesSection);
+        if (params.numberOfGames < 1 || params.numberOfGames > 5) {
+            cout << "[Tournament] Invalid number of games. Must be 1-5.\n";
+            return false;
+        }
+    } catch (...) {
+        cout << "[Tournament] Invalid number of games format.\n";
+        return false;
+    }
+
+    // Parse max turns
+    try {
+        params.maxTurns = stoi(turnsSection);
+        if (params.maxTurns < 10 || params.maxTurns > 50) {
+            cout << "[Tournament] Invalid max turns. Must be 10-50.\n";
+            return false;
+        }
+    } catch (...) {
+        cout << "[Tournament] Invalid max turns format.\n";
+        return false;
+    }
+
+    return params.isValid();
+}
+
 // Try to read a command until successful.
 Command* CommandProcessor::getCommand()
 {
@@ -159,23 +281,28 @@ Command* CommandProcessor::getCommand()
 
         // Find the command type.
         CommandTypes commandType;
-        if (inputs[0] == "loadmap") {
+        string lowerCmd = toLower(inputs[0]);
+
+        if (lowerCmd == "loadmap") {
             commandType = LoadMap;
         }
-        else if (inputs[0] == "validatemap") {
+        else if (lowerCmd == "validatemap") {
             commandType = ValidateMap;
         }
-        else if (inputs[0] == "addplayer") {
+        else if (lowerCmd == "addplayer") {
             commandType = AddPlayer;
         }
-        else if (inputs[0] == "gamestart") {
+        else if (lowerCmd == "gamestart") {
             commandType = GameStart;
         }
-        else if (inputs[0] == "replay") {
+        else if (lowerCmd == "replay") {
             commandType = Replay;
         }
-        else if (inputs[0] == "quit") {
+        else if (lowerCmd == "quit") {
             commandType = Quit;
+        }
+        else if (lowerCmd == "tournament") {  // Part 2: Tournament command
+            commandType = Tournament;
         }
         else {
             cout << "Invalid command entered." << endl;
@@ -188,6 +315,27 @@ Command* CommandProcessor::getCommand()
             continue;
         }
 
+        //handle tournament command specially
+        if (commandType == Tournament) {
+            //reconstruct full command string
+            string fullCommand = inputs[0] + " " + inputs[1];
+            TournamentParameters params;
+
+            if (!parseTournamentCommand(fullCommand, params)) {
+                cout << "Tournament command parsing failed. Please check format:\n";
+                cout << "tournament -M <map1,map2,...> -P <strat1,strat2,...> -G <numgames> -D <maxturns>\n";
+                continue;
+            }
+
+            Command* command = new Command(commandType, inputs[1], State::Start);
+            command->setTournamentParams(params);
+            saveCommand(command);
+            validCommand = true;
+
+            cout << "[Tournament] Parameters validated:\n" << params << "\n";
+            continue;
+        }
+
         // Only some commands require parameters.
         if (commandType == LoadMap || commandType == AddPlayer) {
             if (inputs[1].empty()) {
@@ -196,7 +344,7 @@ Command* CommandProcessor::getCommand()
             }
         }
         else {
-            if (!inputs[1].empty()) {
+            if (!inputs[1].empty() && commandType != Tournament) {
                 cout << "Command does not take a parameter. Ignoring." << endl;
             }
         }
@@ -221,6 +369,9 @@ Command* CommandProcessor::getCommand()
             break;
         case Quit:
             effect = State::Finished;
+            break;
+        case Tournament:
+            effect = State::Start;  // Tournament handles its own state
             break;
         default:
             effect = currentState; // No state change for unknown commands.
@@ -269,9 +420,8 @@ string* CommandProcessor::readCommand()
 void CommandProcessor::saveCommand(Command* command)
 {
     commands.push_back(command);
-    //Nathan:
-    notify(*this);                          //Logs that a command was saved
-    if (command) command->notify(*command); // Logs the command effect
+    notify(*this);
+    if (command) command->notify(*command);
 }
 
 // Validate if a command is allowed in the current state.
@@ -296,6 +446,9 @@ bool CommandProcessor::validateCommand(CommandTypes commandType)
         break;
     case Quit:
         validInState = (currentState == State::Win);
+        break;
+    case Tournament:  // Part 2: Tournament is valid in Start state
+        validInState = (currentState == State::Start);
         break;
     }
     return validInState;
@@ -355,7 +508,7 @@ string* FileCommandProcessorAdapter::readCommand()
     return inputs;
 }
 
-//Nathan: override of stringToLog method for CommandProcessor object
+// Override of stringToLog method for CommandProcessor object
 std::string CommandProcessor::stringToLog() const {
     if (!commands.empty() && commands.back())
     {
@@ -367,9 +520,13 @@ std::string CommandProcessor::stringToLog() const {
     return "CommandProcessor::saveCommand -> (no command)";
 }
 
-//Nathan: override of stringToLog method for Command object
+// Override of stringToLog method for Command object
 std::string Command::stringToLog() const {
-    // Minimal, readable line for the log
-    return std::string("Command: type=") + std::to_string(static_cast<int>(type)) +
+    string typeStr;
+    switch (type) {
+        case Tournament: typeStr = "Tournament"; break;
+        default: typeStr = to_string(static_cast<int>(type)); break;
+    }
+    return std::string("Command: type=") + typeStr +
         " param=\"" + parameter + "\" effect=" + GameEngine::name(effect);
 }
