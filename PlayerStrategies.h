@@ -11,10 +11,13 @@
 class PlayerStrategy {
 public:
     Player* p;
-    ~PlayerStrategy() = default;
+    virtual ~PlayerStrategy() = default;
+    
+    void setPlayer(Player* player) { p = player; }
+    
     virtual void issueOrder() = 0;
-    virtual void toAttack() = 0;
-    virtual void toDefend() = 0;
+    virtual vector<Map::territoryNode*> toAttack() = 0;
+    virtual vector<Map::territoryNode*> toDefend() = 0;
 };
 
 class HumanPlayerStrategy : public PlayerStrategy {
@@ -32,8 +35,8 @@ public:
         return os;
     }
     void issueOrder() override;
-    void toAttack() override;
-    void toDefend() override;
+    vector<Map::territoryNode*> toAttack() override;
+    vector<Map::territoryNode*> toDefend() override;
 };
 
 class AggressivePlayerStrategy : public PlayerStrategy {
@@ -51,8 +54,8 @@ public:
         return os;
     }
     void issueOrder() override;
-    void toAttack() override;
-    void toDefend() override;
+    vector<Map::territoryNode*> toAttack() override;
+    vector<Map::territoryNode*> toDefend() override;
 };
 
 class BenevolentPlayerStrategy : public PlayerStrategy {
@@ -70,8 +73,8 @@ public:
         return os;
     }
     void issueOrder() override;
-    void toAttack() override;
-    void toDefend() override;
+    vector<Map::territoryNode*> toAttack() override;
+    vector<Map::territoryNode*> toDefend() override;
 };
 
 class NeutralPlayerStrategy : public PlayerStrategy {
@@ -89,8 +92,8 @@ public:
         return os;
     }
     void issueOrder() override;
-    void toAttack() override;
-    void toDefend() override;
+    vector<Map::territoryNode*> toAttack() override;
+    vector<Map::territoryNode*> toDefend() override;
 };
 
 class CheaterPlayerStrategy : public PlayerStrategy {
@@ -108,6 +111,6 @@ public:
         return os;
     }
     void issueOrder() override;
-    void toAttack() override;
-    void toDefend() override;
+    vector<Map::territoryNode*> toAttack() override;
+    vector<Map::territoryNode*> toDefend() override;
 };

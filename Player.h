@@ -18,6 +18,7 @@ class Hand;
 class Card;
 class Deck;
 class Map;
+class PlayerStrategy;
 
 using namespace std;
 
@@ -40,6 +41,9 @@ private:
 
     // part 4- Track if player conquered a territory this turn (for card reward)
     bool* conqueredTerritoryThisTurn;
+
+    // Part 1- Strategy pattern: pointer to strategy object
+    PlayerStrategy* strategy;
 
 public:
     Player(const string& n = "Player");
@@ -81,6 +85,10 @@ public:
     // part 4- Territory conquest tracking
     void setConqueredThisTurn(bool conquered);
     bool hasConqueredThisTurn() const;
+
+    // Part 1- Strategy pattern: set and get strategy
+    void setStrategy(PlayerStrategy* newStrategy);
+    PlayerStrategy* getStrategy() const;
 
     friend ostream& operator<<(ostream& os, const Player& p);
 };

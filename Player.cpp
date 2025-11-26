@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Orders.h"
 #include "Cards.h"
+#include "PlayerStrategies.h"
 #include <algorithm>
 #include <iostream>
 using namespace std;
@@ -20,7 +21,9 @@ Player::Player(const string& n)
           deckRef(nullptr),
           //part 4 - Initialize new fields
           cannotAttackPlayers(new set<Player*>()),
-          conqueredTerritoryThisTurn(new bool(false)) {
+          conqueredTerritoryThisTurn(new bool(false)),
+          //Part 1 - Initialize strategy pointer
+          strategy(nullptr) {
     cout << "[Player] Created player '" << *name << "'\n";
 }
 
@@ -33,7 +36,9 @@ Player::Player(const Player& other)
           reinforcementPool(other.reinforcementPool),
           //part 4- Copy new fields
           cannotAttackPlayers(new set<Player*>(*other.cannotAttackPlayers)),
-          conqueredTerritoryThisTurn(new bool(*other.conqueredTerritoryThisTurn)) {
+          conqueredTerritoryThisTurn(new bool(*other.conqueredTerritoryThisTurn)),
+          //Part 1 - Strategy not copied (caller must set explicitly)
+          strategy(nullptr) {
 
     //copy territories (shallow)
     for (auto* t : *other.ownedTerritories) {
@@ -62,6 +67,8 @@ Player& Player::operator=(const Player& other) {
         //part 4-copy new fields
         cannotAttackPlayers = new set<Player*>(*other.cannotAttackPlayers);
         conqueredTerritoryThisTurn = new bool(*other.conqueredTerritoryThisTurn);
+        //Part 1 - Strategy not copied (caller must set explicitly)
+        strategy = nullptr;
     }
     return *this;
 }
@@ -87,96 +94,12 @@ void Player::issueOrder(Order* order) {
 }
 
 void Player::issueOrder() {
-    cout << "[Player::issueOrder] " << *name << " begins issuing orders.\n";
-
-    // 1) DEPLOY: plan to spend all reinforcements on toDefend() territories,
-    // but do NOT touch reinforcementPool here. Let Deploy handle it.
-    auto defendList = toDefend();
-    size_t didx = 0;
-
-    int planned = reinforcementPool;   // local copy to plan how much we want to deploy
-
-    while (planned > 0 && !defendList.empty()) {
-        Map::territoryNode* target = defendList[didx % defendList.size()];
-        int drop = std::min(3, planned);          // chunks of 3 (or remaining)
-
-        // rich constructor: player + territory node
-        ordersList->addOrder(new Deploy(this, drop, target));
-
-        planned -= drop;                          // we "plan" to spend this much
-        cout << "  -> Deploy(" << drop << ", " << target->name
-             << ")  plannedPool=" << planned << "\n";
-        ++didx;
-    }
-
-    // 2) ADVANCE: as before (uses armies on territories, not the pool)
-    if (!mapRef || !ownedTerritories || ownedTerritories->empty()) {
-        cout << "  (No map or territories available for Advance orders)\n";
+    // Part 1: Delegate to strategy if available
+    if (strategy) {
+        strategy->issueOrder();
     } else {
-        auto& nodes = mapRef->getTerritoryNodes();
-
-        // Defensive advance (owned -> owned)
-        bool defIssued = false;
-        for (auto* src : *ownedTerritories) {
-            if (!src) continue;
-            if (src->armyCount <= 1) continue;
-
-            for (int idx : src->adjacentIndices) {
-                Map::territoryNode* dst = const_cast<Map::territoryNode*>(&nodes[idx]);
-                if (!dst || dst->owner != this) continue;
-
-                int move = std::min(2, src->armyCount - 1);
-                if (move <= 0) continue;
-
-                ordersList->addOrder(new Advance(this, move, src, dst, deckRef, mapRef));
-                cout << "  -> Advance(" << move << ", " << src->name
-                     << ", " << dst->name << ") [defend]\n";
-                defIssued = true;
-                break;
-            }
-            if (defIssued) break;
-        }
-
-        // Offensive advance (owned -> enemy/neutral)
-        bool offIssued = false;
-        for (auto* src : *ownedTerritories) {
-            if (!src) continue;
-            if (src->armyCount <= 1) continue;
-
-            for (int idx : src->adjacentIndices) {
-                Map::territoryNode* tgt = const_cast<Map::territoryNode*>(&nodes[idx]);
-                if (!tgt) continue;
-
-                Player* owner = tgt->owner;
-                if (owner == this) continue;
-                if (owner && isNegotiatedWith(owner)) continue;
-
-                int send = std::min(3, src->armyCount - 1);
-                if (send <= 0) continue;
-
-                ordersList->addOrder(new Advance(this, send, src, tgt, deckRef, mapRef));
-                cout << "  -> Advance(" << send << ", " << src->name
-                     << ", " << tgt->name << ") [attack]\n";
-                offIssued = true;
-                break;
-            }
-            if (offIssued) break;
-        }
+        cout << "[Player::issueOrder] No strategy set for player " << *name << ". Cannot issue orders.\n";
     }
-
-    // 3) CARD: same as before
-    if (hand && hand->size() > 0) {
-        auto* c = hand->getCards()->front();
-        cout << "  -> Playing card: " << c->getType() << "\n";
-        if (deckRef) {
-            c->play(this, deckRef, hand);
-        } else {
-            hand->removeCard(c);
-            cout << "     (No deck set on player; removed card from hand only)\n";
-        }
-    }
-
-    cout << "[Player::issueOrder] " << *name << " finished issuing orders.\n";
 }
 
 
@@ -191,72 +114,26 @@ void Player::addCard(Card* c) {
 }
 
 //toDefend() method: returns a list of territories that are to be defended
-//Currently arbitrary
+//Part 1: Delegate to strategy if available
 vector<Map::territoryNode*> Player::toDefend() const {
-    cout << "[Player::toDefend] " << *name << " chooses territories to defend.\n";
-
-    vector<Map::territoryNode*> defend = *ownedTerritories;
-    if (!mapRef || defend.empty()) return defend;
-
-    auto enemyNeighborCount = [&](Map::territoryNode* t) -> int {
-        int cnt = 0;
-        for (int ni : t->adjacentIndices) {
-            const auto& neigh = mapRef->getTerritoryNodes()[ni];
-            if (neigh.owner != this) ++cnt;
-        }
-        return cnt;
-    };
-
-    sort(defend.begin(), defend.end(),
-         [&](Map::territoryNode* a, Map::territoryNode* b) {
-             int ea = enemyNeighborCount(a);
-             int eb = enemyNeighborCount(b);
-             if (ea != eb) return ea > eb;       // more enemy pressure first
-             return a->armyCount < b->armyCount; // then weakest first
-         });
-
-    return defend;
+    if (strategy) {
+        return strategy->toDefend();
+    }
+    // Fallback: return all owned territories
+    cout << "[Player::toDefend] No strategy set; returning all owned territories.\n";
+    return ownedTerritories ? *ownedTerritories : vector<Map::territoryNode*>();
 }
 
 
 //toAttack() method: returns a list of territories that are to be attacked
+//Part 1: Delegate to strategy if available
 vector<Map::territoryNode*> Player::toAttack() const {
-    cout << "[Player::toAttack] " << *name << " chooses territories to attack.\n";
-
-    vector<Map::territoryNode*> attack;
-    if (!mapRef || !ownedTerritories || ownedTerritories->empty()) return attack;
-
-    auto& nodes = mapRef->getTerritoryNodes();
-
-    auto pushUnique = [&](Map::territoryNode* t) {
-        if (!t) return;
-        if (find(attack.begin(), attack.end(), t) == attack.end())
-            attack.push_back(t);
-    };
-
-    for (auto* owned : *ownedTerritories) {
-        for (int ni : owned->adjacentIndices) {
-            Map::territoryNode* neigh = const_cast<Map::territoryNode*>(&nodes[ni]);
-            if (!neigh) continue;
-
-            Player* enemyOwner = neigh->owner;
-
-            // must be enemy or neutral
-            if (enemyOwner == this) continue;
-            // cannot attack negotiated partner
-            if (enemyOwner && isNegotiatedWith(enemyOwner)) continue;
-
-            pushUnique(neigh);
-        }
+    if (strategy) {
+        return strategy->toAttack();
     }
-
-    // optional: weakest target first
-    sort(attack.begin(), attack.end(),
-         [](Map::territoryNode* a, Map::territoryNode* b){
-             return a->armyCount < b->armyCount;
-         });
-
-    return attack;
+    // Fallback: return empty list
+    cout << "[Player::toAttack] No strategy set; returning empty attack list.\n";
+    return vector<Map::territoryNode*>();
 }
 
 // Getters
@@ -311,6 +188,18 @@ void Player::setConqueredThisTurn(bool conquered) {
 
 bool Player::hasConqueredThisTurn() const {
     return *conqueredTerritoryThisTurn;
+}
+
+//Part 1- Strategy pattern: set and get strategy
+void Player::setStrategy(PlayerStrategy* newStrategy) {
+    strategy = newStrategy;
+    if (strategy) {
+        strategy->setPlayer(this);
+    }
+}
+
+PlayerStrategy* Player::getStrategy() const {
+    return strategy;
 }
 
 //stream insertion operator

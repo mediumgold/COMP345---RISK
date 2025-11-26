@@ -9,6 +9,7 @@
 #include "Map.h"
 #include "Cards.h"
 #include "LoggingObserver.h" //Added by Nathan for A2
+#include "PlayerStrategies.h" //Part 1: Strategy pattern
 #include <algorithm>
 #include <cctype>
 #include <filesystem>
@@ -410,6 +411,26 @@ void GameEngine::startupPhase(CommandProcessor& commandProcessor, const std::str
                 {
                     player->addCard(card);
                 }
+            }
+        }
+
+        // Part 1: Assign strategies to players
+        // First player = Human, second = Aggressive, third = Benevolent, others = Neutral
+        for (size_t i = 0; i < players.size(); ++i)
+        {
+            Player* pl = players[i].get();
+            if (i == 0) {
+                pl->setStrategy(new HumanPlayerStrategy(pl));
+                std::cout << "[StartupPhase] Assigned HumanPlayerStrategy to " << pl->getName() << "\n";
+            } else if (i == 1) {
+                pl->setStrategy(new AggressivePlayerStrategy(pl));
+                std::cout << "[StartupPhase] Assigned AggressivePlayerStrategy to " << pl->getName() << "\n";
+            } else if (i == 2) {
+                pl->setStrategy(new BenevolentPlayerStrategy(pl));
+                std::cout << "[StartupPhase] Assigned BenevolentPlayerStrategy to " << pl->getName() << "\n";
+            } else {
+                pl->setStrategy(new NeutralPlayerStrategy(pl));
+                std::cout << "[StartupPhase] Assigned NeutralPlayerStrategy to " << pl->getName() << "\n";
             }
         }
 
