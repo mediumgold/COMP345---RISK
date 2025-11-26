@@ -83,6 +83,7 @@ Player::~Player() {
     //part 4 - Delete new fields
     delete cannotAttackPlayers;
     delete conqueredTerritoryThisTurn;
+    delete strategy;
 }
 
 //issueOrder() method adds the given order to the player's OrdersList
@@ -192,8 +193,16 @@ bool Player::hasConqueredThisTurn() const {
 
 //Part 1- Strategy pattern: set and get strategy
 void Player::setStrategy(PlayerStrategy* newStrategy) {
+    //delete the old strategy first (if it exists)
+    if (strategy != nullptr && strategy != newStrategy) {
+        delete strategy;
+    }
+
+    //now assign the new strategy
     strategy = newStrategy;
-    if (strategy) {
+
+    //set the player reference in the new strategy
+    if (strategy != nullptr) {
         strategy->setPlayer(this);
     }
 }
