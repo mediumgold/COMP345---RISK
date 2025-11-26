@@ -70,7 +70,7 @@ void HumanPlayerStrategy::issueOrder() {
 
         if (amount > 0) {
             p->getOrdersList()->addOrder(new Deploy(p, amount, defendList[idx]));
-            p->removeFromReinforcementPool(amount);
+            // FIX: Don't remove from pool here - Deploy::execute() handles it
             cout << "  -> Deploy(" << amount << ", " << defendList[idx]->name << ")\n";
         }
     }
@@ -150,246 +150,346 @@ void HumanPlayerStrategy::issueOrder() {
     cout << "[HumanPlayerStrategy] " << p->getName() << " finished issuing orders.\n\n";
 }
 
-// Aggressive strategy: Deploy or advance armies on the strongest territory, then always enemy territories. Use any cards with aggressive behaviour.
-void AggressivePlayerStrategy::issueOrder() {
-    toDefend();
-    toAttack();
+// ============================================================================
+// AGGRESSIVE PLAYER STRATEGY
+// Focus on strongest territory, always attack
+// Deploy/advance armies on strongest territory, then attack enemy territories
+// ============================================================================
 
-    // Use any Aggressive cards in hand (e.g., Airlift, Bomb).
-    if (p->getHand() && p->getHand()->size() > 0) {
-        vector<int> cardsToPlay;
-        for (size_t i = 0; i < p->getHand()->size(); ++i) {
-            Card* card = p->getHand()->getCards()->at(i);
-            if (card->getType() == "airlift" || card->getType() == "bomb") {
-                cardsToPlay.push_back(i);
-            }
-        }
+vector<Map::territoryNode*> AggressivePlayerStrategy::toDefend() {
+    vector<Map::territoryNode*> result;
+    if (!p || !p->getOwnedTerritories() || p->getOwnedTerritories()->empty()) return result;
 
-        // Play the identified cards.
-        for (int index : cardsToPlay) {
-            Card* card = p->getHand()->getCards()->at(index);
-            if (p->getDeck()) {
-                card->play(p, p->getDeck(), p->getHand());
-            } else {
-                p->getHand()->removeCard(card);
-            }
+    // Find the strongest territory (most armies)
+    Map::territoryNode* strongest = nullptr;
+    int maxArmies = -1;
+    for (auto* t : *p->getOwnedTerritories()) {
+        if (t && t->armyCount > maxArmies) {
+            maxArmies = t->armyCount;
+            strongest = t;
         }
     }
+
+    if (strongest) {
+        result.push_back(strongest);
+    }
+    return result;
 }
 
 vector<Map::territoryNode*> AggressivePlayerStrategy::toAttack() {
     vector<Map::territoryNode*> result;
     if (!p || !p->getMap() || !p->getOwnedTerritories()) return result;
 
-    // For each owned territory: if it has an adjacent enemy territory, advance all its enemies to the strongest one.
     auto& nodes = p->getMap()->getTerritoryNodes();
-    for (auto* src : *p->getOwnedTerritories()) {
-        if (!src) continue;
-        if (src->armyCount <= 1) continue;
 
-        // Find the strongest adjacent enemy territory.
-        Map::territoryNode* strongestEnemy = nullptr;
-        int maxArmies = -1;
-
-        for (int idx : src->adjacentIndices) {
-            Map::territoryNode* adjacentTerritory = const_cast<Map::territoryNode*>(&nodes[idx]);
-            if (!adjacentTerritory || adjacentTerritory->owner == p) continue;
-            if (p->isNegotiatedWith(adjacentTerritory->owner)) continue;
-
-            if (adjacentTerritory->armyCount > maxArmies) {
-                maxArmies = adjacentTerritory->armyCount;
-                strongestEnemy = adjacentTerritory;
+    // Find ALL adjacent enemy territories from our owned territories
+    for (auto* owned : *p->getOwnedTerritories()) {
+        if (!owned) continue;
+        for (int idx : owned->adjacentIndices) {
+            Map::territoryNode* neigh = const_cast<Map::territoryNode*>(&nodes[idx]);
+            if (!neigh || neigh->owner == p) continue;
+            if (p->isNegotiatedWith(neigh->owner)) continue;
+            if (find(result.begin(), result.end(), neigh) == result.end()) {
+                result.push_back(neigh);
             }
         }
-
-        if (strongestEnemy) {
-            int move = src->armyCount - 1; // Move all but one army.
-            p->getOrdersList()->addOrder(new Advance(p, move, src, strongestEnemy, p->getDeck(), p->getMap()));
-            if (find(result.begin(), result.end(), strongestEnemy) == result.end())
-                result.push_back(strongestEnemy);
-        }
     }
     return result;
 }
 
-vector<Map::territoryNode*> AggressivePlayerStrategy::toDefend() {
-    vector<Map::territoryNode*> result;
-    if (!p || !p->getOwnedTerritories()) return result;
+void AggressivePlayerStrategy::issueOrder() {
+    if (!p || !p->getMap()) return;
 
-    // Find the strongest territory.
-    Map::territoryNode* strongest = nullptr;
+    auto& nodes = p->getMap()->getTerritoryNodes();
+
+    // Find the strongest territory that HAS adjacent enemies (for attacking)
+    Map::territoryNode* attackSource = nullptr;
+    Map::territoryNode* attackTarget = nullptr;
     int maxArmies = -1;
+
     for (auto* t : *p->getOwnedTerritories()) {
-        if (t->armyCount > maxArmies) {
+        if (!t) continue;
+
+        // Check if this territory has any adjacent enemies
+        Map::territoryNode* adjacentEnemy = nullptr;
+        for (int idx : t->adjacentIndices) {
+            Map::territoryNode* neigh = const_cast<Map::territoryNode*>(&nodes[idx]);
+            if (!neigh || neigh->owner == p) continue;
+            if (p->isNegotiatedWith(neigh->owner)) continue;
+            adjacentEnemy = neigh;
+            break;
+        }
+
+        // If this territory has enemies AND is stronger than current best, use it
+        if (adjacentEnemy && t->armyCount > maxArmies) {
             maxArmies = t->armyCount;
-            strongest = t;
+            attackSource = t;
+            attackTarget = adjacentEnemy;
         }
     }
 
-    // Add all reinforcements to the strongest territory.
-    if (strongest && p->getReinforcementPool() > 0) {
-        p->getOrdersList()->addOrder(new Deploy(p, p->getReinforcementPool(), strongest));
-        p->setReinforcementPool(0);
-        result.push_back(strongest);
+    // If no territory with adjacent enemies found, just find strongest for deployment
+    Map::territoryNode* deployTarget = attackSource;
+    if (!deployTarget) {
+        for (auto* t : *p->getOwnedTerritories()) {
+            if (!deployTarget || (t && t->armyCount > deployTarget->armyCount)) {
+                deployTarget = t;
+            }
+        }
     }
-    return result;
-}
 
-// Benevolent strategy: Deploy or advance armies on the weakest territories, never attack. Use any cards with benevolent behaviour.
-void BenevolentPlayerStrategy::issueOrder() {
-    toDefend();
-    // Don't attack.
+    if (!deployTarget) {
+        cout << "[Aggressive] " << p->getName() << " has no territories.\n";
+        return;
+    }
 
-    // Use any Benevolent cards in hand (e.g., Diplomacy, Blockade], Reinforcement).
+    // Step 1: Deploy ALL reinforcements to the attack source (or strongest if no attack possible)
+    int deployedAmount = 0;
+    if (p->getReinforcementPool() > 0) {
+        deployedAmount = p->getReinforcementPool();
+        p->getOrdersList()->addOrder(new Deploy(p, deployedAmount, deployTarget));
+        // FIX: Don't modify reinforcement pool - Deploy::execute() handles it
+        cout << "[Aggressive] " << p->getName() << " deploys " << deployedAmount
+             << " armies to " << deployTarget->name << endl;
+    }
+
+    // Step 2: Attack if we have a valid source and target
+    if (attackSource && attackTarget) {
+        // Calculate effective armies (current + pending deployment if same territory)
+        int effectiveArmies = attackSource->armyCount;
+        if (attackSource == deployTarget) {
+            effectiveArmies += deployedAmount;
+        }
+
+        if (effectiveArmies > 1) {
+            int moveArmies = effectiveArmies - 1;  // Leave 1 behind
+            p->getOrdersList()->addOrder(
+                new Advance(p, moveArmies, attackSource, attackTarget, p->getDeck(), p->getMap())
+            );
+            cout << "[Aggressive] " << p->getName() << " advances " << moveArmies
+                 << " from " << attackSource->name << " to " << attackTarget->name << endl;
+        }
+    } else {
+        cout << "[Aggressive] " << p->getName() << " has no adjacent enemies to attack.\n";
+    }
+
+    // Step 3: Play aggressive cards (bomb, airlift)
+    // FIX: Collect cards first, then play (to avoid index invalidation)
     if (p->getHand() && p->getHand()->size() > 0) {
-        vector<int> cardsToPlay;
+        vector<Card*> cardsToPlay;
         for (size_t i = 0; i < p->getHand()->size(); ++i) {
             Card* card = p->getHand()->getCards()->at(i);
-            if (card->getType() == "diplomacy" || card->getType() == "blockade" || card->getType() == "reinforcement") {
-                cardsToPlay.push_back(i);
+            if (card->getType() == "airlift" || card->getType() == "bomb") {
+                cardsToPlay.push_back(card);
             }
         }
 
-        // Play the identified cards.
-        for (int index : cardsToPlay) {
-            Card* card = p->getHand()->getCards()->at(index);
+        for (Card* card : cardsToPlay) {
             if (p->getDeck()) {
                 card->play(p, p->getDeck(), p->getHand());
-            } else {
-                p->getHand()->removeCard(card);
             }
         }
     }
 }
 
-vector<Map::territoryNode*> BenevolentPlayerStrategy::toAttack() {
-    // Benevolent players do not attack.
-    cout << "[BenevolentPlayerStrategy::toAttack] Benevolent player " << p->getName() << " does not attack.\n";
-    return vector<Map::territoryNode*>();
-}
+// ============================================================================
+// BENEVOLENT PLAYER STRATEGY
+// Focus on weakest territories, never attack
+// Deploy/advance armies on weakest territories, never attack
+// ============================================================================
 
 vector<Map::territoryNode*> BenevolentPlayerStrategy::toDefend() {
     vector<Map::territoryNode*> result;
-    if (!p || !p->getOwnedTerritories()) return result;
+    if (!p || !p->getOwnedTerritories() || p->getOwnedTerritories()->empty()) return result;
 
-    // Find the weakest territories and reinforce them.
-    auto territories = *p->getOwnedTerritories();
-    sort(territories.begin(), territories.end(),
-         [](Map::territoryNode* a, Map::territoryNode* b){
+    // Return territories sorted by army count (weakest first)
+    result = *p->getOwnedTerritories();
+    sort(result.begin(), result.end(),
+         [](Map::territoryNode* a, Map::territoryNode* b) {
              return a->armyCount < b->armyCount;
          });
-
-    int reinforcements = p->getReinforcementPool();
-    size_t index = 0;
-
-    // Distribute reinforcements to the 3 weakest territories.
-    Map::territoryNode* weakest1 = territories.size() > 0 ? territories[0] : nullptr;
-    Map::territoryNode* weakest2 = territories.size() > 1 ? territories[1] : nullptr;
-    Map::territoryNode* weakest3 = territories.size() > 2 ? territories[2] : nullptr;
-
-    int sharePerTerritory = reinforcements / 3;
-    int remainder = reinforcements % 3;
-
-    // Allocate any remainder to the weakest territory.
-    if (weakest1) {
-        int toDeploy = sharePerTerritory + remainder;
-        p->getOrdersList()->addOrder(new Deploy(p, toDeploy, weakest1));
-        reinforcements -= toDeploy;
-        remainder = max(0, remainder - 1);
-        result.push_back(weakest1);
-    }
-
-    if (weakest2) {
-        int toDeploy = sharePerTerritory;
-        p->getOrdersList()->addOrder(new Deploy(p, toDeploy, weakest2));
-        reinforcements -= toDeploy;
-        result.push_back(weakest2);
-    }
-
-    if (weakest3) {
-        int toDeploy = sharePerTerritory;
-        p->getOrdersList()->addOrder(new Deploy(p, toDeploy, weakest3));
-        reinforcements -= toDeploy;
-        result.push_back(weakest3);
-    }
-
-    p->setReinforcementPool(reinforcements);
     return result;
 }
 
-// Neutral strategy: Does nothing. If attacked, will be converted into an aggressive player.
-void NeutralPlayerStrategy::issueOrder() {
-    
-}
-
-// Neutral: does nothing in both attack and defend.
-vector<Map::territoryNode*> NeutralPlayerStrategy::toAttack() {
-    // Neutral players do nothing on their own turn.
-    cout << "[NeutralPlayerStrategy::toAttack] Neutral player "
-              << p->getName() << " does not attack.\n";
+vector<Map::territoryNode*> BenevolentPlayerStrategy::toAttack() {
+    // Benevolent players do not attack
     return vector<Map::territoryNode*>();
 }
+
+void BenevolentPlayerStrategy::issueOrder() {
+    if (!p) return;
+
+    // Step 1: Deploy reinforcements to weakest territories
+    auto defendList = toDefend();
+    int reinforcements = p->getReinforcementPool();
+
+    if (!defendList.empty() && reinforcements > 0) {
+        // Distribute to the 3 weakest territories
+        int numTargets = min(3, (int)defendList.size());
+        int sharePerTerritory = reinforcements / numTargets;
+        int remainder = reinforcements % numTargets;
+
+        for (int i = 0; i < numTargets; ++i) {
+            int toDeploy = sharePerTerritory + (i == 0 ? remainder : 0);
+            if (toDeploy > 0) {
+                p->getOrdersList()->addOrder(new Deploy(p, toDeploy, defendList[i]));
+                cout << "[Benevolent] " << p->getName() << " deploys " << toDeploy
+                     << " armies to " << defendList[i]->name << endl;
+            }
+        }
+        // FIX: Don't modify reinforcement pool - Deploy::execute() handles it
+    }
+
+    // Step 2: NO attacks (benevolent players never attack)
+
+    // Step 3: Play benevolent cards (diplomacy, reinforcement)
+    // FIX: Collect cards first, then play (to avoid index invalidation)
+    if (p->getHand() && p->getHand()->size() > 0) {
+        vector<Card*> cardsToPlay;
+        for (size_t i = 0; i < p->getHand()->size(); ++i) {
+            Card* card = p->getHand()->getCards()->at(i);
+            if (card->getType() == "diplomacy" || card->getType() == "reinforcement") {
+                cardsToPlay.push_back(card);
+            }
+            // Note: blockade is risky for benevolent, skip it
+        }
+
+        for (Card* card : cardsToPlay) {
+            if (p->getDeck()) {
+                card->play(p, p->getDeck(), p->getHand());
+            }
+        }
+    }
+}
+
+// ============================================================================
+// NEUTRAL PLAYER STRATEGY
+// Does nothing. If attacked, becomes Aggressive (handled in Advance::execute)
+// ============================================================================
 
 vector<Map::territoryNode*> NeutralPlayerStrategy::toDefend() {
-    // Neutral players also do not actively defend (no orders issued).
-    cout << "[NeutralPlayerStrategy::toDefend] Neutral player "
-              << p->getName() << " does not defend.\n";
+    // Neutral players don't actively defend, but need territories for deployment
+    if (!p || !p->getOwnedTerritories()) return {};
+    return *p->getOwnedTerritories();
+}
+
+vector<Map::territoryNode*> NeutralPlayerStrategy::toAttack() {
+    // Neutral players do not attack
     return vector<Map::territoryNode*>();
 }
 
-// Cheater strategy: Automatically conquers all adjacent enemy territories each turn. Does not use cards.
-void CheaterPlayerStrategy::issueOrder() {
-    // Don't defend.
-    toAttack();
+void NeutralPlayerStrategy::issueOrder() {
+    if (!p) return;
+
+    // Neutral players must deploy their reinforcements (otherwise they accumulate)
+    // But they don't attack or do anything else
+    auto defendList = toDefend();
+    int reinforcements = p->getReinforcementPool();
+
+    if (!defendList.empty() && reinforcements > 0) {
+        // Deploy evenly across all territories
+        int perTerritory = reinforcements / defendList.size();
+        int remainder = reinforcements % defendList.size();
+
+        for (size_t i = 0; i < defendList.size(); ++i) {
+            int toDeploy = perTerritory + (i < (size_t)remainder ? 1 : 0);
+            if (toDeploy > 0) {
+                p->getOrdersList()->addOrder(new Deploy(p, toDeploy, defendList[i]));
+            }
+        }
+        // FIX: Don't modify reinforcement pool - Deploy::execute() handles it
+    }
+
+    cout << "[Neutral] " << p->getName() << " does nothing this turn.\n";
+}
+
+// ============================================================================
+// CHEATER PLAYER STRATEGY
+// Automatically conquers all adjacent enemy territories (no combat)
+// ============================================================================
+
+vector<Map::territoryNode*> CheaterPlayerStrategy::toDefend() {
+    // Cheater doesn't focus on defense
+    if (!p || !p->getOwnedTerritories()) return {};
+    return *p->getOwnedTerritories();
 }
 
 vector<Map::territoryNode*> CheaterPlayerStrategy::toAttack() {
-    vector<Map::territoryNode*> territoriesToConquer;
-    if (!p || !p->getMap() || !p->getOwnedTerritories()) return territoriesToConquer;
+    vector<Map::territoryNode*> result;
+    if (!p || !p->getMap() || !p->getOwnedTerritories()) return result;
 
     auto& nodes = p->getMap()->getTerritoryNodes();
 
-    // Identify all adjacent enemy territories.
-    for (auto* src : *p->getOwnedTerritories()) {
-        if (!src) continue;
-
-        for (int idx : src->adjacentIndices) {
-            Map::territoryNode* adjacentTerritory = const_cast<Map::territoryNode*>(&nodes[idx]);
-            if (!adjacentTerritory || adjacentTerritory->owner == p) continue;
-
-            // Mark this territory for conquest (only once per territory).
-            if (find(territoriesToConquer.begin(), territoriesToConquer.end(), adjacentTerritory) == territoriesToConquer.end()) {
-                territoriesToConquer.push_back(adjacentTerritory);
+    // Find all adjacent enemy territories
+    for (auto* owned : *p->getOwnedTerritories()) {
+        if (!owned) continue;
+        for (int idx : owned->adjacentIndices) {
+            Map::territoryNode* neigh = const_cast<Map::territoryNode*>(&nodes[idx]);
+            if (!neigh || neigh->owner == p) continue;
+            if (find(result.begin(), result.end(), neigh) == result.end()) {
+                result.push_back(neigh);
             }
         }
     }
-
-    // Conquer all identified territories (only once per turn).
-    for (auto* target : territoriesToConquer) {
-        // Conquer the territory with 1 more army than it has.
-        int armiesToMove = target->armyCount + 1;
-        // Find a source territory to move from
-        Map::territoryNode* source = nullptr;
-        for (auto* src : *p->getOwnedTerritories()) {
-            for (int idx : src->adjacentIndices) {
-                if (&nodes[idx] == target) {
-                    source = src;
-                    break;
-                }
-            }
-            if (source) break;
-        }
-        if (source && source->armyCount > 1) {
-            p->getOrdersList()->addOrder(new Advance(p, min(armiesToMove, source->armyCount - 1), source, target, p->getDeck(), p->getMap()));
-        }
-    }
-    return territoriesToConquer;
+    return result;
 }
 
-// Cheater: no defensive logic, only auto-conquer in toAttack().
-vector<Map::territoryNode*> CheaterPlayerStrategy::toDefend() {
-    // Cheater focuses only on aggressive auto-conquest; no defensive orders.
-    cout << "[CheaterPlayerStrategy::toDefend] Cheater player "
-              << p->getName() << " does not defend.\n";
-    return vector<Map::territoryNode*>();
+void CheaterPlayerStrategy::issueOrder() {
+    if (!p || !p->getMap()) return;
+
+    // Step 1: Deploy reinforcements (even cheaters need to deploy)
+    auto defendList = toDefend();
+    if (!defendList.empty() && p->getReinforcementPool() > 0) {
+        int amount = p->getReinforcementPool();
+        p->getOrdersList()->addOrder(new Deploy(p, amount, defendList[0]));
+        // FIX: Don't modify reinforcement pool - Deploy::execute() handles it
+    }
+
+    // Step 2: CHEAT - Automatically conquer all adjacent enemy territories
+    // Cheater doesn't use Advance orders with combat - directly takes ownership
+    auto& nodes = p->getMap()->getTerritoryNodes();
+    vector<Map::territoryNode*> toConquer;
+
+    // Collect all adjacent enemy territories
+    for (auto* owned : *p->getOwnedTerritories()) {
+        if (!owned) continue;
+        for (int idx : owned->adjacentIndices) {
+            Map::territoryNode* target = const_cast<Map::territoryNode*>(&nodes[idx]);
+            if (!target || target->owner == p) continue;
+            if (find(toConquer.begin(), toConquer.end(), target) == toConquer.end()) {
+                toConquer.push_back(target);
+            }
+        }
+    }
+
+    // Conquer them directly (cheating!)
+    for (auto* target : toConquer) {
+        Player* previousOwner = target->owner;
+
+        // Remove from previous owner's territory list
+        if (previousOwner) {
+            auto* prevTerritories = const_cast<vector<Map::territoryNode*>*>(previousOwner->getOwnedTerritories());
+            if (prevTerritories) {
+                prevTerritories->erase(
+                    remove(prevTerritories->begin(), prevTerritories->end(), target),
+                    prevTerritories->end()
+                );
+            }
+        }
+
+        // Add to cheater's territory list
+        target->owner = p;
+        p->addTerritory(target);
+
+        // Set army count to 1 (conquered with minimal force)
+        target->armyCount = 1;
+
+        cout << "[Cheater] " << p->getName() << " automatically conquers "
+             << target->name << " from "
+             << (previousOwner ? previousOwner->getName() : "neutral") << "!\n";
+    }
+
+    if (toConquer.empty()) {
+        cout << "[Cheater] " << p->getName() << " has no adjacent enemies to conquer.\n";
+    }
 }
