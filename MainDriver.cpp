@@ -20,6 +20,8 @@
 using namespace std;
 
 void testMainGameLoop();
+void testTournament();
+void testTournamentInteractive();
 
 static void printUsage(const char* prog) {
     cout << "Usage:\n"
@@ -102,6 +104,9 @@ int main(int argc, char* argv[]) {
         // ---------- PART 5: Order Execution ----------
         cout << "\n>>> PART 5: Game log Observer<<<\n";
         testLoggingObserver();
+// Tournament
+        testTournament();
+        testTournamentInteractive();
     }
 
     catch (const std::exception& e) {
