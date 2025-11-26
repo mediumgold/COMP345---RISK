@@ -1,5 +1,6 @@
 //
 // Created by Nathan on 2025-10-05.
+// Updated for Assignment 3 Part 2: Tournament Mode
 //
 
 #include "GameEngine.h"
@@ -8,8 +9,8 @@
 #include "Player.h"
 #include "Map.h"
 #include "Cards.h"
-#include "LoggingObserver.h" //Added by Nathan for A2
-#include "PlayerStrategies.h" //Part 1: Strategy pattern
+#include "LoggingObserver.h"
+#include "PlayerStrategies.h"
 #include <algorithm>
 #include <cctype>
 #include <filesystem>
@@ -21,6 +22,8 @@
 #include <system_error>
 #include <unordered_set>
 #include <unordered_map>
+#include <fstream>
+#include <iomanip>
 
 namespace fs = std::filesystem;
 
@@ -157,6 +160,21 @@ fs::path resolveMapPath(const std::vector<std::string>& availableMaps,
     return {};
 }
 
+// Part 2: Helper to create strategy based on name
+PlayerStrategy* createStrategy(const std::string& strategyName, Player* player) {
+    std::string lower = toLowerCopy(strategyName);
+    if (lower == "aggressive") {
+        return new AggressivePlayerStrategy(player);
+    } else if (lower == "benevolent") {
+        return new BenevolentPlayerStrategy(player);
+    } else if (lower == "neutral") {
+        return new NeutralPlayerStrategy(player);
+    } else if (lower == "cheater") {
+        return new CheaterPlayerStrategy(player);
+    }
+    return nullptr;
+}
+
 }
 
 
@@ -227,12 +245,12 @@ bool GameEngine::apply(const std::string& cmd) {
 
     auto itCmd = itState->second.find(cmd);  //equal to the value of the inner unordered map ( (key) state, (value) [ (key) string , (value) state ])
 
-    if (itCmd == itState->second.end())  
+    if (itCmd == itState->second.end())
     {
         return false;
     }
 
-    //apply transition 
+    //apply transition
     current = itCmd->second;
     notify(*this);     // Nathan: log game state
     return true;
@@ -241,6 +259,277 @@ bool GameEngine::apply(const std::string& cmd) {
 //Nathan: stringToLog override method for GameEngine
 std::string GameEngine::stringToLog() const {
     return std::string("GameEngine::state -> ") + GameEngine::name(current);
+}
+
+// Part 2: Reset game state for new tournament game
+void GameEngine::resetGameState() {
+    current = State::Start;
+    mapLoaded = false;
+    mapValidated = false;
+    loadedMap.reset();
+    players.clear();
+    deck.reset();
+}
+
+// Part 2: Tournament Mode Implementation
+
+void GameEngine::tournamentMode(const TournamentParameters& params, const std::string& mapDirectory) {
+    std::cout << "TOURNAMENT MODE STARTING                    \n";
+
+    // Results table: results[mapIndex][gameIndex] = winner name or "Draw"
+    std::vector<std::vector<std::string>> results;
+    results.resize(params.mapFiles.size());
+    for (auto& row : results) {
+        row.resize(params.numberOfGames);
+    }
+
+    // For each map
+    for (size_t mapIdx = 0; mapIdx < params.mapFiles.size(); ++mapIdx) {
+        const std::string& mapFile = params.mapFiles[mapIdx];
+        std::cout << "\n--- Playing on Map: " << mapFile << " ---\n";
+
+        // For each game on this map
+        for (int gameNum = 0; gameNum < params.numberOfGames; ++gameNum) {
+            std::cout << "\n=== Map " << (mapIdx + 1) << "/" << params.mapFiles.size()
+                      << ", Game " << (gameNum + 1) << "/" << params.numberOfGames << " ===\n";
+
+            // Run the game and get the winner
+            std::string winner = runSingleGame(mapFile, params.playerStrategies,
+                                                params.maxTurns, mapDirectory);
+
+            results[mapIdx][gameNum] = winner;
+
+            std::cout << "Result: " << winner << "\n";
+        }
+    }
+
+    //output results to console and log file
+    outputTournamentResults(params, results);
+}
+
+std::string GameEngine::runSingleGame(const std::string& mapFile,
+                                       const std::vector<std::string>& strategies,
+                                       int maxTurns,
+                                       const std::string& mapDirectory) {
+    //reset game state
+    resetGameState();
+
+    //collect available maps
+    std::vector<std::string> availableMaps = collectMapFiles(mapDirectory);
+
+    //1. Load the map
+    fs::path mapPath = resolveMapPath(availableMaps, mapFile, mapDirectory);
+    if (mapPath.empty()) {
+        std::cout << "[Tournament] Failed to find map: " << mapFile << "\n";
+        return "Draw";  // Map not found, treat as draw
+    }
+
+    try {
+        MapLoader loader(mapPath.string());
+        loadedMap = std::make_unique<Map>(loader.getMap());
+        mapLoaded = true;
+        std::cout << "[Tournament] Loaded map: " << loadedMap->getName() << "\n";
+    } catch (const std::exception& e) {
+        std::cout << "[Tournament] Failed to load map: " << e.what() << "\n";
+        return "Draw";
+    }
+
+    //2. Validate the map
+    if (!loadedMap->validate()) {
+        std::cout << "[Tournament] Map validation failed for: " << mapFile << "\n";
+        return "Draw";
+    }
+    mapValidated = true;
+    std::cout << "[Tournament] Map validated successfully.\n";
+
+    //3. Create players with specified strategies
+    deck = std::make_unique<Deck>(STARTING_DECK_SIZE);
+
+    for (size_t i = 0; i < strategies.size(); ++i) {
+        std::string playerName = strategies[i] + "_Player" + std::to_string(i + 1);
+        players.push_back(std::make_unique<Player>(playerName));
+
+        Player* p = players.back().get();
+        PlayerStrategy* strategy = createStrategy(strategies[i], p);
+        if (strategy) {
+            p->setStrategy(strategy);
+            std::cout << "[Tournament] Created player: " << playerName
+                      << " with " << strategies[i] << " strategy\n";
+        }
+    }
+
+    //4. Distribute territories fairly
+    auto& territories = loadedMap->getTerritoryNodes();
+    if (territories.empty()) {
+        std::cout << "[Tournament] No territories in map.\n";
+        return "Draw";
+    }
+
+    std::random_device rd;
+    std::mt19937 rng(rd());
+
+    //shuffle player order
+    std::shuffle(players.begin(), players.end(), rng);
+
+    //shuffle territory indices
+    std::vector<size_t> territoryIndices(territories.size());
+    std::iota(territoryIndices.begin(), territoryIndices.end(), 0);
+    std::shuffle(territoryIndices.begin(), territoryIndices.end(), rng);
+
+    // Clear existing territories and distribute
+    for (auto& player : players) {
+        player->clearTerritories();
+        player->setReinforcementPool(0);
+    }
+
+    for (size_t i = 0; i < territoryIndices.size(); ++i) {
+        Map::territoryNode* territory = &territories[territoryIndices[i]];
+        Player* owner = players[i % players.size()].get();
+        owner->addTerritory(territory);
+        territory->owner = owner;
+    }
+
+    //5. Initialize players with reinforcements, cards, and references
+    for (auto& player : players) {
+        player->setDeck(deck.get());
+        player->setReinforcementPool(INITIAL_REINFORCEMENT_POOL);
+        player->setMap(loadedMap.get());
+
+        for (int i = 0; i < INITIAL_CARD_DRAW; ++i) {
+            if (Card* card = deck->draw()) {
+                player->addCard(card);
+            }
+        }
+    }
+
+    std::cout << "[Tournament] Game setup complete. " << players.size() << " players, "
+              << territories.size() << " territories.\n";
+
+    //6. Set state to AssignReinforcement
+    current = State::AssignReinforcement;
+
+    //7. Run the game loop
+    std::cout << "\n--- Starting Game Loop (max " << maxTurns << " turns) ---\n";
+
+    for (int turn = 1; turn <= maxTurns; ++turn) {
+        std::cout << "\n--- Turn " << turn << "/" << maxTurns << " ---\n";
+
+        // Reinforcement phase
+        reinforcementPhase();
+
+        // Issue orders phase
+        issueOrdersPhase();
+
+        // Execute orders phase
+        executeOrdersPhase();
+
+        // Check for winner
+        size_t winnerIdx = static_cast<size_t>(-1);
+        if (isGameOver(&winnerIdx)) {
+            std::string winnerName = players[winnerIdx]->getName();
+            // Extract just the strategy name (before _Player)
+            size_t pos = winnerName.find("_Player");
+            if (pos != std::string::npos) {
+                winnerName = winnerName.substr(0, pos);
+            }
+            std::cout << "\n*** WINNER: " << winnerName << " ***\n";
+            return winnerName;
+        }
+
+        // Check if only one player remains (others eliminated)
+        if (players.size() == 1) {
+            std::string winnerName = players[0]->getName();
+            size_t pos = winnerName.find("_Player");
+            if (pos != std::string::npos) {
+                winnerName = winnerName.substr(0, pos);
+            }
+            std::cout << "\n*** WINNER (last standing): " << winnerName << " ***\n";
+            return winnerName;
+        }
+
+        // Check if no players left
+        if (players.empty()) {
+            std::cout << "\n*** No players remaining - Draw ***\n";
+            return "Draw";
+        }
+    }
+
+    // Max turns reached without a winner
+    std::cout << "\n*** Max turns (" << maxTurns << ") reached - Draw ***\n";
+    return "Draw";
+}
+
+void GameEngine::outputTournamentResults(const TournamentParameters& params,
+                                          const std::vector<std::vector<std::string>>& results) {
+    std::ostringstream output;
+
+    output << "\n";
+    output << "=========================================================\n";
+    output << "              Tournament Results                          \n";
+    output << "\n";
+    output << "Tournament mode:\n";
+    output << "M: ";
+    for (size_t i = 0; i < params.mapFiles.size(); ++i) {
+        output << params.mapFiles[i];
+        if (i < params.mapFiles.size() - 1) output << ", ";
+    }
+    output << "\n";
+
+    output << "P: ";
+    for (size_t i = 0; i < params.playerStrategies.size(); ++i) {
+        output << params.playerStrategies[i];
+        if (i < params.playerStrategies.size() - 1) output << ", ";
+    }
+    output << "\n";
+
+    output << "G: " << params.numberOfGames << "\n";
+    output << "D: " << params.maxTurns << "\n";
+    output << "\n";
+
+    // Calculate column widths
+    int mapColWidth = 10;
+    for (const auto& m : params.mapFiles) {
+        if (static_cast<int>(m.length()) > mapColWidth) {
+            mapColWidth = static_cast<int>(m.length());
+        }
+    }
+    mapColWidth += 2;
+
+    int gameColWidth = 12;
+
+    //Header row
+    output << "Results:\n";
+    output << std::left << std::setw(mapColWidth) << "";
+    for (int g = 0; g < params.numberOfGames; ++g) {
+        output << std::setw(gameColWidth) << ("Game " + std::to_string(g + 1));
+    }
+    output << "\n";
+
+    //Separator
+    output << std::string(mapColWidth + params.numberOfGames * gameColWidth, '-') << "\n";
+
+    //Data rows
+    for (size_t m = 0; m < params.mapFiles.size(); ++m) {
+        output << std::left << std::setw(mapColWidth) << params.mapFiles[m];
+        for (int g = 0; g < params.numberOfGames; ++g) {
+            output << std::setw(gameColWidth) << results[m][g];
+        }
+        output << "\n";
+    }
+
+
+    // Print to console
+    std::cout << output.str();
+
+    // Write to log file
+    std::ofstream logFile("gamelog.txt", std::ios::app);
+    if (logFile.is_open()) {
+        logFile << "\n" << output.str();
+        logFile.close();
+    }
+    notify(*this);
+    std::cout << "[Tournament] Results written to gamelog.txt\n";
+
 }
 
 void GameEngine::startupPhase(CommandProcessor& commandProcessor, const std::string& mapDirectory)
@@ -261,7 +550,8 @@ void GameEngine::startupPhase(CommandProcessor& commandProcessor, const std::str
         }
     }
 
-    std::cout << "[StartupPhase] Commands: loadmap <file>, validatemap, addplayer <name>, gamestart\n";
+    std::cout << "[StartupPhase] Commands: loadmap <file>, validatemap, addplayer <n>, gamestart\n";
+    std::cout << "[StartupPhase] Or use: tournament -M <maps> -P <strategies> -G <games> -D <turns>\n";
 
     commandProcessor.setState(state());
 
@@ -438,7 +728,7 @@ void GameEngine::startupPhase(CommandProcessor& commandProcessor, const std::str
         for (size_t i = 0; i < players.size(); ++i)
         {
             std::cout << "  " << (i + 1) << ". " << players[i]->getName()
-                      << " (Reinforcements: " << players[i]->getReinforcementPool()
+                      << "(Reinforcements: " << players[i]->getReinforcementPool()
                       << ", Territories: " << players[i]->getOwnedTerritories()->size() << ")\n";
         }
 
@@ -462,6 +752,21 @@ void GameEngine::startupPhase(CommandProcessor& commandProcessor, const std::str
         if (!command)
         {
             std::cout << "[StartupPhase] Received an invalid command.\n";
+            continue;
+        }
+
+        //Part 2: Handle tournament command
+        if (command->getType() == Tournament) {
+            TournamentParameters params = command->getTournamentParams();
+            if (params.isValid()) {
+                tournamentMode(params, mapDirectory);
+                //After tournament, we can either exit or return to start state
+                current = State::Start;
+                std::cout << "\n[StartupPhase] Tournament completed. Returning to start state.\n";
+                std::cout << "[StartupPhase] Enter another command or tournament.\n";
+            } else {
+                std::cout << "[StartupPhase] Invalid tournament parameters.\n";
+            }
             continue;
         }
 
@@ -525,7 +830,7 @@ void testGameStates() {
     GameEngine g;
 
     std::cout << "Current state: " << GameEngine::name(g.state()) << "\n";
-    while (g.state() != State::Finished) 
+    while (g.state() != State::Finished)
     {
 
         std::cout << "Enter command: ";
@@ -541,11 +846,11 @@ void testGameStates() {
             continue;
         }
 
-        if (g.apply(cmd)) 
+        if (g.apply(cmd))
         {
             std::cout << "OK -> " << GameEngine::name(g.state()) << "\n";
         }
-        else 
+        else
         {
             std::cout << "Invalid command from '" << GameEngine::name(g.state()) << "': " << cmd << "\n";
         }
@@ -825,5 +1130,5 @@ void GameEngine::mainGameLoop(int maxTurns) {
         std::cout << "[MainLoop] Max turns reached (" << maxTurns << "). Ending demo loop.\n";
     }
 
-    std::cout << "=== End of Main Game Loop ===\n";
+    std::cout << "End of Main Game Loop\n";
 }

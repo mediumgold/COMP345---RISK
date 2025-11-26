@@ -1,5 +1,6 @@
 //
 // Created by Nathan on 2025-10-05.
+// Updated for Assignment 3 Part 2: Tournament Mode
 //
 #ifndef COMP345_RISK_GAMEENGINE_H
 #define COMP345_RISK_GAMEENGINE_H
@@ -13,9 +14,10 @@
 #include "Player.h"
 #include "Map.h"
 #include "Cards.h"
-#include "LoggingObserver.h" //added by Nathan for A2
+#include "LoggingObserver.h"
 
 class CommandProcessor;
+struct TournamentParameters;  //forward declaration
 
 enum class State {
     Start,
@@ -27,6 +29,13 @@ enum class State {
     ExecuteOrders,
     Win,
     Finished
+};
+
+// Part 2: Structure to store tournament results
+struct TournamentResult {
+    std::string mapName;
+    int gameNumber;
+    std::string winner;  // Player name or "Draw"
 };
 
 class GameEngine : public ILoggable, public Subject {
@@ -49,15 +58,27 @@ class GameEngine : public ILoggable, public Subject {
         bool isMapLoaded() const { return mapLoaded; }
         bool isMapValidated() const { return mapValidated; }
 
-        std::string stringToLog() const override; //Nathan: override stringToLog method for GameEngine object
+        std::string stringToLog() const override;
 
         // === Part 3: Turn-loop phases ===
-        void mainGameLoop(int maxTurns = 5);      // runs Assign → Issue → Execute per turn
-        void assignReinforcementsPhase();         // computes and adds reinforcements to each player
-        void reinforcementPhase();                  // rubric name
-        void issueOrdersPhase();                  // (demo) auto-issues simple Deploy orders using reinforcementPool
-        void executeOrdersPhase();                // executes all orders for all players, clears per-turn flags
-        bool isGameOver(size_t* winnerIndex = nullptr) const; // true if one player owns all territories
+        void mainGameLoop(int maxTurns = 5);
+        void assignReinforcementsPhase();
+        void reinforcementPhase();
+        void issueOrdersPhase();
+        void executeOrdersPhase();
+        bool isGameOver(size_t* winnerIndex = nullptr) const;
+
+        // === Part 2: Tournament Mode ===
+        void tournamentMode(const TournamentParameters& params, const std::string& mapDirectory = "Maps");
+        std::string runSingleGame(const std::string& mapFile,
+                                  const std::vector<std::string>& strategies,
+                                  int maxTurns,
+                                  const std::string& mapDirectory);
+        void outputTournamentResults(const TournamentParameters& params,
+                                     const std::vector<std::vector<std::string>>& results);
+
+        // Reset game state for new game
+        void resetGameState();
 
 private:
         static constexpr int INITIAL_REINFORCEMENT_POOL = 50;
