@@ -1,0 +1,20 @@
+# ninja log v5
+54	926	7860612253666217	CMakeFiles/MainDriver.dir/MapDriver.cpp.obj	bb9ad711330c7ee8
+14	1098	7860612255559012	CMakeFiles/MainDriver.dir/Map.cpp.obj	e583046b59e196a5
+38	1008	7860612254504955	CMakeFiles/MainDriver.dir/LoggingObserver.cpp.obj	5a0497c3e42d8035
+65	1092	7860612255468516	CMakeFiles/MainDriver.dir/PlayerDriver.cpp.obj	cdfd412595e5c638
+22	1111	7860612255754765	CMakeFiles/MainDriver.dir/Orders.cpp.obj	21f13a49f95e7d3d
+18	1132	7860612255855716	CMakeFiles/MainDriver.dir/MapLoader.cpp.obj	bf32023533506103
+33	1152	7860612256078443	CMakeFiles/MainDriver.dir/CommandProcessing.cpp.obj	720d64b0fdd43fce
+43	1153	7860612256159216	CMakeFiles/MainDriver.dir/PlayerStrategies.cpp.obj	c09af832d17d0444
+5	1173	7860612256374784	CMakeFiles/MainDriver.dir/Cards.cpp.obj	c38776cc2b8c7bef
+70	1174	7860612256395406	CMakeFiles/MainDriver.dir/CardsDriver.cpp.obj	a19a1f84e0da60ed
+87	1188	7860612256521181	CMakeFiles/MainDriver.dir/LoggingObserverDriver.cpp.obj	8cbfe685206a0fdd
+76	1213	7860612256788082	CMakeFiles/MainDriver.dir/GameEngineDriver.cpp.obj	d3d5011b6ce5265b
+81	1276	7860612257403195	CMakeFiles/MainDriver.dir/CommandProcessingDriver.cpp.obj	26523813a0fb9406
+59	1306	7860612257712184	CMakeFiles/MainDriver.dir/OrdersDriver.cpp.obj	1859a8b2607fdb24
+1885	2704	7860612267879069	MainDriver.exe	f8bc09fabc445ed2
+27	1328	7860612257946368	CMakeFiles/MainDriver.dir/Player.cpp.obj	303a7ab270c55658
+49	1331	7860612257978197	CMakeFiles/MainDriver.dir/MainDriver.cpp.obj	37cf61e2ea114e7a
+92	1410	7860612258775232	CMakeFiles/MainDriver.dir/TournamentDriver.cpp.obj	c81e84da50a6ff83
+9	1885	7860612263499302	CMakeFiles/MainDriver.dir/GameEngine.cpp.obj	efef6340657f44b2

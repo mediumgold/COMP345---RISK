@@ -16,6 +16,7 @@
 #include "CommandProcessing.h"
 #include "CommandProcessingDriver.h"
 #include "LoggingObserverDriver.h"
+#include "LoggingObserver.h"
 
 using namespace std;
 

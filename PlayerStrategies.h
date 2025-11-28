@@ -10,7 +10,7 @@
 
 class PlayerStrategy {
 public:
-    Player* p;
+    Player* p = nullptr;
     virtual ~PlayerStrategy() = default;
     
     void setPlayer(Player* player) { p = player; }

@@ -198,8 +198,10 @@ void testMainGameLoop() {
     cout << "=== End Part 3 Driver ===\n";
 }
 
+/*
 int main(int argc, char* argv[]) {
 //    testStartupPhase();
     testMainGameLoop();
 }
+*/
 

@@ -1077,9 +1077,11 @@ OrdersList& OrdersList::operator=(const OrdersList& other) {
 void OrdersList::addOrder(Order* order) {
     if (order != nullptr) {
         orders->push_back(order);
-        //Nathan:
-        notify(*this);                         // Log order
-        if (order) order->notify(*order);      // Log order content
+        //Nathan: Attach all observers from OrdersList to the order
+        for (Observer* obs : getObservers()) {
+            order->attach(obs);
+        }
+        notify(*this);                         // Log order added to list
     }
 
 }

@@ -5,16 +5,23 @@
 #include "Player.h"
 #include "Map.h"
 #include "Cards.h"
+#include "Orders.h"
 #include <iostream>
 using namespace std;
 
-/*
 void testPlayers() {
     cout << "=== Part 2: Player Demo ===\n";
 
     // Simulate territories (from Map)
-    Map::territoryNode quebec{"Quebec", "North America", {1}};
-    Map::territoryNode ontario{"Ontario", "North America", {0}};
+    Map::territoryNode quebec;   // default ctor sets armyCount=0, owner=nullptr
+    quebec.name = "Quebec";
+    quebec.continent = "North America";
+    quebec.adjacentIndices.push_back(1);
+
+    Map::territoryNode ontario;
+    ontario.name = "Ontario";
+    ontario.continent = "North America";
+    ontario.adjacentIndices.push_back(0);
 
     // Create a player
     Player alice("Alice");
@@ -51,7 +58,7 @@ void testPlayers() {
     for (auto* t : attackList) cout << t->name << " ";
 
     cout << "\n\n=== End of Part 2 Demo ===\n";
-} */
+}
 
 /**
 int main() {

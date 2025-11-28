@@ -54,8 +54,10 @@ void testCommandProcessor(int argc, char* argv[])
     cout << *cp << endl;
 }
 
+/*
 int main(int argc, char* argv[]) {
     // Test using command processor via console or file input
    testCommandProcessor(argc, argv);
     return 0;
 }
+*/

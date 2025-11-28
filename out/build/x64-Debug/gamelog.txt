@@ -1,0 +1,220 @@
+CommandProcessor::saveCommand -> type=6 param="-M Africa.map -P Aggressive,Benevolent,Neutral,Cheater -G 2 -D 15" effect=start
+GameEngine::state -> issue orders
+OrdersList::addOrder -> size=1
+OrdersList::addOrder -> size=2
+OrdersList::addOrder -> size=3
+OrdersList::addOrder -> size=4
+OrdersList::addOrder -> size=5
+OrdersList::addOrder -> size=6
+OrdersList::addOrder -> size=7
+OrdersList::addOrder -> size=8
+OrdersList::addOrder -> size=9
+OrdersList::addOrder -> size=10
+OrdersList::addOrder -> size=11
+OrdersList::addOrder -> size=1
+OrdersList::addOrder -> size=2
+OrdersList::addOrder -> size=3
+OrdersList::addOrder -> size=1
+OrdersList::addOrder -> size=2
+OrdersList::addOrder -> size=1
+GameEngine::state -> execute orders
+GameEngine::state -> execute orders
+Order: Deploy Order: 5 army units to Burkina Faso | effect="Deployed 5 army units to Burkina Faso.Territory now has 5 armies." | executed
+Order: Deploy Order: 19 army units to DR Congo | effect="Deploy order is invalid and was not executed" | executed
+Order: Deploy Order: 53 army units to Mozambique | effect="Deploy order is invalid and was not executed" | executed
+Order: Deploy Order: 53 army units to South Africa | effect="Deployed 53 army units to South Africa.Territory now has 53 armies." | executed
+Order: Deploy Order: 5 army units to Angola | effect="Deploy order is invalid and was not executed" | executed
+Order: Deploy Order: 17 army units to Mauritania | effect="Deploy order is invalid and was not executed" | executed
+Order: Deploy Order: 5 army units to Somalia | effect="Deployed 5 army units to Somalia.Territory now has 5 armies." | executed
+Order: Deploy Order: 17 army units to Libya | effect="Deploy order is invalid and was not executed" | executed
+Order: Deploy Order: 5 army units to Niger | effect="Deployed 5 army units to Niger.Territory now has 5 armies." | executed
+Order: Deploy Order: 5 army units to Uganda | effect="Deploy order is invalid and was not executed" | executed
+Order: Deploy Order: 5 army units to Kenya | effect="Deploy order is invalid and was not executed" | executed
+Order: Deploy Order: 5 army units to Senegal | effect="Deploy order is invalid and was not executed" | executed
+Order: Deploy Order: 5 army units to Gabon | effect="Deploy order is invalid and was not executed" | executed
+Order: Deploy Order: 5 army units to Eritrea | effect="Deploy order is invalid and was not executed" | executed
+Order: Deploy Order: 4 army units to Botswana | effect="Deploy order is invalid and was not executed" | executed
+Order: Deploy Order: 4 army units to Ethiopia | effect="Deploy order is invalid and was not executed" | executed
+Order: Advance Order: 52 army units from Mozambique to Zambia | effect="Advance order is invalid and was not executed" | executed
+GameEngine::state -> assign reinforcement
+GameEngine::state -> issue orders
+OrdersList::addOrder -> size=1
+OrdersList::addOrder -> size=2
+OrdersList::addOrder -> size=3
+OrdersList::addOrder -> size=1
+OrdersList::addOrder -> size=2
+OrdersList::addOrder -> size=1
+OrdersList::addOrder -> size=2
+OrdersList::addOrder -> size=1
+GameEngine::state -> execute orders
+GameEngine::state -> execute orders
+Order: Deploy Order: 14 army units to Burkina Faso | effect="Deploy order is invalid and was not executed" | executed
+Order: Deploy Order: 28 army units to Ghana | effect="Deploy order is invalid and was not executed" | executed
+Order: Deploy Order: 56 army units to Tunisia | effect="Deploy order is invalid and was not executed" | executed
+Order: Deploy Order: 22 army units to South Africa | effect="Deployed 22 army units to South Africa.Territory now has 75 armies." | executed
+Order: Deploy Order: 14 army units to Somalia | effect="Deploy order is invalid and was not executed" | executed
+Order: Deploy Order: 28 army units to Benin | effect="Deploy order is invalid and was not executed" | executed
+Order: Deploy Order: 13 army units to Niger | effect="Deploy order is invalid and was not executed" | executed
+Order: Advance Order: 55 army units from Tunisia to Algeria | effect="Advance order is invalid and was not executed" | executed
+GameEngine::state -> win
+GameEngine::state -> issue orders
+OrdersList::addOrder -> size=1
+OrdersList::addOrder -> size=1
+OrdersList::addOrder -> size=2
+OrdersList::addOrder -> size=3
+OrdersList::addOrder -> size=1
+OrdersList::addOrder -> size=2
+OrdersList::addOrder -> size=3
+OrdersList::addOrder -> size=1
+OrdersList::addOrder -> size=2
+OrdersList::addOrder -> size=3
+OrdersList::addOrder -> size=4
+GameEngine::state -> execute orders
+GameEngine::state -> execute orders
+Order: Deploy Order: 53 army units to Angola | effect="Deployed 53 army units to Angola.Territory now has 53 armies." | executed
+Order: Deploy Order: 53 army units to Ivory Coast | effect="Deployed 53 army units to Ivory Coast.Territory now has 53 armies." | executed
+Order: Deploy Order: 27 army units to Malawi | effect="Deployed 27 army units to Malawi.Territory now has 27 armies." | executed
+Order: Deploy Order: 14 army units to Liberia | effect="Deployed 14 army units to Liberia.Territory now has 14 armies." | executed
+Order: Deploy Order: 26 army units to Madagascar | effect="Deployed 26 army units to Madagascar.Territory now has 26 armies." | executed
+Order: Deploy Order: 13 army units to Zimbabwe | effect="Deployed 13 army units to Zimbabwe.Territory now has 13 armies." | executed
+Order: Deploy Order: 5 army units to Malawi | effect="Deployed 5 army units to Malawi.Territory now has 32 armies." | executed
+Order: Deploy Order: 13 army units to Senegal | effect="Deployed 13 army units to Senegal.Territory now has 13 armies." | executed
+Order: Deploy Order: 13 army units to Mozambique | effect="Deployed 13 army units to Mozambique.Territory now has 13 armies." | executed
+Order: Advance Order: 52 army units from Ivory Coast to Mali | effect="Battle at Mali: 52 attackers vs 1 defenders. Attackers killed 1 defenders. Defenders killed 1 attackers. Territory conquered! Aggressive_Player1 now owns Mali with 51 armies." | executed
+Order: Bomb Order: target territory Mali | effect="Bomb order is invalid and was not executed" | executed
+GameEngine::state -> assign reinforcement
+GameEngine::state -> issue orders
+OrdersList::addOrder -> size=1
+OrdersList::addOrder -> size=1
+OrdersList::addOrder -> size=2
+OrdersList::addOrder -> size=1
+OrdersList::addOrder -> size=1
+GameEngine::state -> execute orders
+GameEngine::state -> execute orders
+Order: Deploy Order: 28 army units to Angola | effect="Deployed 28 army units to Angola.Territory now has 81 armies." | executed
+Order: Deploy Order: 3 army units to Guinea | effect="Deployed 3 army units to Guinea.Territory now has 3 armies." | executed
+Order: Deploy Order: 3 army units to Madagascar | effect="Deployed 3 army units to Madagascar.Territory now has 29 armies." | executed
+Order: Deploy Order: 3 army units to Liberia | effect="Deployed 3 army units to Liberia.Territory now has 17 armies." | executed
+Order: Advance Order: 2 army units from Guinea to Senegal | effect="Battle at Senegal: 2 attackers vs 1 defenders. Attackers killed 1 defenders. Defenders killed 1 attackers. Territory conquered! Aggressive_Player1 now owns Senegal with 1 armies." | executed
+GameEngine::state -> assign reinforcement
+GameEngine::state -> issue orders
+OrdersList::addOrder -> size=1
+OrdersList::addOrder -> size=1
+OrdersList::addOrder -> size=2
+OrdersList::addOrder -> size=3
+GameEngine::state -> execute orders
+GameEngine::state -> execute orders
+Order: Deploy Order: 33 army units to Angola | effect="Deployed 33 army units to Angola.Territory now has 114 armies." | executed
+Order: Deploy Order: 3 army units to Sierra Leone | effect="Deployed 3 army units to Sierra Leone.Territory now has 3 armies." | executed
+Order: Advance Order: 2 army units from Sierra Leone to Guinea | effect="Battle at Guinea: 2 attackers vs 1 defenders. Attackers killed 1 defenders. Defenders killed 0 attackers. Territory conquered! Aggressive_Player1 now owns Guinea with 2 armies." | executed
+Order: Airlift Order: 3 army units from Sierra Leone to Sierra Leone | effect="Airlift order is invalid and was not executed" | executed
+GameEngine::state -> assign reinforcement
+GameEngine::state -> issue orders
+OrdersList::addOrder -> size=1
+GameEngine::state -> execute orders
+GameEngine::state -> execute orders
+Order: Deploy Order: 37 army units to Angola | effect="Deployed 37 army units to Angola.Territory now has 151 armies." | executed
+GameEngine::state -> win
+
+
+=========================================================
+              Tournament Results                          
+
+Tournament mode:
+M: Africa.map
+P: Aggressive, Benevolent, Neutral, Cheater
+G: 2
+D: 15
+
+Results:
+            Game 1      Game 2      
+------------------------------------
+Africa.map  Cheater     Cheater     
+GameEngine::state -> win
+CommandProcessor::saveCommand -> type=6 param="-M Africa.map -P Aggressive,Benevolent,Neutral,Cheater -G 2 -D 15" effect=start
+GameEngine::state -> issue orders
+OrdersList::addOrder -> size=1
+OrdersList::addOrder -> size=2
+OrdersList::addOrder -> size=3
+OrdersList::addOrder -> size=1
+OrdersList::addOrder -> size=1
+OrdersList::addOrder -> size=2
+OrdersList::addOrder -> size=3
+OrdersList::addOrder -> size=1
+GameEngine::state -> execute orders
+GameEngine::state -> execute orders
+Order: Deploy Order: 53 army units to Kenya | effect="Deploy order is invalid and was not executed" | executed
+Order: Deploy Order: 53 army units to Uganda | effect="Deployed 53 army units to Uganda.Territory now has 53 armies." | executed
+Order: Deploy Order: 19 army units to Liberia | effect="Deployed 19 army units to Liberia.Territory now has 19 armies." | executed
+Order: Deploy Order: 53 army units to Benin | effect="Deployed 53 army units to Benin.Territory now has 53 armies." | executed
+Order: Deploy Order: 17 army units to Niger | effect="Deployed 17 army units to Niger.Territory now has 17 armies." | executed
+Order: Deploy Order: 17 army units to Sierra Leone | effect="Deployed 17 army units to Sierra Leone.Territory now has 17 armies." | executed
+Order: Advance Order: 52 army units from Kenya to South Sudan | effect="Advance order is invalid and was not executed" | executed
+Order: Bomb Order: target territory South Sudan | effect="Bomb order is invalid and was not executed" | executed
+GameEngine::state -> assign reinforcement
+GameEngine::state -> issue orders
+OrdersList::addOrder -> size=1
+OrdersList::addOrder -> size=2
+OrdersList::addOrder -> size=1
+OrdersList::addOrder -> size=1
+OrdersList::addOrder -> size=2
+OrdersList::addOrder -> size=3
+OrdersList::addOrder -> size=1
+GameEngine::state -> execute orders
+GameEngine::state -> execute orders
+Order: Deploy Order: 56 army units to Ivory Coast | effect="Deploy order is invalid and was not executed" | executed
+Order: Deploy Order: 19 army units to Uganda | effect="Deployed 19 army units to Uganda.Territory now has 72 armies." | executed
+Order: Deploy Order: 1 army units to Ghana | effect="Deployed 1 army units to Ghana.Territory now has 1 armies." | executed
+Order: Deploy Order: 3 army units to Benin | effect="Deployed 3 army units to Benin.Territory now has 56 armies." | executed
+Order: Deploy Order: 1 army units to Sierra Leone | effect="Deployed 1 army units to Sierra Leone.Territory now has 18 armies." | executed
+Order: Deploy Order: 1 army units to Liberia | effect="Deployed 1 army units to Liberia.Territory now has 20 armies." | executed
+Order: Advance Order: 55 army units from Ivory Coast to Mali | effect="Advance order is invalid and was not executed" | executed
+GameEngine::state -> assign reinforcement
+GameEngine::state -> issue orders
+OrdersList::addOrder -> size=1
+GameEngine::state -> execute orders
+GameEngine::state -> execute orders
+Order: Deploy Order: 36 army units to Uganda | effect="Deployed 36 army units to Uganda.Territory now has 108 armies." | executed
+GameEngine::state -> win
+GameEngine::state -> issue orders
+OrdersList::addOrder -> size=1
+OrdersList::addOrder -> size=1
+OrdersList::addOrder -> size=2
+OrdersList::addOrder -> size=1
+OrdersList::addOrder -> size=2
+OrdersList::addOrder -> size=3
+OrdersList::addOrder -> size=4
+OrdersList::addOrder -> size=1
+GameEngine::state -> execute orders
+GameEngine::state -> execute orders
+Order: Deploy Order: 53 army units to Burkina Faso | effect="Deployed 53 army units to Burkina Faso.Territory now has 53 armies." | executed
+Order: Deploy Order: 53 army units to Senegal | effect="Deployed 53 army units to Senegal.Territory now has 53 armies." | executed
+Order: Deploy Order: 19 army units to Madagascar | effect="Deployed 19 army units to Madagascar.Territory now has 19 armies." | executed
+Order: Deploy Order: 53 army units to Gabon | effect="Deployed 53 army units to Gabon.Territory now has 53 armies." | executed
+Order: Deploy Order: 17 army units to Western Sahara | effect="Deployed 17 army units to Western Sahara.Territory now has 17 armies." | executed
+Order: Deploy Order: 17 army units to Mauritania | effect="Deployed 17 army units to Mauritania.Territory now has 17 armies." | executed
+Order: Deploy Order: 5 army units to Madagascar | effect="Deployed 5 army units to Madagascar.Territory now has 24 armies." | executed
+Order: Advance Order: 52 army units from Senegal to Mauritania | effect="Battle at Mauritania: 52 attackers vs 17 defenders. Attackers killed 17 defenders. Defenders killed 13 attackers. Territory conquered! Aggressive_Player1 now owns Mauritania with 39 armies." | executed
+GameEngine::state -> assign reinforcement
+GameEngine::state -> issue orders
+OrdersList::addOrder -> size=1
+GameEngine::state -> execute orders
+GameEngine::state -> execute orders
+Order: Deploy Order: 23 army units to Burkina Faso | effect="Deployed 23 army units to Burkina Faso.Territory now has 76 armies." | executed
+GameEngine::state -> win
+
+
+=========================================================
+              Tournament Results                          
+
+Tournament mode:
+M: Africa.map
+P: Aggressive, Benevolent, Neutral, Cheater
+G: 2
+D: 15
+
+Results:
+            Game 1      Game 2      
+------------------------------------
+Africa.map  Cheater     Cheater     
+GameEngine::state -> win

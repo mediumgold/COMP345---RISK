@@ -3,6 +3,21 @@
 // Updated for Assignment 3 Part 2: Tournament Mode
 //
 
+#include <algorithm>
+#include <cctype>
+#include <filesystem>
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <numeric>
+#include <random>
+#include <sstream>
+#include <string>
+#include <system_error>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
+
 #include "GameEngine.h"
 #include "CommandProcessing.h"
 #include "MapLoader.h"
@@ -11,19 +26,6 @@
 #include "Cards.h"
 #include "LoggingObserver.h"
 #include "PlayerStrategies.h"
-#include <algorithm>
-#include <cctype>
-#include <filesystem>
-#include <iostream>
-#include <numeric>
-#include <random>
-#include <string>
-#include <vector>
-#include <system_error>
-#include <unordered_set>
-#include <unordered_map>
-#include <fstream>
-#include <iomanip>
 
 namespace fs = std::filesystem;
 
@@ -400,6 +402,11 @@ std::string GameEngine::runSingleGame(const std::string& mapFile,
                 player->addCard(card);
             }
         }
+
+        // Attach GameEngine's observers to player's OrdersList for logging
+        for (Observer* obs : getObservers()) {
+            player->getOrdersList()->attach(obs);
+        }
     }
 
     std::cout << "[Tournament] Game setup complete. " << players.size() << " players, "
@@ -701,6 +708,11 @@ void GameEngine::startupPhase(CommandProcessor& commandProcessor, const std::str
                 {
                     player->addCard(card);
                 }
+            }
+
+            // Attach GameEngine's observers to player's OrdersList for logging
+            for (Observer* obs : getObservers()) {
+                player->getOrdersList()->attach(obs);
             }
         }
 

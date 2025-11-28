@@ -156,6 +156,12 @@ void testTournamentInteractive() {
     cout << "\n";
     cout << "INTERACTIVE TOURNAMENT MODE (CommandProcessor)\n";
 
+    // Clear the log file for clean output
+    {
+        ofstream clearLog("gamelog.txt", ios::trunc);
+        clearLog << "=== Tournament Mode Log ===\n\n";
+    }
+
     GameEngine gameEngine;
     CommandProcessor cmdProcessor;
     
@@ -175,7 +181,10 @@ void testTournamentInteractive() {
 }
 
 //main function
+/*
 int main() {
+    testTournament();
     testTournamentInteractive();
     return 0;
 }
+*/

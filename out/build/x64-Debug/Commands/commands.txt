@@ -1,0 +1,10 @@
+loadmap asd
+invalidcommand
+validatemap
+validatemap ignoreme
+addplayer bob
+addplayer
+addplayer jason
+gamestart
+anotherinvalid command
+quit

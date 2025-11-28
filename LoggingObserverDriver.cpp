@@ -121,6 +121,8 @@ void testLoggingObserver()
     cout << "=== END gamelog.txt ===\n";
 }
 
+/*
 int main(){
     testLoggingObserver();
 }
+*/

@@ -28,6 +28,7 @@ public:
     void attach(Observer* o);
     void detach(Observer* o);
     void notify(const ILoggable& l);
+    const std::vector<Observer*>& getObservers() const { return observers_; }
 
     // Stream insertion: shows how many observers are attached
     friend std::ostream& operator<<(std::ostream& os, const Subject& s);
