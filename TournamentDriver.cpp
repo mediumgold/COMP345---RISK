@@ -181,10 +181,9 @@ void testTournamentInteractive() {
 }
 
 //main function
-/*
-int main() {
-    testTournament();
-    testTournamentInteractive();
-    return 0;
-}
-*/
+
+//int main() {
+//    testTournament();
+    //testTournamentInteractive();
+//    return 0;
+//}

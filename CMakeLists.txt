@@ -23,14 +23,17 @@ set(SOURCES
 
 # === Executables for each module test ===
 # Each of these has its own main() and tests that specific part.
-#add_executable(MapDriver         ${SOURCES} MapDriver.cpp)
-#add_executable(PlayerDriver      ${SOURCES} PlayerDriver.cpp)
-#add_executable(OrdersDriver      ${SOURCES} OrdersDriver.cpp)
-#add_executable(CardsDriver       ${SOURCES} CardsDriver.cpp)
-#add_executable(GameEngineDriver  ${SOURCES} GameEngineDriver.cpp)
-#add_executable(CommandProcessingDriver  ${SOURCES} CommandProcessingDriver.cpp)
-#add_executable(LoggingObserverDriver  ${SOURCES} LoggingObserverDriver.cpp)
-#add_executable(TournamentDriver       ${SOURCES} TournamentDriver.cpp)
+add_executable(MapDriver         ${SOURCES} MapDriver.cpp)
+add_executable(PlayerDriver      ${SOURCES} PlayerDriver.cpp)
+add_executable(OrdersDriver      ${SOURCES} OrdersDriver.cpp)
+add_executable(CardsDriver       ${SOURCES} CardsDriver.cpp)
+add_executable(GameEngineDriver  ${SOURCES} GameEngineDriver.cpp)
+add_executable(CommandProcessingDriver  ${SOURCES} CommandProcessingDriver.cpp)
+add_executable(LoggingObserverDriver  ${SOURCES} LoggingObserverDriver.cpp)
+
+add_executable(PlayerStrategiesDriver ${SOURCES} PlayerStrategiesDriver.cpp)
+
+add_executable(TournamentDriver  ${SOURCES} TournamentDriver.cpp)
 
 # === Full integrated demo (runs all tests in sequence) ===
 # Main integrated driver (runs everything)
@@ -45,6 +48,7 @@ add_executable(MainDriver
         GameEngineDriver.cpp
         CommandProcessingDriver.cpp
         LoggingObserverDriver.cpp
+        PlayerStrategiesDriver.cpp
         TournamentDriver.cpp
 )
 

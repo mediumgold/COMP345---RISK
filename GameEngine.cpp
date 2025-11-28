@@ -1,22 +1,8 @@
 //
 // Created by Nathan on 2025-10-05.
 // Updated for Assignment 3 Part 2: Tournament Mode
+// FIXED: Added order execution output
 //
-
-#include <algorithm>
-#include <cctype>
-#include <filesystem>
-#include <fstream>
-#include <iomanip>
-#include <iostream>
-#include <numeric>
-#include <random>
-#include <sstream>
-#include <string>
-#include <system_error>
-#include <unordered_map>
-#include <unordered_set>
-#include <vector>
 
 #include "GameEngine.h"
 #include "CommandProcessing.h"
@@ -26,167 +12,180 @@
 #include "Cards.h"
 #include "LoggingObserver.h"
 #include "PlayerStrategies.h"
+#include <algorithm>
+#include <cctype>
+#include <filesystem>
+#include <iostream>
+#include <numeric>
+#include <random>
+#include <string>
+#include <vector>
+#include <system_error>
+#include <unordered_set>
+#include <unordered_map>
+#include <fstream>
+#include <iomanip>
 
 namespace fs = std::filesystem;
 
 namespace {
 
-std::string trim(const std::string& value)
-{
-    const auto first = value.find_first_not_of(" \t\r\n");
-    if (first == std::string::npos)
+    std::string trim(const std::string& value)
     {
-        return "";
-    }
-    const auto last = value.find_last_not_of(" \t\r\n");
-    return value.substr(first, last - first + 1);
-}
-
-std::string toLowerCopy(const std::string& value)
-{
-    std::string result = value;
-    std::transform(result.begin(), result.end(), result.begin(), [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
-    return result;
-}
-
-std::vector<std::string> collectMapFiles(const std::string& directory)
-{
-    std::vector<std::string> maps;
-    try
-    {
-        if (!directory.empty() && fs::exists(directory))
+        const auto first = value.find_first_not_of(" \t\r\n");
+        if (first == std::string::npos)
         {
-            for (const auto& entry : fs::directory_iterator(directory))
+            return "";
+        }
+        const auto last = value.find_last_not_of(" \t\r\n");
+        return value.substr(first, last - first + 1);
+    }
+
+    std::string toLowerCopy(const std::string& value)
+    {
+        std::string result = value;
+        std::transform(result.begin(), result.end(), result.begin(), [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
+        return result;
+    }
+
+    std::vector<std::string> collectMapFiles(const std::string& directory)
+    {
+        std::vector<std::string> maps;
+        try
+        {
+            if (!directory.empty() && fs::exists(directory))
             {
-                if (entry.is_regular_file() && entry.path().extension() == ".map")
+                for (const auto& entry : fs::directory_iterator(directory))
                 {
-                    maps.push_back(entry.path().filename().string());
+                    if (entry.is_regular_file() && entry.path().extension() == ".map")
+                    {
+                        maps.push_back(entry.path().filename().string());
+                    }
                 }
             }
+            std::sort(maps.begin(), maps.end());
         }
-        std::sort(maps.begin(), maps.end());
-    }
-    catch (const fs::filesystem_error& e)
-    {
-        std::cout << "[StartupPhase] Unable to list map files in '" << directory << "': " << e.what() << "\n";
-    }
-    return maps;
-}
-
-std::string findMatchingMapName(const std::vector<std::string>& availableMaps, const std::string& requested)
-{
-    const auto requestedLower = toLowerCopy(requested);
-    for (const auto& name : availableMaps)
-    {
-        if (toLowerCopy(name) == requestedLower)
+        catch (const fs::filesystem_error& e)
         {
-            return name;
+            std::cout << "[StartupPhase] Unable to list map files in '" << directory << "': " << e.what() << "\n";
         }
-    }
-    return "";
-}
-
-fs::path resolveMapPath(const std::vector<std::string>& availableMaps,
-                        const std::string& requested,
-                        const std::string& mapDirectory)
-{
-    const std::string trimmed = trim(requested);
-    if (trimmed.empty())
-    {
-        return {};
+        return maps;
     }
 
-    auto validateCandidate = [](const fs::path& candidate) -> fs::path
+    std::string findMatchingMapName(const std::vector<std::string>& availableMaps, const std::string& requested)
     {
-        if (candidate.empty())
+        const auto requestedLower = toLowerCopy(requested);
+        for (const auto& name : availableMaps)
+        {
+            if (toLowerCopy(name) == requestedLower)
+            {
+                return name;
+            }
+        }
+        return "";
+    }
+
+    fs::path resolveMapPath(const std::vector<std::string>& availableMaps,
+                            const std::string& requested,
+                            const std::string& mapDirectory)
+    {
+        const std::string trimmed = trim(requested);
+        if (trimmed.empty())
         {
             return {};
         }
 
-        std::error_code ec;
-        if (!fs::exists(candidate, ec) || !fs::is_regular_file(candidate, ec))
+        auto validateCandidate = [](const fs::path& candidate) -> fs::path
         {
-            return {};
-        }
+            if (candidate.empty())
+            {
+                return {};
+            }
 
-        const auto extension = toLowerCopy(candidate.extension().string());
-        if (extension != ".map")
-        {
-            return {};
-        }
+            std::error_code ec;
+            if (!fs::exists(candidate, ec) || !fs::is_regular_file(candidate, ec))
+            {
+                return {};
+            }
 
-        return candidate;
-    };
+            const auto extension = toLowerCopy(candidate.extension().string());
+            if (extension != ".map")
+            {
+                return {};
+            }
 
-    const fs::path direct(trimmed);
-    if (auto candidate = validateCandidate(direct); !candidate.empty())
-    {
-        return candidate;
-    }
-
-    if (direct.extension().empty())
-    {
-        fs::path withExtension = direct;
-        withExtension.replace_extension(".map");
-        if (auto candidate = validateCandidate(withExtension); !candidate.empty())
-        {
             return candidate;
-        }
-    }
+        };
 
-    if (!mapDirectory.empty())
-    {
-        fs::path fromDirectory = fs::path(mapDirectory) / direct;
-        if (auto candidate = validateCandidate(fromDirectory); !candidate.empty())
+        const fs::path direct(trimmed);
+        if (auto candidate = validateCandidate(direct); !candidate.empty())
         {
             return candidate;
         }
 
-        if (fromDirectory.extension().empty())
+        if (direct.extension().empty())
         {
-            fs::path withExtension = fromDirectory;
+            fs::path withExtension = direct;
             withExtension.replace_extension(".map");
             if (auto candidate = validateCandidate(withExtension); !candidate.empty())
             {
                 return candidate;
             }
         }
-    }
 
-    const std::string match = findMatchingMapName(availableMaps, trimmed);
-    if (!match.empty())
-    {
-        return fs::path(mapDirectory) / match;
-    }
+        if (!mapDirectory.empty())
+        {
+            fs::path fromDirectory = fs::path(mapDirectory) / direct;
+            if (auto candidate = validateCandidate(fromDirectory); !candidate.empty())
+            {
+                return candidate;
+            }
 
-    return {};
-}
+            if (fromDirectory.extension().empty())
+            {
+                fs::path withExtension = fromDirectory;
+                withExtension.replace_extension(".map");
+                if (auto candidate = validateCandidate(withExtension); !candidate.empty())
+                {
+                    return candidate;
+                }
+            }
+        }
+
+        const std::string match = findMatchingMapName(availableMaps, trimmed);
+        if (!match.empty())
+        {
+            return fs::path(mapDirectory) / match;
+        }
+
+        return {};
+    }
 
 // Part 2: Helper to create strategy based on name
-PlayerStrategy* createStrategy(const std::string& strategyName, Player* player) {
-    std::string lower = toLowerCopy(strategyName);
-    if (lower == "aggressive") {
-        return new AggressivePlayerStrategy(player);
-    } else if (lower == "benevolent") {
-        return new BenevolentPlayerStrategy(player);
-    } else if (lower == "neutral") {
-        return new NeutralPlayerStrategy(player);
-    } else if (lower == "cheater") {
-        return new CheaterPlayerStrategy(player);
+    PlayerStrategy* createStrategy(const std::string& strategyName, Player* player) {
+        std::string lower = toLowerCopy(strategyName);
+        if (lower == "aggressive") {
+            return new AggressivePlayerStrategy(player);
+        } else if (lower == "benevolent") {
+            return new BenevolentPlayerStrategy(player);
+        } else if (lower == "neutral") {
+            return new NeutralPlayerStrategy(player);
+        } else if (lower == "cheater") {
+            return new CheaterPlayerStrategy(player);
+        }
+        return nullptr;
     }
-    return nullptr;
-}
 
 }
 
 
 //transition table / transitions[current_state][command] = next_state
 GameEngine::GameEngine()
-    : current(State::Start),
-      mapLoaded(false),
-      mapValidated(false),
-      loadedMap(nullptr),
-      players()
+        : current(State::Start),
+          mapLoaded(false),
+          mapValidated(false),
+          loadedMap(nullptr),
+          players()
 {
 
     // startup
@@ -276,7 +275,7 @@ void GameEngine::resetGameState() {
 // Part 2: Tournament Mode Implementation
 
 void GameEngine::tournamentMode(const TournamentParameters& params, const std::string& mapDirectory) {
-    std::cout << "TOURNAMENT MODE STARTING                    \n";
+    std::cout << "TOURNAMENT MODE STARTING\n";
 
     // Results table: results[mapIndex][gameIndex] = winner name or "Draw"
     std::vector<std::vector<std::string>> results;
@@ -297,7 +296,7 @@ void GameEngine::tournamentMode(const TournamentParameters& params, const std::s
 
             // Run the game and get the winner
             std::string winner = runSingleGame(mapFile, params.playerStrategies,
-                                                params.maxTurns, mapDirectory);
+                                               params.maxTurns, mapDirectory);
 
             results[mapIdx][gameNum] = winner;
 
@@ -310,9 +309,9 @@ void GameEngine::tournamentMode(const TournamentParameters& params, const std::s
 }
 
 std::string GameEngine::runSingleGame(const std::string& mapFile,
-                                       const std::vector<std::string>& strategies,
-                                       int maxTurns,
-                                       const std::string& mapDirectory) {
+                                      const std::vector<std::string>& strategies,
+                                      int maxTurns,
+                                      const std::string& mapDirectory) {
     //reset game state
     resetGameState();
 
@@ -402,11 +401,6 @@ std::string GameEngine::runSingleGame(const std::string& mapFile,
                 player->addCard(card);
             }
         }
-
-        // Attach GameEngine's observers to player's OrdersList for logging
-        for (Observer* obs : getObservers()) {
-            player->getOrdersList()->attach(obs);
-        }
     }
 
     std::cout << "[Tournament] Game setup complete. " << players.size() << " players, "
@@ -467,12 +461,12 @@ std::string GameEngine::runSingleGame(const std::string& mapFile,
 }
 
 void GameEngine::outputTournamentResults(const TournamentParameters& params,
-                                          const std::vector<std::vector<std::string>>& results) {
+                                         const std::vector<std::vector<std::string>>& results) {
     std::ostringstream output;
 
     output << "\n";
     output << "=========================================================\n";
-    output << "              Tournament Results                          \n";
+    output << "              Tournament Results\n";
     output << "\n";
     output << "Tournament mode:\n";
     output << "M: ";
@@ -709,11 +703,6 @@ void GameEngine::startupPhase(CommandProcessor& commandProcessor, const std::str
                     player->addCard(card);
                 }
             }
-
-            // Attach GameEngine's observers to player's OrdersList for logging
-            for (Observer* obs : getObservers()) {
-                player->getOrdersList()->attach(obs);
-            }
         }
 
         // Part 1: Assign strategies to players
@@ -785,37 +774,37 @@ void GameEngine::startupPhase(CommandProcessor& commandProcessor, const std::str
         bool success = false;
         switch (command->getType())
         {
-        case LoadMap:
-            success = loadMapCommand(trim(command->getParameter()));
-            if (success)
-            {
-                success = apply("loadmap");
-            }
-            break;
-        case ValidateMap:
-            success = validateMapCommand();
-            if (success)
-            {
-                success = apply("validatemap");
-            }
-            break;
-        case AddPlayer:
-            success = addPlayerCommand(command->getParameter());
-            if (success)
-            {
-                success = apply("addplayer");
-            }
-            break;
-        case GameStart:
-            success = startGameCommand();
-            if (success)
-            {
-                success = apply("assigncountries");
-            }
-            break;
-        default:
-            std::cout << "[StartupPhase] Command not supported during startup.\n";
-            break;
+            case LoadMap:
+                success = loadMapCommand(trim(command->getParameter()));
+                if (success)
+                {
+                    success = apply("loadmap");
+                }
+                break;
+            case ValidateMap:
+                success = validateMapCommand();
+                if (success)
+                {
+                    success = apply("validatemap");
+                }
+                break;
+            case AddPlayer:
+                success = addPlayerCommand(command->getParameter());
+                if (success)
+                {
+                    success = apply("addplayer");
+                }
+                break;
+            case GameStart:
+                success = startGameCommand();
+                if (success)
+                {
+                    success = apply("assigncountries");
+                }
+                break;
+            default:
+                std::cout << "[StartupPhase] Command not supported during startup.\n";
+                break;
         }
 
         if (success)
@@ -1004,7 +993,7 @@ void GameEngine::executeOrdersPhase() {
         return dynamic_cast<Deploy*>(o) != nullptr;
     };
 
-    // Execute one kind (deploy or non-deploy) in round-robin using OrdersList::getOrder/remove
+    // *** FIXED: Execute one kind (deploy or non-deploy) in round-robin with OUTPUT ***
     auto executeOneKindRoundRobin = [&](bool wantDeploy) {
         bool progressed = false;
         bool keepLooping = true;
@@ -1030,8 +1019,18 @@ void GameEngine::executeOrdersPhase() {
                 if (foundIdx < 0) continue;
 
                 Order* o = ol->getOrder(foundIdx);
-                // Per spec: execute() should validate then enact and record effect
+
+                // *** FIXED: Execute and print effect ***
                 o->execute();
+
+                // *** NEW: Print execution result ***
+                if (o->isExecuted()) {
+                    std::string effect = o->getEffect();
+                    if (!effect.empty()) {
+                        std::cout << "[Execute] " << effect << "\n";
+                    }
+                }
+
                 // Remove the order after execution
                 ol->remove(foundIdx);
 
